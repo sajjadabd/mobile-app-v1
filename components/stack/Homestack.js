@@ -12,6 +12,7 @@ import Branch from '../screens/Branch';
 
 
 import { View } from 'react-native'
+import SubBranch from '../screens/SubBranch';
 
 const screens = {
   Homepage : {
@@ -44,6 +45,7 @@ const screens = {
     screen : Bookmark ,
     navigationOptions : {
       title : 'Bookmark' , 
+      header : () => null,
       headerStyle : {
         backgroundColor : '#51344D',
       },
@@ -58,6 +60,7 @@ const screens = {
     screen : Work ,
     navigationOptions : {
       title : 'Work' , 
+      header : () => null ,
       headerStyle : {
         backgroundColor : '#51344D',
       },
@@ -72,6 +75,7 @@ const screens = {
     screen : Edit ,
     navigationOptions : {
       title : 'Edit' , 
+      header : () => null,
       headerStyle : {
         backgroundColor : '#51344D',
       },
@@ -86,6 +90,7 @@ const screens = {
     screen : Branch ,
     navigationOptions : {
       title : '' , 
+      header : () => null ,
       headerStyle : {
         backgroundColor : '#51344D',
       },
@@ -96,6 +101,21 @@ const screens = {
       }
     }
   },
+  SubBranch : {
+    screen : SubBranch ,
+    navigationOptions : {
+      title : '' , 
+      header : () => null ,
+      headerStyle : {
+        backgroundColor : '#51344D',
+      },
+      headerTintColor: 'white',
+      headerTitleStyle: {
+        color: 'white',
+        fontFamily : 'Lalezar-Regular'
+      }
+    }
+  }
 }
 
 const HomeStack = createStackNavigator(screens);

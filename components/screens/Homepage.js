@@ -27,6 +27,7 @@ import { NavigationEvents } from 'react-navigation';
 
 import Footer from '../footer/Footer';
 import Header from '../header/Header';
+import { LalezarRegular } from '../utils/Fonts';
 
 
 
@@ -149,12 +150,12 @@ const styles = StyleSheet.create({
     paddingBottom : 20,
   },  
   title : {
-    fontFamily : 'Lalezar-Regular',
+    fontFamily : LalezarRegular,
     fontSize : windowWidth / 9,
     color : 'white',
   },
   numberOfItems : {
-    fontFamily : 'Lalezar-Regular',
+    fontFamily : LalezarRegular,
     alignSelf : 'flex-end',
     fontSize : windowWidth / 15,
     color : 'white',

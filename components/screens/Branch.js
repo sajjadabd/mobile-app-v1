@@ -17,6 +17,7 @@ import Header from '../header/Header';
 import { windowHeight , windowWidth } from '../utils/Dimensions';
 import SubBranch from '../utils/SubBranch';
 import { FlatList } from 'react-native-gesture-handler';
+
 import Footer from '../footer/Footer';
 import SubChapterLogo from '../utils/SubChapterLogo';
 
@@ -50,7 +51,7 @@ const Branch = ({ navigation }) => {
             {
               numbers.map( (item , index) => {
                 return (
-                  <SubBranch key={index} />
+                  <SubBranch key={index} navigation={navigation} />
                 )
               })
             }

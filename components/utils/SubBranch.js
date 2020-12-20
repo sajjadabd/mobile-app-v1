@@ -5,17 +5,17 @@ import { View , Text , TouchableOpacity , StyleSheet } from 'react-native';
 import { windowWidth } from './Dimensions';
 
 
-import MaterialICon from 'react-native-vector-icons/MaterialIcons';
+import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 
-const SubBranch = () => {
+const SubBranch = ({navigation}) => {
   return (
     <TouchableOpacity 
-      onPress={ () => null }
+      onPress={ () => navigation.navigate('SubBranch') }
       style={styles.branch}> 
       <Text style={styles.subtitle}>زیر شاخه</Text>
       <View>
-        <MaterialICon size={40} color="white" name="east" />
+        <MaterialIcon size={40} color="white" name="east" />
       </View>
     </TouchableOpacity>
   )

@@ -17,6 +17,7 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import { DropDown } from './PickerStyle';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import Footer from '../footer/Footer';
+import { LalezarRegular } from '../utils/Fonts';
 
 
 const Profile = ({ navigation }) => {
@@ -127,7 +128,7 @@ const styles = StyleSheet.create({
   },
   infoText : {
     fontSize : 25,
-    fontFamily : 'Lalezar-Regular',
+    fontFamily : LalezarRegular,
   } ,
   dropDownItem : {
     color : 'black',
@@ -157,12 +158,12 @@ const styles = StyleSheet.create({
   },
   activebuttonText : {
     color : 'white',
-    fontFamily : 'Lalezar-Regular',
+    fontFamily : LalezarRegular,
     fontSize : 20,
   },
   deactivebuttonText : {
     color : 'black',
-    fontFamily : 'Lalezar-Regular',
+    fontFamily : LalezarRegular,
     fontSize : 20,
   }
 });
