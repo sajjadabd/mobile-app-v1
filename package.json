@@ -1,5 +1,5 @@
 {
-  "name": "RNative",
+  "name": "testapp",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -14,6 +14,7 @@
     "@react-native-picker/picker": "^1.9.7",
     "react": "16.13.1",
     "react-native": "0.63.4",
+    "react-native-dropdown-picker": "^3.7.1",
     "react-native-gesture-handler": "^1.9.0",
     "react-native-picker-select": "^8.0.4",
     "react-native-reanimated": "^1.13.2",

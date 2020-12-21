@@ -8,20 +8,40 @@ import { windowWidth } from './Dimensions';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 
-const SubBranch = ({navigation}) => {
+const SubBranch = ({navigation, save}) => {
   return (
-    <TouchableOpacity 
-      onPress={ () => navigation.navigate('SubBranch') }
-      style={styles.branch}> 
-      <Text style={styles.subtitle}>زیر شاخه</Text>
-      <View>
-        <MaterialIcon size={40} color="white" name="east" />
+    <View style={styles.container}>
+      <TouchableOpacity 
+        onPress={ () => navigation.navigate('SubBranch') }
+        style={styles.branch}> 
+        <Text style={styles.subtitle}>زیر شاخه</Text>
+        <View>
+          <MaterialIcon size={40} color="white" name="east" />
+        </View>
+      </TouchableOpacity>
+      <View style={styles.save}>
+      <TouchableOpacity
+      onPress={() => null}
+      style={styles.saveButton}
+      >
+            { 
+            save
+            ?
+            <MaterialIcon size={40} color="white" name="bookmark" />
+            : 
+            <MaterialIcon size={40} color="white" name="bookmark-outline" />
+            }
+            
+      </TouchableOpacity>
       </View>
-    </TouchableOpacity>
+    </View>
   )
 }
 
 const styles = StyleSheet.create({
+  container : {
+    marginBottom : 20,
+  },
   branch : {
     paddingHorizontal : 30,
     marginBottom : 20,
@@ -38,6 +58,13 @@ const styles = StyleSheet.create({
     fontSize : windowWidth / 13,
     color : 'white',
   },  
+  save : {
+    position : 'absolute',
+    bottom : 0,
+    left : 10,
+  },
+  saveButton : {
+  }
 });
 
 export default SubBranch

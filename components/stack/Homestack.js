@@ -7,12 +7,14 @@ import Homepage from '../screens/Homepage';
 import Profile from '../screens/Profile';
 import Bookmark from '../screens/Bookmark';
 import Work from '../screens/Work';
-import Edit from '../screens/Edit';
+import Edit from '../screens/ReadyToExamSubjects';
 import Branch from '../screens/Branch';
-
+import Questions from '../screens/Chapters';
 
 import { View } from 'react-native'
 import SubBranch from '../screens/SubBranch';
+import Chapters from '../screens/Chapters';
+import Exam from '../screens/Exam';
 
 const screens = {
   Homepage : {
@@ -23,7 +25,7 @@ const screens = {
         height : 0,
       }
     }
-  },
+  } ,
   Profile : {
     screen : Profile ,
     navigationOptions : {
@@ -40,7 +42,7 @@ const screens = {
         fontFamily : 'Lalezar-Regular'
       }
     }
-  },
+  } ,
   Bookmark : {
     screen : Bookmark ,
     navigationOptions : {
@@ -55,7 +57,7 @@ const screens = {
         fontFamily : 'Lalezar-Regular'
       }
     }
-  },
+  } ,
   Work : {
     screen : Work ,
     navigationOptions : {
@@ -71,21 +73,21 @@ const screens = {
       }
     }
   },
-  Edit : {
-    screen : Edit ,
-    navigationOptions : {
-      title : 'Edit' , 
-      header : () => null,
-      headerStyle : {
-        backgroundColor : '#51344D',
-      },
-      headerTintColor: 'white',
-      headerTitleStyle: {
-        color: 'white',
-        fontFamily : 'Lalezar-Regular'
-      }
-    }
-  },
+  // ReadyToExamSubjects : {
+  //   screen : ReadyToExamSubjects ,
+  //   navigationOptions : {
+  //     title : 'ReadyToExamSubjects' , 
+  //     header : () => null,
+  //     headerStyle : {
+  //       backgroundColor : '#51344D',
+  //     },
+  //     headerTintColor: 'white',
+  //     headerTitleStyle: {
+  //       color: 'white',
+  //       fontFamily : 'Lalezar-Regular'
+  //     }
+  //   }
+  // },
   Branch : {
     screen : Branch ,
     navigationOptions : {
@@ -103,6 +105,36 @@ const screens = {
   },
   SubBranch : {
     screen : SubBranch ,
+    navigationOptions : {
+      title : '' , 
+      header : () => null ,
+      headerStyle : {
+        backgroundColor : '#51344D',
+      },
+      headerTintColor: 'white',
+      headerTitleStyle: {
+        color: 'white',
+        fontFamily : 'Lalezar-Regular'
+      }
+    }
+  },
+  Chapters : {
+    screen : Chapters ,
+    navigationOptions : {
+      title : '' , 
+      header : () => null ,
+      headerStyle : {
+        backgroundColor : '#51344D',
+      },
+      headerTintColor: 'white',
+      headerTitleStyle: {
+        color: 'white',
+        fontFamily : 'Lalezar-Regular'
+      }
+    }
+  },
+  Exam : {
+    screen : Exam ,
     navigationOptions : {
       title : '' , 
       header : () => null ,

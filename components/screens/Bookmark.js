@@ -58,9 +58,9 @@ const Bookmark = ({ navigation }) => {
         <ScrollView style={styles.scroll}>
           <View style={styles.scrollContent}>
             {
-              numbers.map( (item , index) => {
+              numbers.map( ( item , index ) => {
                 return (
-                  <SubBranch key={index} />
+                  <SubBranch key={index} navigation={navigation} save={true} />
                 )
               })
             }

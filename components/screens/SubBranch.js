@@ -27,20 +27,27 @@ const SubBranch = ({ navigation }) => {
           <Text style={styles.myText}>زیر شاخه</Text>
         </View>
 
-        <View style={styles.block}>
-          <View style={styles.iconContainer}>
-            <MaterialIcon size={50} color="white" name="person" />
+        <TouchableOpacity
+          onPress={() => navigation.navigate('Chapters')}
+        >
+          <View style={styles.block}>
+            <View style={styles.iconContainer}>
+              <MaterialIcon size={80} color="white" name="list-alt" />
+            </View>
+            <Text style={styles.myBlockText}>نمونه سوالات</Text>
           </View>
-          <Text style={styles.myBlockText}>نمونه سوالات</Text>
-        </View>
+        </TouchableOpacity>
 
-
+        <TouchableOpacity
+          onPress={() => navigation.navigate('Exam')}
+        >
         <View style={styles.block}>
           <View style={styles.iconContainer}>
-            <MaterialIcon size={50} color="white" name="person" />
+            <MaterialIcon size={80} color="white" name="edit" />
           </View>
           <Text style={styles.myBlockText}>آزمون جامع</Text>
         </View>
+        </TouchableOpacity>
 
       </View>
       <Footer navigation={navigation}/>
@@ -84,8 +91,8 @@ const styles = StyleSheet.create({
   },
   iconContainer : {
     position : 'absolute',
-    left : 20,
-    top : -20,
+    left : 10,
+    top : -30,
   }
 });
 

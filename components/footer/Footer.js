@@ -27,13 +27,13 @@ const Footer = ({ navigation }) => {
         </TouchableOpacity>
         </View>
         
-        <View style={styles.touchableButton}>
+        {/* <View style={styles.touchableButton}>
           <TouchableOpacity 
           style={styles.button}
-          onPress={ () => navigation.navigate('Edit') }>
+          onPress={ () => navigation.navigate('Exam') }>
             <MaterialIcon size={40} color="white" name="edit" />
           </TouchableOpacity>
-        </View>
+        </View> */}
 
         <View style={styles.touchableButton}>
           <TouchableOpacity 
