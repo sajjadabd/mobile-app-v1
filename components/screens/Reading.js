@@ -11,33 +11,14 @@ import {
     TouchableOpacity,
   } from 'react-native';
   
-import { windowHeight , windowWidth } from '../utils/Dimensions';
+  import { windowHeight , windowWidth } from '../utils/Dimensions';
+  
+  import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+  
+  import Footer from '../footer/Footer';
+  import { LalezarRegular } from '../utils/Fonts';
 
-import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
-
-import Footer from '../footer/Footer';
-import { LalezarRegular } from '../utils/Fonts';
-
-import RadioButtonRN from 'radio-buttons-react-native';
-
-
-
-const radioButtonsData = [
-  {
-    label: 'گزینه ی اول'
-  },
-  {
-    label: 'گزینه ی دوم'
-  },
-  {
-    label: 'گزینه ی سوم'
-  },
-  {
-    label: 'گزینه ی چهارم'
-  }
-];
-
-const Exam = ({navigation}) => {
+const Reading = ({navigation}) => {
     return (
         <>
         <StatusBar backgroundColor="#51344D" barStyle="light-content" />
@@ -48,29 +29,11 @@ const Exam = ({navigation}) => {
                     <Text style={styles.myTextQuestion}>سوال</Text>
                 </View>
                 
-                {/* <View style={styles.Answer}>
+                <View style={styles.Answer}>
                     <Text style={styles.myTextAnswer}>
                     جواب سوال این متن  می باشد
                     </Text>
-                </View> */}
-
-                <View >
-                  <RadioButtonRN
-                    data={radioButtonsData}
-                    animationTypes={['shake']}
-                    selectedBtn={(e) => console.log(e)}
-                    style={styles.answers}
-                    boxStyle={{flexDirection : 'row-reverse'}}
-                    textStyle={{alignSelf : 'flex-end' , fontFamily : LalezarRegular}}
-                    boxActiveBgColor='dodgerblue'
-                    boxDeactiveBgColor={null}
-                    textColor='white'
-                    icon={
-                      <MaterialIcon size={20} color="white" name="check" />
-                    }
-                  />
                 </View>
-
             
             </View>
 
@@ -103,8 +66,8 @@ const styles = StyleSheet.create({
         backgroundColor : '#51344D',
         borderBottomRightRadius : 55,
         borderBottomLeftRadius : 55,
-        // justifyContent : 'flex-start',
-        // alignItems : 'flex-end',
+        justifyContent : 'flex-start',
+        alignItems : 'flex-end',
         padding : 40,
         marginBottom : 40,
     },
@@ -172,10 +135,7 @@ const styles = StyleSheet.create({
         paddingHorizontal : 20,
         paddingVertical : 10,
         // backgroundColor : 'red',
-    },
-    answers : {
-      
     }
 });
 
-export default Exam
+export default Reading

@@ -1,4 +1,5 @@
 import React from 'react';
+
 import {
   SafeAreaView,
   StyleSheet,
@@ -7,6 +8,7 @@ import {
   Text,
   StatusBar,
 } from 'react-native';
+
 import Footer from '../footer/Footer';
 
 

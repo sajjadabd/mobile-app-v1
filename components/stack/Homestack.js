@@ -15,6 +15,7 @@ import { View } from 'react-native'
 import SubBranch from '../screens/SubBranch';
 import Chapters from '../screens/Chapters';
 import Exam from '../screens/Exam';
+import Reading from '../screens/Reading';
 
 const screens = {
   Homepage : {
@@ -73,21 +74,21 @@ const screens = {
       }
     }
   },
-  // ReadyToExamSubjects : {
-  //   screen : ReadyToExamSubjects ,
-  //   navigationOptions : {
-  //     title : 'ReadyToExamSubjects' , 
-  //     header : () => null,
-  //     headerStyle : {
-  //       backgroundColor : '#51344D',
-  //     },
-  //     headerTintColor: 'white',
-  //     headerTitleStyle: {
-  //       color: 'white',
-  //       fontFamily : 'Lalezar-Regular'
-  //     }
-  //   }
-  // },
+  Reading : {
+    screen : Reading ,
+    navigationOptions : {
+      title : 'ReadyToExamSubjects' , 
+      header : () => null,
+      headerStyle : {
+        backgroundColor : '#51344D',
+      },
+      headerTintColor: 'white',
+      headerTitleStyle: {
+        color: 'white',
+        fontFamily : 'Lalezar-Regular'
+      }
+    }
+  },
   Branch : {
     screen : Branch ,
     navigationOptions : {

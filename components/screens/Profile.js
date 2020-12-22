@@ -1,4 +1,5 @@
-import React , {useState} from 'react';
+import React , {useState , useRef } from 'react';
+
 import {
   SafeAreaView,
   StyleSheet,
@@ -8,21 +9,44 @@ import {
   StatusBar,
   PixelRatio
 } from 'react-native';
+
 import { windowHeight, windowWidth } from '../utils/Dimensions';
 
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 // import DropDownPicker from 'react-native-dropdown-picker';
 
-import { DropDown } from './PickerStyle';
+// import { DropDown } from './PickerStyle';
+
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import Footer from '../footer/Footer';
 import { LalezarRegular } from '../utils/Fonts';
 
+import {Picker} from '@react-native-picker/picker';
+
+// import SimplePicker from 'react-native-simple-picker';
+
+const provinces = [
+  'مازندران'
+  , 'تهران'
+  , 'اصفهان'
+  , 'گلستان'
+  , 'گیلان'
+];
+
+// Labels is optional
+const labels = ['Banana', 'Apple', 'Pear'];
+
+
 
 const Profile = ({ navigation }) => {
 
+
+  const [province , setProvince] = useState(provinces[0]);
+
   const [ sex , setSex ] = useState('male');
+
+  const picker = useRef();
 
   return (
     <>
@@ -43,8 +67,25 @@ const Profile = ({ navigation }) => {
         </View>
 
         <View style={styles.info}>
-          <DropDown />
-        </View>
+          <Picker
+            selectedValue={province}
+            style={{flex : 1}}
+            itemStyle={{fontFamily : LalezarRegular }}
+            textStyle={{fontFamily : LalezarRegular }}
+            itemTextStyle={{fontFamily : LalezarRegular }}
+            activeItemTextStyle={{fontFamily : LalezarRegular }}
+            onValueChange={(itemValue, itemIndex) => setProvince(itemValue) }
+            >
+            {provinces.map( (item,index) => {
+              return (
+                <Picker.Item label={item} value={item} />
+              )
+            })}
+          </Picker>
+        </View> 
+
+        
+        
 
 
         <View style={styles.buttonContainer}>

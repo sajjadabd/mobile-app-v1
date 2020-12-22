@@ -6,7 +6,7 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 import { LalezarRegular } from '../utils/Fonts';
 
-const SubChapter = () => {
+const SubChapter = ({navigation}) => {
     return (
         <>
         <View style={styles.block}>
@@ -18,7 +18,9 @@ const SubChapter = () => {
           </View>
           
             <View style={styles.info}>
-                <TouchableOpacity>
+                <TouchableOpacity
+                onPress={() => navigation.navigate('Reading')}
+                >
                 <Text style={styles.myBlockText}>فصل 1</Text>
                 <Text style={ styles.mySubjectText }>موضوع</Text>
                 </TouchableOpacity>

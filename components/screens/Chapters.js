@@ -34,7 +34,7 @@ const Chapters = ({ navigation }) => {
             <View style={styles.scrollContent}>
             {numbers.map( ( item , index ) => {
                 return (
-                    <SubChapter key={index}/>
+                    <SubChapter key={index} navigation={navigation}/>
                 )
             })}
             </View>
