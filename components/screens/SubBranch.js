@@ -19,6 +19,9 @@ import Footer from '../footer/Footer';
 import { LalezarRegular } from '../utils/Fonts';
 
 const SubBranch = ({ navigation }) => {
+
+  const whichPage = navigation.getParam('whichPage');
+
   return (
     <>
       <StatusBar backgroundColor="#51344D" barStyle="light-content" />
@@ -50,7 +53,7 @@ const SubBranch = ({ navigation }) => {
         </TouchableOpacity>
 
       </View>
-      <Footer navigation={navigation}/>
+      <Footer navigation={navigation} whichPage={whichPage}/>
     </>
   )
 }

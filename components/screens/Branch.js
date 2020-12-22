@@ -29,6 +29,8 @@ const Branch = ({ navigation }) => {
   const logo = navigation.getParam('logo');
   const items = navigation.getParam('items');
 
+  const whichPage = navigation.getParam('whichPage');
+
   return (
     <View style={styles.container}>
       <Header />
@@ -62,7 +64,7 @@ const Branch = ({ navigation }) => {
         
       </View>
 
-      <Footer navigation={navigation}/>
+      <Footer navigation={navigation} whichPage={whichPage}/>
     </View>
   )
 }

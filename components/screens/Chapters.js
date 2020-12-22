@@ -22,6 +22,10 @@ import SubChapter from '../utils/SubChapter';
 const numbers = [1,2,3,4,5,6,7,8];
 
 const Chapters = ({ navigation }) => {
+
+  const whichPage = navigation.getParam('whichPage');
+
+
   return (
     <>
       <StatusBar backgroundColor="#51344D" barStyle="light-content" />
@@ -40,7 +44,7 @@ const Chapters = ({ navigation }) => {
             </View>
         </ScrollView>
 
-        <Footer navigation={navigation}/>
+        <Footer navigation={navigation} whichPage={whichPage}/>
       </View>
       
     </>

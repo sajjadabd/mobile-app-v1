@@ -11,12 +11,16 @@ import Footer from '../footer/Footer';
 
 
 const Edit = ({ navigation }) => {
+
+  const whichPage = navigation.getParam('whichPage');
+
+
   return (
     <>
       <View style={styles.body}>
         <Text style={styles.myText}>Edit</Text>
       </View>
-      <Footer navigation={navigation} />
+      <Footer navigation={navigation} whichPage={whichPage}/>
     </>
   )
 }

@@ -13,7 +13,18 @@ import {
 
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
-const Footer = ({ navigation }) => {
+const Icons = {
+  home : 'home',
+  altHome : 'house-siding',
+  work : 'work',
+  altWork : 'work-outline',
+  bookmark : 'bookmark',
+  altBookmark : 'bookmark-outline',
+  person : 'person',
+  altPerson : 'person-outline'
+}
+
+const Footer = ({ navigation , whichPage }) => {
 
   return (
     <>
@@ -22,8 +33,9 @@ const Footer = ({ navigation }) => {
         <View style={styles.touchableButton}>
         <TouchableOpacity 
         style={styles.button}
-        onPress={ () => navigation.navigate('Homepage') }>
-          <MaterialIcon size={40} color="white" name="home" />
+        onPress={ () => navigation.navigate('Homepage' , { whichPage : 'home' }) }>
+          <MaterialIcon size={40} color="white" 
+          name={whichPage == 'home' || whichPage == undefined ? Icons.home : Icons.altHome} />
         </TouchableOpacity>
         </View>
         
@@ -38,8 +50,9 @@ const Footer = ({ navigation }) => {
         <View style={styles.touchableButton}>
           <TouchableOpacity 
           style={styles.button}
-          onPress={ () => navigation.navigate('Work') }>
-            <MaterialIcon size={40} color="white" name="work" />
+          onPress={ () => navigation.navigate('Work' , { whichPage : 'work' }) }>
+            <MaterialIcon size={40} color="white" 
+            name={whichPage == 'work' ? Icons.work : Icons.altWork} />
           </TouchableOpacity>
         </View>
 
@@ -47,16 +60,18 @@ const Footer = ({ navigation }) => {
         <View style={styles.touchableButton}>
           <TouchableOpacity 
           style={styles.button}
-          onPress={ () => navigation.navigate('Bookmark') }>
-            <MaterialIcon size={40} color="white" name="bookmark" />
+          onPress={ () => navigation.navigate('Bookmark' , { whichPage : 'bookmark' }) }>
+            <MaterialIcon size={40} color="white" 
+            name={whichPage == 'bookmark' ? Icons.bookmark : Icons.altBookmark} />
           </TouchableOpacity>
         </View>
         
         <View style={styles.touchableButton}>
           <TouchableOpacity 
           style={styles.button}
-          onPress={ () => navigation.navigate('Profile') }>
-            <MaterialIcon size={40} color="white" name="person" />
+          onPress={ () => navigation.navigate('Profile' , { whichPage : 'profile' }) }>
+            <MaterialIcon size={40} color="white" 
+            name={whichPage == 'profile' ? Icons.person : Icons.altPerson} />
           </TouchableOpacity>
         </View>
 
