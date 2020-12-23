@@ -102,22 +102,26 @@ const Profile = ({ navigation }) => {
           <MaterialIcon size={100} color="white" name="person" />
         </View>
 
-        <TouchableOpacity
-        onPress={() => setShowNameChangeModal(true)}
-        >
-          <View style={styles.infoCotainer}>
-            <View style={styles.info}>
-              <Text style={styles.infoText}>
-                { name == '' 
-                ?
-                'نام خود را وارد کنید'   
-                :
-                name
-                }
-              </Text>
-            </View>
+        
+          <View style={styles.infoContainer}>
+            
+              <View style={styles.info}>
+                <TouchableOpacity
+                onPress={() => setShowNameChangeModal(true)}
+                >
+                  <Text style={styles.infoText}>
+                    { name == '' 
+                    ?
+                    'نام خود را وارد کنید'   
+                    :
+                    name
+                    }
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            
           </View>
-        </TouchableOpacity>
+        
         
 
 
@@ -192,17 +196,14 @@ const styles = StyleSheet.create({
     padding : 20,
     fontSize : 25,
   } , 
-  infoCotainer : {
+  infoContainer : {
     marginTop : 100,
   },
   info : {
-    paddingHorizontal : 20,
-    paddingVertical : 10,
     marginHorizontal : 20,
     marginBottom : 20,
     backgroundColor : '#CEE0E5',
     borderWidth : 3,
-    height : 70,
     justifyContent : 'center',
     borderRadius : 55,
   },
@@ -217,6 +218,8 @@ const styles = StyleSheet.create({
     justifyContent : 'space-between'
   },
   infoText : {
+    paddingHorizontal : 20,
+    paddingVertical : 10,
     fontSize : 25,
     fontFamily : LalezarRegular,
   } ,

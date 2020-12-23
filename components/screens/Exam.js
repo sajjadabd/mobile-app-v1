@@ -9,7 +9,7 @@ import {
     StatusBar,
     Image,
     TouchableOpacity,
-    Animated
+    PixelRatio
   } from 'react-native';
   
 import { windowHeight , windowWidth } from '../utils/Dimensions';
@@ -19,50 +19,68 @@ import { LalezarRegular } from '../utils/Fonts';
 
 import ExamQuestionContainer from '../utils/ExamQuestionContainer';
 
+import Swiper from 'react-native-swiper'
+
 const duration = 100;
 
-const fadeAnim = new Animated.Value(0);
+
+// const numbers = [1,2,3];
+
+const radioButtonsData = [
+    [
+      {
+        label: 'گزینه ی اول'
+      },
+      {
+        label: 'گزینه ی دوم'
+      },
+      {
+        label: 'گزینه ی سوم'
+      },
+      {
+        label: 'گزینه ی چهارم'
+      }
+    ],
+    [
+      {
+        label: 'سلام'
+      },
+      {
+        label: 'خوبی'
+      },
+      {
+        label: 'چطوری'
+      },
+      {
+        label: 'چه خبر ؟'
+      }
+    ],
+    [
+      {
+        label: '1'
+      },
+      {
+        label: '2'
+      },
+      {
+        label: '3'
+      },
+      {
+        label: '4'
+      }
+    ]
+];
 
 
 const Exam = ({navigation}) => {
 
-  const [ fadeLeft , setFadeLeft ] = useState(0);
+    const currentIndex = useRef(0);
+    currentIndex.current = 1;
+    // console.log(radioButtonsData.length);
 
-  fadeAnim.addListener(({value}) => {
-    let roundValue = Math.round(value);
-    if(value%5 == 0) {
-      setFadeLeft(roundValue);
-    }
-  });
-
-  // fadeAnim.addListener(({value}) => {
-  //   let roundValue = Math.round(value);
-  //   console.log(roundValue);
-  //   this._value = value;
-  //   return _value;
-  // });
-
-  const fadeIn = () => {
-    // Will change fadeAnim value to 1 in 5 seconds
-    Animated.timing(fadeAnim, {
-      toValue: 0,
-      duration: duration,
-      useNativeDriver: true,
-    }).start();
-
-    console.log("Fade In ...");
-  };
-  
-  const fadeOut = () => {
-    // Will change fadeAnim value to 0 in 5 seconds
-    Animated.timing(fadeAnim, {
-      toValue: - windowWidth,
-      duration: duration,
-      useNativeDriver: true,
-    }).start();
-  
-    console.log("Fade Out ...");
-  };
+    const mySwiper = useRef(null);
+    // const prevButton = useRef(null);
+    // const [myIndex , setIndex] = useState(0);
 
     return (
         <>
@@ -70,33 +88,59 @@ const Exam = ({navigation}) => {
         <View style={styles.body}>
             <View style={styles.header}>
 
-                <View
-                style={{
-                  transform : [
-                    // { perspective: 850 },
-                    { translateX: fadeLeft },
-                    // { rotateY: '0deg'},
-                  ]
-                }}
-                >
-                  <ExamQuestionContainer />
+                <View style={styles.swiperContainer}>
+                  <Swiper 
+                  horizontal={true}
+                  ref={mySwiper}
+                  style={styles.swiper} 
+                  showsButtons={false}
+                  paginationStyle={styles.pagination}
+                  dotStyle={styles.dotStyle}
+                  activeDotStyle={styles.activeDotStyle}
+                  scrollEnabled={false}
+                  >
+                    {
+                    radioButtonsData.map( (item , index) => {
+                      return (
+                        <ExamQuestionContainer 
+                        radioButtonsData={radioButtonsData[index]}
+                        key={index} 
+                        style={styles.slide}/>
+                      )
+                    })
+                    }
+                  </Swiper>
 
                 </View>
 
             </View>
 
             <View style={styles.navigation}>
-                <View style={styles.buttonRight}>
+                <View 
+                style={styles.buttonRight}>
                     <TouchableOpacity 
-                    onPress={() => fadeOut()}
+                    onPress={() => {
+                      if(currentIndex.current < radioButtonsData.length) {
+                        mySwiper.current.scrollBy(1);
+                        currentIndex.current++;
+                        console.log(currentIndex.current);
+                      }
+                    }}
                     style={styles.touchable}>
                         <Text style={styles.buttonText}>بعدی</Text>
                     </TouchableOpacity>
                 </View>
                 
-                <View style={styles.buttonLeft}>
+                <View 
+                style={styles.buttonLeft}>
                     <TouchableOpacity 
-                    onPress={() => fadeIn()}
+                    onPress={() => {
+                      if(currentIndex.current > 1) {
+                        mySwiper.current.scrollBy(-1);
+                        currentIndex.current--;
+                        console.log(currentIndex.current);
+                      }
+                    }}
                     style={styles.touchable}>
                         <Text style={styles.buttonText}>قبلی</Text>
                     </TouchableOpacity>
@@ -178,12 +222,34 @@ const styles = StyleSheet.create({
         // backgroundColor : 'red',
     },
     QuestionContainer : {
-      // backgroundColor : 'yellow',
-      transform : [
-        // { perspective: 850 },
-        { translateX: fadeAnim },
-        // { rotateY: '0deg'},
-      ]
+
+    },
+    swiperContainer : {
+      flex : 1,
+    },
+    pagination : {
+      position : 'absolute',
+      bottom : -90,
+    },
+    dotStyle : {
+      backgroundColor:'rgba(0,0,0,.2)', 
+      width: 22, 
+      height: 22,
+      borderRadius: 22 / PixelRatio.get(), 
+      marginLeft: 3, 
+      marginRight: 3, 
+      marginTop: 3, 
+      marginBottom: 3,
+    },
+    activeDotStyle : {
+      backgroundColor: '#51344D', 
+      width: 22, 
+      height: 22,
+      borderRadius: 22 / PixelRatio.get(), 
+      marginLeft: 3, 
+      marginRight: 3, 
+      marginTop: 3, 
+      marginBottom: 3,
     }
 });
 

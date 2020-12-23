@@ -1,4 +1,4 @@
-import React from 'react'
+import React , { useRef , useState } from 'react'
 
 import {
     SafeAreaView,
@@ -9,43 +9,101 @@ import {
     StatusBar,
     Image,
     TouchableOpacity,
+    PixelRatio
   } from 'react-native';
-  
-  import { windowHeight , windowWidth } from '../utils/Dimensions';
-  
-  import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
-  
-  import Footer from '../footer/Footer';
-  import { LalezarRegular } from '../utils/Fonts';
+
+import { windowHeight , windowWidth } from '../utils/Dimensions';
+
+import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+
+import Footer from '../footer/Footer';
+import { LalezarRegular } from '../utils/Fonts';
+import EachReadingQuestion from '../utils/EachReadingQuestion';
+
+import Swiper from 'react-native-swiper'
+
+const questions = [
+  {
+    question : 'سوال 1',
+    answer : 'جواب 1'
+  },
+  {
+    question : 'سوال 2',
+    answer : 'جواب 2'
+  },
+  {
+    question : 'سوال 3',
+    answer : 'جواب 3'
+  }
+]
 
 const Reading = ({navigation}) => {
+
+    const mySwiper = useRef(null);
+
+    const currentIndex = useRef(0);
+    currentIndex.current = 1;
+
     return (
         <>
         <StatusBar backgroundColor="#51344D" barStyle="light-content" />
         <View style={styles.body}>
             <View style={styles.header}>
 
-                <View style={styles.Question}>
-                    <Text style={styles.myTextQuestion}>سوال</Text>
+                <View style={styles.swiperContainer}>
+                  <Swiper 
+                  horizontal={true}
+                  ref={mySwiper}
+                  style={styles.swiper} 
+                  showsButtons={false}
+                  paginationStyle={styles.pagination}
+                  dotStyle={styles.dotStyle}
+                  activeDotStyle={styles.activeDotStyle}
+                  scrollEnabled={false}
+                  >
+                    {
+                    questions.map( (item , index) => {
+                      return (
+                        <EachReadingQuestion 
+                        question={questions[index]}
+                        key={index} 
+                        style={styles.slide}
+                        />
+                      )
+                    })
+                    }
+                  </Swiper>
+
                 </View>
                 
-                <View style={styles.Answer}>
-                    <Text style={styles.myTextAnswer}>
-                    جواب سوال این متن  می باشد
-                    </Text>
-                </View>
             
             </View>
 
             <View style={styles.navigation}>
                 <View style={styles.buttonRight}>
-                    <TouchableOpacity style={styles.touchable}>
+                    <TouchableOpacity 
+                    onPress={() => {
+                      if(currentIndex.current < questions.length) {
+                        mySwiper.current.scrollBy(1);
+                        currentIndex.current++;
+                        console.log(currentIndex.current);
+                      }
+                    }}
+                    style={styles.touchable}>
                         <Text style={styles.buttonText}>بعدی</Text>
                     </TouchableOpacity>
                 </View>
                 
                 <View style={styles.buttonLeft}>
-                    <TouchableOpacity style={styles.touchable}>
+                    <TouchableOpacity 
+                      onPress={() => {
+                        if(currentIndex.current > 1) {
+                          mySwiper.current.scrollBy(-1);
+                          currentIndex.current--;
+                          console.log(currentIndex.current);
+                        }
+                      }}
+                      style={styles.touchable}>
                         <Text style={styles.buttonText}>قبلی</Text>
                     </TouchableOpacity>
                 </View>
@@ -70,22 +128,6 @@ const styles = StyleSheet.create({
         alignItems : 'flex-end',
         padding : 40,
         marginBottom : 40,
-    },
-    Question : {
-
-    },
-    Answer : {
-        paddingTop : 40,
-    },
-    myTextQuestion : {
-        color : 'white',
-        fontSize : 55,
-        fontFamily : LalezarRegular,
-    },
-    myTextAnswer : {
-        color : 'white',
-        fontSize : 25,
-        fontFamily : LalezarRegular,
     },
     myBlockText : {
         color : 'white',
@@ -135,6 +177,33 @@ const styles = StyleSheet.create({
         paddingHorizontal : 20,
         paddingVertical : 10,
         // backgroundColor : 'red',
+    },
+    swiperContainer : {
+      flex : 1,
+    },
+    pagination : {
+      position : 'absolute',
+      bottom : -90,
+    },
+    dotStyle : {
+      backgroundColor:'rgba(0,0,0,.2)', 
+      width: 22, 
+      height: 22,
+      borderRadius: 22 / PixelRatio.get(), 
+      marginLeft: 3, 
+      marginRight: 3, 
+      marginTop: 3, 
+      marginBottom: 3,
+    },
+    activeDotStyle : {
+      backgroundColor: '#51344D', 
+      width: 22, 
+      height: 22,
+      borderRadius: 22 / PixelRatio.get(), 
+      marginLeft: 3, 
+      marginRight: 3, 
+      marginTop: 3, 
+      marginBottom: 3,
     }
 });
 
