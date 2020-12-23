@@ -1,4 +1,4 @@
-import React from 'react';
+import React , {useState} from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -13,10 +13,19 @@ import Footer from '../footer/Footer';
 import { LalezarRegular } from '../utils/Fonts';
 import SubBranch from '../utils/SubBranch';
 
+import SegmentedControlTab from "react-native-segmented-control-tab";
+
+import QuestionsBookmark from '../BookmarkPages/QuestionsBookmark';
+import BrancheBookmark from '../BookmarkPages/BrancheBookmark';
+
 
 const Bookmark = ({ navigation }) => {
 
-  const numbers = [1,2,3,4,5,6,7,8,9,10];
+  const [selectedIndex , setSelectedIndex] = useState(0);
+
+  const handleIndexChange = (index) => {
+    setSelectedIndex(index);
+  };
 
   const whichPage = navigation.getParam('whichPage');
 
@@ -26,7 +35,21 @@ const Bookmark = ({ navigation }) => {
     <StatusBar backgroundColor="#4D7C8A" barStyle="light-content" />
     <View style={styles.body}>
 
-      <View style={styles.tabs}>
+      <SegmentedControlTab
+          tabsContainerStyle={tabStyles.tabsContainerStyle}
+          tabStyle={tabStyles.tabStyle}
+          firstTabStyle={tabStyles.firstTabStyle}
+          lastTabStyle={tabStyles.lastTabStyle}
+          activeTabStyle={tabStyles.activeTabStyle}
+          activeTabTextStyle={tabStyles.activeTabTextStyle}
+          tabTextStyle={tabStyles.tabTextStyle}
+          allowFontScaling={false}
+          values={["سوالات", "زیر شاخه"]}
+          selectedIndex={selectedIndex}
+          onTabPress={handleIndexChange}
+      />
+
+      {/* <View style={styles.tabs}>
 
         <View style={styles.item}>
           <TouchableOpacity 
@@ -53,22 +76,28 @@ const Bookmark = ({ navigation }) => {
           </TouchableOpacity>
         </View>
 
-      </View>
+      </View> */}
 
       <View style={styles.container}>
 
         <ScrollView style={styles.scroll}>
-          <View style={styles.scrollContent}>
-            {
-              numbers.map( ( item , index ) => {
-                return (
-                  <SubBranch key={index} navigation={navigation} save={true} />
-                )
-              })
-            }
-          </View>
+          
+          {
+            selectedIndex == 0 
+            ?
+            <QuestionsBookmark navigation={navigation} />
+            :
+            <BrancheBookmark navigation={navigation} />
+          }
+
 
         </ScrollView>
+
+      {/* <SlidableTabBar>
+				<QuestionsBookmark title="سوالات" />
+				<BrancheBookmark title="زیر شاخه" />
+			</SlidableTabBar> */}
+
       </View>
       
       
@@ -125,13 +154,61 @@ const styles = StyleSheet.create({
   scroll : {
     flex : 1,
   },
-  scrollContent : {
-    paddingTop : 20,
-  },
   touchableButton : {
     height : '100%',
     justifyContent : 'center',
     alignItems : 'center',
+  }
+});
+
+
+
+
+const tabStyles = StyleSheet.create({
+  tabsContainerStyle: {
+    height : 70,
+  },
+  tabStyle: {
+    //custom styles
+    backgroundColor : '#4D7C8A',
+    borderWidth : 0,
+  },
+  firstTabStyle: {
+    //custom styles
+    borderWidth : 0,
+  },
+  lastTabStyle: {
+    //custom styles
+    borderWidth : 0,
+  },
+  tabTextStyle: {
+    //custom styles
+    color : 'white',
+    fontFamily : LalezarRegular,
+    fontSize : 20,
+  },
+  activeTabStyle: {
+    //custom styles
+    backgroundColor : '#6FA6B6',
+    borderWidth : 0,
+  },
+  activeTabTextStyle: {
+    //custom styles
+    color : 'white',
+    fontFamily : LalezarRegular,
+    fontSize : 30,
+  },
+  tabBadgeContainerStyle: {
+    //custom styles
+  },
+  activeTabBadgeContainerStyle: {
+    //custom styles
+  },
+  tabBadgeStyle: {
+    //custom styles
+  },
+  activeTabBadgeStyle: {
+    //custom styles
   }
 });
 

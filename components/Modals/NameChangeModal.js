@@ -1,4 +1,4 @@
-import React from 'react';
+import React , { useState } from 'react';
 
 import { 
   View , 
@@ -16,14 +16,17 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 import { LalezarRegular } from '../utils/Fonts';
 
-const NameChangeModal = ({visible , setShowNameChangeModal}) => {
+const NameChangeModal = ({visible , changeName}) => {
+
+  const [name , setName] = useState('');
+
   return (
     <>
     <Modal visible={visible}>
       <View style={styles.container}>
 
         <TouchableOpacity
-          onPress={() => setShowNameChangeModal(false)}
+          onPress={() => changeName()}
           style={styles.button}>
           <Text
           style={styles.buttonText}>
@@ -35,7 +38,15 @@ const NameChangeModal = ({visible , setShowNameChangeModal}) => {
           <Text style={styles.myText}>
             نام جدید خود را وارد کنید :
           </Text>
-          <TextInput style={styles.input}/>
+          <TextInput 
+          value={name}
+          onChangeText={(value) => setName(value)}
+          style={styles.input}/>
+          <TouchableOpacity 
+          onPress={() => changeName(name)}
+          style={styles.button}>
+            <Text style={styles.buttonText}>تغییر نام</Text>
+          </TouchableOpacity>
         </View>
         
       </View>
@@ -48,10 +59,14 @@ const styles = StyleSheet.create({
   container : {
     backgroundColor : '#6FA6B6',
     flex : 1,
+    
   },
   wrapper : {
     marginVertical : 20,
     marginHorizontal : 20,
+    justifyContent : 'center',
+    flex : 1,
+    marginVertical : 20,
   },
   myText : {
     fontFamily : LalezarRegular ,

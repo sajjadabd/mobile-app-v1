@@ -61,6 +61,13 @@ const Profile = ({ navigation }) => {
     }
   }
 
+  const changeName = (data) => {
+    if(data != undefined) {
+      setName(data);
+    }
+    setShowNameChangeModal(false);
+  }
+
   const SubmitProvinceFromModal = (data) => {
     if(data !== undefined ) {
       setProvince(data);
@@ -83,7 +90,7 @@ const Profile = ({ navigation }) => {
 
     <NameChangeModal 
     visible={showNameChangeModal}
-    setShowNameChangeModal={setShowNameChangeModal}
+    changeName={changeName}
     />
 
     <View style={styles.body}>
