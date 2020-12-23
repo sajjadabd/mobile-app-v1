@@ -1,4 +1,4 @@
-import React from 'react'
+import React , { useRef , useState } from 'react'
 
 import {
     SafeAreaView,
@@ -9,81 +9,95 @@ import {
     StatusBar,
     Image,
     TouchableOpacity,
+    Animated
   } from 'react-native';
   
 import { windowHeight , windowWidth } from '../utils/Dimensions';
 
-import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
-
 import Footer from '../footer/Footer';
 import { LalezarRegular } from '../utils/Fonts';
 
-import RadioButtonRN from 'radio-buttons-react-native';
+import ExamQuestionContainer from '../utils/ExamQuestionContainer';
 
+const duration = 100;
 
-
-const radioButtonsData = [
-  {
-    label: 'گزینه ی اول'
-  },
-  {
-    label: 'گزینه ی دوم'
-  },
-  {
-    label: 'گزینه ی سوم'
-  },
-  {
-    label: 'گزینه ی چهارم'
-  }
-];
+const fadeAnim = new Animated.Value(0);
 
 
 const Exam = ({navigation}) => {
+
+  const [ fadeLeft , setFadeLeft ] = useState(0);
+
+  fadeAnim.addListener(({value}) => {
+    let roundValue = Math.round(value);
+    if(value%5 == 0) {
+      setFadeLeft(roundValue);
+    }
+  });
+
+  // fadeAnim.addListener(({value}) => {
+  //   let roundValue = Math.round(value);
+  //   console.log(roundValue);
+  //   this._value = value;
+  //   return _value;
+  // });
+
+  const fadeIn = () => {
+    // Will change fadeAnim value to 1 in 5 seconds
+    Animated.timing(fadeAnim, {
+      toValue: 0,
+      duration: duration,
+      useNativeDriver: true,
+    }).start();
+
+    console.log("Fade In ...");
+  };
+  
+  const fadeOut = () => {
+    // Will change fadeAnim value to 0 in 5 seconds
+    Animated.timing(fadeAnim, {
+      toValue: - windowWidth,
+      duration: duration,
+      useNativeDriver: true,
+    }).start();
+  
+    console.log("Fade Out ...");
+  };
+
     return (
         <>
         <StatusBar backgroundColor="#51344D" barStyle="light-content" />
         <View style={styles.body}>
             <View style={styles.header}>
 
-                <View style={styles.Question}>
-                    <Text style={styles.myTextQuestion}>سوال</Text>
-                </View>
-                
-                {/* <View style={styles.Answer}>
-                    <Text style={styles.myTextAnswer}>
-                    جواب سوال این متن  می باشد
-                    </Text>
-                </View> */}
+                <View
+                style={{
+                  transform : [
+                    // { perspective: 850 },
+                    { translateX: fadeLeft },
+                    // { rotateY: '0deg'},
+                  ]
+                }}
+                >
+                  <ExamQuestionContainer />
 
-                <View >
-                  <RadioButtonRN
-                    data={radioButtonsData}
-                    animationTypes={['shake']}
-                    selectedBtn={(e) => console.log(e)}
-                    style={styles.answers}
-                    boxStyle={{flexDirection : 'row-reverse'}}
-                    textStyle={{alignSelf : 'flex-end' , fontFamily : LalezarRegular}}
-                    boxActiveBgColor='dodgerblue'
-                    boxDeactiveBgColor={null}
-                    textColor='white'
-                    icon={
-                      <MaterialIcon size={20} color="white" name="check" />
-                    }
-                  />
                 </View>
 
-            
             </View>
 
             <View style={styles.navigation}>
                 <View style={styles.buttonRight}>
-                    <TouchableOpacity style={styles.touchable}>
+                    <TouchableOpacity 
+                    onPress={() => fadeOut()}
+                    style={styles.touchable}>
                         <Text style={styles.buttonText}>بعدی</Text>
                     </TouchableOpacity>
                 </View>
                 
                 <View style={styles.buttonLeft}>
-                    <TouchableOpacity style={styles.touchable}>
+                    <TouchableOpacity 
+                    onPress={() => fadeIn()}
+                    style={styles.touchable}>
                         <Text style={styles.buttonText}>قبلی</Text>
                     </TouchableOpacity>
                 </View>
@@ -108,17 +122,6 @@ const styles = StyleSheet.create({
         // alignItems : 'flex-end',
         padding : 40,
         marginBottom : 40,
-    },
-    Question : {
-
-    },
-    Answer : {
-        paddingTop : 40,
-    },
-    myTextQuestion : {
-        color : 'white',
-        fontSize : 55,
-        fontFamily : LalezarRegular,
     },
     myTextAnswer : {
         color : 'white',
@@ -174,8 +177,13 @@ const styles = StyleSheet.create({
         paddingVertical : 10,
         // backgroundColor : 'red',
     },
-    answers : {
-      
+    QuestionContainer : {
+      // backgroundColor : 'yellow',
+      transform : [
+        // { perspective: 850 },
+        { translateX: fadeAnim },
+        // { rotateY: '0deg'},
+      ]
     }
 });
 
