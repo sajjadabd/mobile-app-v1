@@ -167,11 +167,14 @@ const styles = StyleSheet.create({
 const tabStyles = StyleSheet.create({
   tabsContainerStyle: {
     height : 70,
+    borderRadius : 0,
   },
   tabStyle: {
     //custom styles
-    backgroundColor : '#4D7C8A',
-    borderWidth : 0,
+    backgroundColor : '#6FA6B6',
+    borderColor : '#51344D',
+    borderBottomWidth : 10,
+    borderRadius : 0,
   },
   firstTabStyle: {
     //custom styles
@@ -185,11 +188,11 @@ const tabStyles = StyleSheet.create({
     //custom styles
     color : 'white',
     fontFamily : LalezarRegular,
-    fontSize : 20,
+    fontSize : 15,
   },
   activeTabStyle: {
     //custom styles
-    backgroundColor : '#6FA6B6',
+    backgroundColor : '#51344D',
     borderWidth : 0,
   },
   activeTabTextStyle: {

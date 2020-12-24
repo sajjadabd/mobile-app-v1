@@ -4,7 +4,7 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
-import RNPickerSelect from 'react-native-picker-select';
+// import RNPickerSelect from 'react-native-picker-select';
 
 export const pickerStyle = {
 	fontSize: 30,

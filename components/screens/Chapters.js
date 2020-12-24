@@ -1,4 +1,4 @@
-import React from 'react'
+import React , { useState } from 'react'
 
 import {
   SafeAreaView,
@@ -19,11 +19,70 @@ import Footer from '../footer/Footer';
 import { LalezarRegular } from '../utils/Fonts';
 import SubChapter from '../utils/SubChapter';
 
-const numbers = [1,2,3,4,5,6,7,8];
+
+
+const listOfChapters = [
+  { 
+    chapter : 'فصل 1',
+    subject : 'موضوع',
+    selectedExam : false
+  },
+  { 
+    chapter : 'فصل 2',
+    subject : 'موضوع',
+    selectedExam : false
+  },
+  { 
+    chapter : 'فصل 3',
+    subject : 'موضوع',
+    selectedExam : false
+  },
+  { 
+    chapter : 'فصل 4',
+    subject : 'موضوع',
+    selectedExam : false
+  },
+  { 
+    chapter : 'فصل 5',
+    subject : 'موضوع',
+    selectedExam : false
+  }
+]
+
+
+
+
 
 const Chapters = ({ navigation }) => {
 
   const whichPage = navigation.getParam('whichPage');
+
+  const [chapters , setChapters] = useState(listOfChapters);
+
+
+  const checkExamsInSelectedOrNot = () => {
+    let result = false;
+    result = chapters.find( item => {
+      if(item.selectedExam) {
+        return true;
+      }
+    })
+    return result;
+  }
+
+  const changeSelectedExams = (index) => {
+    let newChapter = chapters.map( (item , i) => {
+      if(index === i) {
+        return {
+          ...item,
+          selectedExam : !item.selectedExam
+        }
+      } else {
+        return item;
+      }
+    });
+    setChapters(newChapter);
+  }
 
 
   return (
@@ -32,13 +91,32 @@ const Chapters = ({ navigation }) => {
       <View style={styles.body}>
         <View style={styles.header}>
           <Text style={styles.myText}>زیر شاخه</Text>
+          
+          {
+            checkExamsInSelectedOrNot() ?
+            <TouchableOpacity
+            onPress={() => navigation.navigate('Exam')}
+            >
+              <View style={styles.examButton}>
+                <Text style={styles.examButtonText}>آزمون از فصل های انتخاب شده</Text>
+              </View>
+            </TouchableOpacity>
+            :
+            null
+          }
+
         </View>
 
         <ScrollView style={styles.scroll}>
             <View style={styles.scrollContent}>
-            {numbers.map( ( item , index ) => {
+            {chapters.map( ( item , index ) => {
                 return (
-                    <SubChapter key={index} navigation={navigation}/>
+                    <SubChapter 
+                    key={index} 
+                    index={index}
+                    changeSelectedExams={changeSelectedExams}
+                    navigation={navigation} 
+                    item={item}/>
                 )
             })}
             </View>
@@ -77,6 +155,16 @@ const styles = StyleSheet.create({
   scrollContent : {
     flex : 1,
     paddingTop : 40,
+  },
+  examButton : {
+    backgroundColor : '#4D7C8A',
+    paddingHorizontal : 20,
+    paddingVertical : 10,
+    borderRadius : 10,
+  },
+  examButtonText : {
+    color: 'white',
+    fontFamily : LalezarRegular,
   }
 });
 

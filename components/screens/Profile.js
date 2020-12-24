@@ -6,6 +6,7 @@ import {
   ScrollView,
   View,
   Text,
+  Image,
   StatusBar,
   PixelRatio,
   Modal
@@ -27,6 +28,8 @@ import ProvinceModal from '../Modals/ProvinceModal';
 import { ActiveButton , DeactiveButton } from '../utils/Buttons';
 import NameChangeModal from '../Modals/NameChangeModal';
 
+import { Picsum } from 'picsum-photos';
+
 // import {Picker} from '@react-native-picker/picker';
 
 // import SimplePicker from 'react-native-simple-picker';
@@ -34,6 +37,11 @@ import NameChangeModal from '../Modals/NameChangeModal';
 const defaultProvince = 'مازندران';
 
 
+const getImage = async () => {
+  const image = await Picsum.random();
+  console.log(image.download_url);
+  return image.download_url;
+}
 
 
 
@@ -99,7 +107,8 @@ const Profile = ({ navigation }) => {
       </View>
       <View style={styles.insideProfile}>
         <View style={styles.profilePic}>
-          <MaterialIcon size={100} color="white" name="person" />
+          {/* <MaterialIcon size={100} color="white" name="person" /> */}
+          <Image src={require(getImage())}/>
         </View>
 
         

@@ -6,12 +6,35 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 import { LalezarRegular } from '../utils/Fonts';
 
-const SubChapter = ({navigation}) => {
+const SubChapter = ({navigation , item , index , changeSelectedExams}) => {
+
+    const changeStyleBasedOnSelected = (item) => {
+      if(item.selectedExam) {
+        return {
+          justifyContent : 'center',
+          backgroundColor : '#51344D',
+          borderRightWidth : 2,
+          paddingRight : 10,
+          flex : 1,
+        }
+      } else {
+        return {
+          justifyContent : 'center',
+          backgroundColor : '#4D7C8A',
+          borderRightWidth : 2,
+          paddingRight : 10,
+          flex : 1,
+        }
+      }
+    }
+
     return (
         <>
         <View style={styles.block}>
-          <View style={styles.iconContainer}>
-            <TouchableOpacity style={styles.icon}>
+          <View style={changeStyleBasedOnSelected(item)}> 
+            <TouchableOpacity 
+            onPress={() => changeSelectedExams(index)}
+            style={styles.icon}>
                 <MaterialIcon size={80} color="white" name="list-alt" />
                 <Text style={styles.examText}>آزمون</Text>
             </TouchableOpacity>
@@ -21,8 +44,8 @@ const SubChapter = ({navigation}) => {
                 <TouchableOpacity
                 onPress={() => navigation.navigate('Reading')}
                 >
-                <Text style={styles.myBlockText}>فصل 1</Text>
-                <Text style={ styles.mySubjectText }>موضوع</Text>
+                <Text style={styles.myBlockText}>{item.chapter}</Text>
+                <Text style={ styles.mySubjectText }>{item.subject}</Text>
                 </TouchableOpacity>
             </View>
         </View>
@@ -64,7 +87,7 @@ const styles = StyleSheet.create({
     },
     iconContainer : {
         justifyContent : 'center',
-        // backgroundColor : 'yellow',
+        backgroundColor : 'yellow',
         borderRightWidth : 2,
         paddingRight : 10,
         flex : 1,
