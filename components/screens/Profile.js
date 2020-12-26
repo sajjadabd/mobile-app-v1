@@ -28,7 +28,10 @@ import ProvinceModal from '../Modals/ProvinceModal';
 import { ActiveButton , DeactiveButton } from '../utils/Buttons';
 import NameChangeModal from '../Modals/NameChangeModal';
 
-import { Picsum } from 'picsum-photos';
+import { launchImageLibrary } from 'react-native-image-picker';
+
+
+// import { Picsum } from 'picsum-photos';
 
 // import {Picker} from '@react-native-picker/picker';
 
@@ -37,15 +40,17 @@ import { Picsum } from 'picsum-photos';
 const defaultProvince = 'مازندران';
 
 
-const getImage = async () => {
-  const image = await Picsum.random();
-  console.log(image.download_url);
-  return image.download_url;
-}
+// const getImage = async () => {
+//   const image = await Picsum.random();
+//   console.log(image);
+//   return image.download_url;
+// }
 
 
 
 const Profile = ({ navigation }) => {
+
+  const [imageURI , setImageURI] = useState('https://reactjs.org/logo-og.png');
 
   const [province , setProvince] = useState(defaultProvince);
 
@@ -106,11 +111,37 @@ const Profile = ({ navigation }) => {
 
       </View>
       <View style={styles.insideProfile}>
-        <View style={styles.profilePic}>
+        
+        <View style={styles.profilePictureContainer}>
+          <TouchableOpacity
+          onPress={() =>
+            launchImageLibrary(
+              {
+                mediaType: 'photo',
+                includeBase64: false,
+                maxHeight: 200,
+                maxWidth: 200,
+              },
+              (response) => {
+                if(response.uri !== undefined) {
+                  setImageURI(response.uri);
+                }
+                console.log(response);
+              },
+            )
+          }
+          >
           {/* <MaterialIcon size={100} color="white" name="person" /> */}
-          <Image src={require(getImage())}/>
+          {/* <Image 
+          style={styles.profilePicture}
+          source={require('../logo/worker.png')} /> */}
+          <Image 
+          style={styles.profilePicture}
+          source={{ uri : imageURI }}
+          />
+          </TouchableOpacity>
         </View>
-
+        
         
           <View style={styles.infoContainer}>
             
@@ -188,7 +219,7 @@ const styles = StyleSheet.create({
   insideProfile : {
     flex : 3,
   },
-  profilePic : {
+  profilePictureContainer : {
     width : windowWidth / 2.5 ,
     height : windowWidth / 2.5 ,
     backgroundColor : '#CEE0E5' ,
@@ -198,7 +229,14 @@ const styles = StyleSheet.create({
     alignSelf : 'center',
     justifyContent : 'center',
     alignItems : 'center',
-    top : -70
+    top : -70,
+    overflow : 'hidden'
+  },
+  profilePicture : {
+    flex : 1,
+    width : windowWidth / 2.5 ,
+    height : windowWidth / 2.5 ,
+    // resizeMode : 'contain',
   },
   myText : {
     color : 'black',

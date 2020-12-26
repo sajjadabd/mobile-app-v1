@@ -1,10 +1,18 @@
 import React from 'react'
 
-import { View , Text , StyleSheet , PixelRatio } from 'react-native'
+import { 
+  View , 
+  Text , 
+  StyleSheet , 
+  PixelRatio ,
+  Image
+} from 'react-native'
 
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 import { LalezarRegular } from '../utils/Fonts';
+
+import { windowHeight, windowWidth } from '../utils/Dimensions';
 
 const width = 70;
 
@@ -13,7 +21,11 @@ const WorkCard = () => {
     <>
       <View style={styles.item}>
           <View style={styles.profile}>
-            <MaterialIcon size={50} color="black" name="person" />
+            {/* <MaterialIcon size={50} color="black" name="person" /> */}
+            <Image 
+            style={styles.profilePicture}
+            source={{ uri : 'https://reactjs.org/logo-og.png' }}
+            />
             <View style={styles.blueTick}>
               <MaterialIcon size={width/3} color="white" name="check" />
             </View>
@@ -51,7 +63,7 @@ const styles = StyleSheet.create({
     borderRadius : width / PixelRatio.get(),
     alignSelf : 'center',
     justifyContent : 'center',
-    alignItems : 'center'
+    alignItems : 'center',
   },
   blueTick : {
     position : 'absolute',
@@ -76,6 +88,26 @@ const styles = StyleSheet.create({
     color : 'black',
     fontFamily : LalezarRegular,
     fontSize : 25,
+  },
+  profilePictureContainer : {
+    // width : windowWidth / 2.5 ,
+    // height : windowWidth / 2.5 ,
+    backgroundColor : '#CEE0E5' ,
+    borderRadius : width / PixelRatio.get(),
+    position : 'absolute',
+    // borderWidth : 3,
+    alignSelf : 'center',
+    justifyContent : 'center',
+    alignItems : 'center',
+    top : -70,
+    overflow : 'hidden'
+  },
+  profilePicture : {
+    flex : 1,
+    width : width ,
+    height : width ,
+    borderRadius : width / PixelRatio.get(),
+    // resizeMode : 'contain',
   },
 });
 

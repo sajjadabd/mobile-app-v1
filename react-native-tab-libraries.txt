@@ -1,0 +1,8 @@
+https://github.com/kirankalyan5/react-native-segmented-control-tab
+
+
+https://github.com/pwbrown/react-native-slidable-tab-bar
+
+
+
+https://github.com/lvlrSajjad/react-native-animated-bottom-tabbar

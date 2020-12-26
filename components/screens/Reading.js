@@ -59,7 +59,7 @@ const Reading = ({navigation}) => {
                   paginationStyle={styles.pagination}
                   dotStyle={styles.dotStyle}
                   activeDotStyle={styles.activeDotStyle}
-                  scrollEnabled={false}
+                  scrollEnabled={true}
                   >
                     {
                     questions.map( (item , index) => {
@@ -83,11 +83,11 @@ const Reading = ({navigation}) => {
                 <View style={styles.buttonRight}>
                     <TouchableOpacity 
                     onPress={() => {
-                      if(currentIndex.current < questions.length) {
+                      // if(currentIndex.current < questions.length) {
                         mySwiper.current.scrollBy(1);
-                        currentIndex.current++;
-                        console.log(currentIndex.current);
-                      }
+                        // currentIndex.current++;
+                        // console.log(currentIndex.current);
+                      // }
                     }}
                     style={styles.touchable}>
                         <Text style={styles.buttonText}>بعدی</Text>
@@ -97,11 +97,11 @@ const Reading = ({navigation}) => {
                 <View style={styles.buttonLeft}>
                     <TouchableOpacity 
                       onPress={() => {
-                        if(currentIndex.current > 1) {
+                        // if(currentIndex.current > 1) {
                           mySwiper.current.scrollBy(-1);
-                          currentIndex.current--;
-                          console.log(currentIndex.current);
-                        }
+                          // currentIndex.current--;
+                          // console.log(currentIndex.current);
+                        // }
                       }}
                       style={styles.touchable}>
                         <Text style={styles.buttonText}>قبلی</Text>

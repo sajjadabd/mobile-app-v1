@@ -21,7 +21,7 @@ import BrancheBookmark from '../BookmarkPages/BrancheBookmark';
 
 const Bookmark = ({ navigation }) => {
 
-  const [selectedIndex , setSelectedIndex] = useState(0);
+  const [selectedIndex , setSelectedIndex] = useState(1);
 
   const handleIndexChange = (index) => {
     setSelectedIndex(index);
