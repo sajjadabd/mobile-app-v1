@@ -20,11 +20,14 @@ import Navigator from './components/stack/Homestack';
 
 // import Homepage from './components/homepage/Homepage';
 import Splashscreen from './components/splashscreen/Splashscreen';
+import Phone from './components/phone/Phone';
 
 
 const App = () => {
 
   const [splash , setSplash] = useState(true);
+
+  const [phoneReady , setPhoneReady] = useState(false);
 
   useEffect( () => {
     setTimeout( () => {
@@ -36,6 +39,12 @@ const App = () => {
     return (
       <>
         <Splashscreen />
+      </>
+    );
+  } else if(phoneReady == false) {
+    return (
+      <>
+        <Phone setPhoneReady={setPhoneReady}/>
       </>
     );
   } else {
