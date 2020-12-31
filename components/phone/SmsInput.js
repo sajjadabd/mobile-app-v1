@@ -5,7 +5,14 @@ import { LalezarRegular } from '../utils/Fonts'
 
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
-const SmsInput = ({sms , scrollSwiper , setPhoneReady}) => {
+import { storeData } from '../AsyncStorage/AsyncStorage'
+
+const savePhoneAndSms = async (phoneNumber , sms) => {
+  await storeData({ phoneNumber , sms });
+  setPhoneReady(true);
+}
+
+const SmsInput = ({phoneNumber , sms , scrollSwiper , setPhoneReady}) => {
   return (
     <>
       <View style={styles.phoneNumber}>
@@ -30,7 +37,9 @@ const SmsInput = ({sms , scrollSwiper , setPhoneReady}) => {
             sms.length >= 6
             ?
             <TouchableOpacity
-            onPress={() => setPhoneReady(true)}
+            onPress={() => {
+              savePhoneAndSms(phoneNumber , sms);
+            }}
             >
             <View style={styles.next}>
                 <MaterialIcon size={40} color="black" name={'arrow-forward'} />

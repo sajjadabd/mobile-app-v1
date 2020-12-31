@@ -66,7 +66,7 @@ const Phone = ({setPhoneReady}) => {
           ?
           <NumberInput phoneNumber={phoneNumber} scrollSwiper={scrollSwiper}/>
           :
-          <SmsInput sms={sms} scrollSwiper={scrollSwiper} setPhoneReady={setPhoneReady}/>
+          <SmsInput phoneNumber={phoneNumber} sms={sms} scrollSwiper={scrollSwiper} setPhoneReady={setPhoneReady}/>
           }
           
 

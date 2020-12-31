@@ -17,7 +17,7 @@ import Phone from './components/phone/Phone';
 
 const MainApp = () => {
 
-  const [splash , setSplash] = useState(true);
+  const [splash , setSplash] = useState(false);
 
   const [phoneReady , setPhoneReady] = useState(false);
 

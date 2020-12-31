@@ -3,6 +3,30 @@ import React from 'react'
 import { View , Text , StyleSheet , TouchableOpacity } from 'react-native'
 import { LalezarRegular } from '../utils/Fonts'
 
+import axios from 'axios';
+
+const requestToServerForSms = (phoneNumber) => {
+  try {
+    result = await axios({
+      method: 'get',
+      url: 'http://localhost:3000/login',
+      headers: {
+        'Content-Type': 'text/xml'
+      },
+      data : {
+        phoneNumber
+      }
+    });
+  } catch (e) {
+    
+  }
+}
+
+const sendSms = (phoneNumber) => {
+  requestToServerForSms(phoneNumber);
+  scrollSwiper(2);
+}
+
 const NumberInput = ({phoneNumber , scrollSwiper}) => {
 
   const checkPhoneNumber = () => {
@@ -17,7 +41,9 @@ const NumberInput = ({phoneNumber , scrollSwiper}) => {
         <>
         <View style={styles.button}>
           <TouchableOpacity
-          onPress={() => scrollSwiper(2)}
+          onPress={() => {
+            sendSms();
+          }}
           >
             <Text style={styles.buttonText}>
               دریافت کد تایید
