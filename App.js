@@ -1,64 +1,25 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow strict-local
- */
+import React from 'react'
+import MainApp from './MainApp';
 
-import React , { useState , useEffect } from 'react';
-import {
-  SafeAreaView,
-  StyleSheet,
-  ScrollView,
-  View,
-  Text,
-  StatusBar,
-} from 'react-native';
+import { Provider } from 'react-redux'
+import { createStore, applyMiddleware, combineReducers } from 'redux'
+import thunk from 'redux-thunk'
 
-import Navigator from './components/stack/Homestack';
+import ThemeReducer from './redux/Reducers'
 
-// import Homepage from './components/homepage/Homepage';
-import Splashscreen from './components/splashscreen/Splashscreen';
-import Phone from './components/phone/Phone';
+const rootReducer = combineReducers({ ThemeReducer });
 
+const store = createStore(
+  rootReducer,
+  applyMiddleware(thunk)
+)
 
 const App = () => {
+  return (
+    <Provider store={store}>
+      <MainApp />
+    </Provider>
+  )
+}
 
-  const [splash , setSplash] = useState(true);
-
-  const [phoneReady , setPhoneReady] = useState(false);
-
-  useEffect( () => {
-    setTimeout( () => {
-      setSplash(false);
-    } , 1000)
-  } );
-
-  if(splash) {
-    return (
-      <>
-        <Splashscreen />
-      </>
-    );
-  } else if(phoneReady == false) {
-    return (
-      <>
-        <Phone setPhoneReady={setPhoneReady}/>
-      </>
-    );
-  } else {
-    return (
-      <>
-        <Navigator />
-      </>
-    );
-  }
-  
-};
-
-const styles = StyleSheet.create({
-
-});
-
-export default App;
+export default App
