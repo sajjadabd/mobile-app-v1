@@ -69,9 +69,6 @@ const Phone = ({setPhoneReady}) => {
           <SmsInput phoneNumber={phoneNumber} sms={sms} scrollSwiper={scrollSwiper} setPhoneReady={setPhoneReady}/>
           }
           
-
-          
-          
           
         
           <Keypad addToInputNumber={addToInputNumber}/>

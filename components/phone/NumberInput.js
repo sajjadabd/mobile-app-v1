@@ -5,16 +5,19 @@ import { LalezarRegular } from '../utils/Fonts'
 
 import axios from 'axios';
 
-const requestToServerForSms = (phoneNumber) => {
+import { GET_SMS_URL } from '../URL/Urls';
+
+const requestToServerForSms = async (phoneNumber) => {
+  console.log(phoneNumber)
   try {
-    result = await axios({
-      method: 'get',
-      url: 'http://localhost:3000/login',
+    await axios({
+      method: 'POST',
+      url: GET_SMS_URL,
       headers: {
-        'Content-Type': 'text/xml'
+        'Content-Type': 'application/json'
       },
       data : {
-        phoneNumber
+        "to" : `${phoneNumber}`
       }
     });
   } catch (e) {
@@ -22,12 +25,14 @@ const requestToServerForSms = (phoneNumber) => {
   }
 }
 
-const sendSms = (phoneNumber) => {
-  requestToServerForSms(phoneNumber);
-  scrollSwiper(2);
-}
+
 
 const NumberInput = ({phoneNumber , scrollSwiper}) => {
+
+  const sendSms = (phoneNumber) => {
+    requestToServerForSms(phoneNumber);
+    scrollSwiper(2);
+  }
 
   const checkPhoneNumber = () => {
     if( phoneNumber.length < 11 ) {
@@ -42,7 +47,7 @@ const NumberInput = ({phoneNumber , scrollSwiper}) => {
         <View style={styles.button}>
           <TouchableOpacity
           onPress={() => {
-            sendSms();
+            sendSms(phoneNumber);
           }}
           >
             <Text style={styles.buttonText}>

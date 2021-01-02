@@ -6,7 +6,7 @@
  * @flow strict-local
  */
 
-import React , { useState , useEffect } from 'react';
+import React , { useRef ,  useState , useEffect } from 'react';
 
 import Navigator from './components/stack/Homestack';
 
@@ -14,14 +14,26 @@ import Navigator from './components/stack/Homestack';
 import Splashscreen from './components/splashscreen/Splashscreen';
 import Phone from './components/phone/Phone';
 
+import { getData , removeData , existsData } from './components/AsyncStorage/SecureStorage';
 
 const MainApp = () => {
 
-  const [splash , setSplash] = useState(false);
+  const [splash , setSplash] = useState(true);
 
-  const [phoneReady , setPhoneReady] = useState(false);
+  const [phoneReady , setPhoneReady]   = useState(false);
 
   useEffect( () => {
+    const doTheJob = async () => {
+      // await removeData();
+      let userInfo = await getData();
+      console.log(userInfo);
+      if( userInfo && userInfo.phoneNumber && userInfo.sms ) {
+        setPhoneReady(true);
+      } else {
+        setPhoneReady(false);
+      }
+    }
+    doTheJob();
     setTimeout( () => {
       setSplash(false);
     } , 1000)

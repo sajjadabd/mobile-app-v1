@@ -5,14 +5,16 @@ import { LalezarRegular } from '../utils/Fonts'
 
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
-import { storeData } from '../AsyncStorage/AsyncStorage'
+import { setData  } from '../AsyncStorage/SecureStorage'
 
-const savePhoneAndSms = async (phoneNumber , sms) => {
-  await storeData({ phoneNumber , sms });
-  setPhoneReady(true);
-}
 
 const SmsInput = ({phoneNumber , sms , scrollSwiper , setPhoneReady}) => {
+  
+  const savePhoneAndSms = async (phoneNumber , sms) => {
+    await setData(phoneNumber , sms);
+    setPhoneReady(true);
+  }
+  
   return (
     <>
       <View style={styles.phoneNumber}>

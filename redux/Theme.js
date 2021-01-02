@@ -4,6 +4,8 @@ export const darkTheme = {
   PRIMARY_TEXT_COLOR: '#767d92',
   PRIMARY_BUTTON_COLOR: '#152642',
 }
+
+
 export const lightTheme = {
   mode: 'light',
   PRIMARY_BACKGROUND_COLOR: '#ffefd5',
