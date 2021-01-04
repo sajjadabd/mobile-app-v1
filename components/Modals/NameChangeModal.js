@@ -16,6 +16,24 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 import { LalezarRegular } from '../utils/Fonts';
 
+
+import styled from 'styled-components/native';
+
+const Container = styled.View`
+  background-color : ${props => props.theme.SECOND_BACKGROUND};
+  flex : 1;
+`
+
+const CloseButton = styled.View`
+  padding : 10px;
+  margin : 20px 40px;
+  justify-content : center;
+  align-items : center;
+  border-radius : 35px;
+  background-color : ${props => props.theme.FIRST_BACKGROUND};
+`
+
+
 const NameChangeModal = ({visible , changeName}) => {
 
   const [name , setName] = useState('');
@@ -23,15 +41,16 @@ const NameChangeModal = ({visible , changeName}) => {
   return (
     <>
     <Modal visible={visible}>
-      <View style={styles.container}>
+      <Container>
 
         <TouchableOpacity
-          onPress={() => changeName()}
-          style={styles.button}>
-          <Text
-          style={styles.buttonText}>
-            بستن
-          </Text>
+          onPress={() => changeName()}>
+          <CloseButton>
+            <Text
+            style={styles.buttonText}>
+              بستن
+            </Text>
+          </CloseButton>
         </TouchableOpacity>
 
         <View style={styles.wrapper}>
@@ -43,13 +62,14 @@ const NameChangeModal = ({visible , changeName}) => {
           onChangeText={(value) => setName(value)}
           style={styles.input}/>
           <TouchableOpacity 
-          onPress={() => changeName(name)}
-          style={styles.button}>
+          onPress={() => changeName(name)}>
+            <CloseButton>
             <Text style={styles.buttonText}>تغییر نام</Text>
+            </CloseButton>
           </TouchableOpacity>
         </View>
         
-      </View>
+      </Container>
       </Modal>
     </>
   )

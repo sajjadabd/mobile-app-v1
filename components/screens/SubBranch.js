@@ -18,6 +18,8 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import Footer from '../footer/Footer';
 import { LalezarRegular } from '../utils/Fonts';
 
+
+
 const SubBranch = ({ navigation }) => {
 
   const whichPage = navigation.getParam('whichPage');

@@ -6,17 +6,34 @@ import { windowWidth } from './Dimensions';
 
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
+import styled from 'styled-components/native';
+
+
+const Container = styled.View`
+  padding-left : 30px;
+  padding-right : 30px;
+  margin-bottom : 20px;
+  flex-direction : row;
+  justify-content : space-between;
+  align-items : center;
+  height : 100px;
+  border-top-left-radius : 20px;
+  border-bottom-left-radius : 20px;
+  background-color : ${props => props.theme.SECOND_BACKGROUND};
+`
+
 
 const EachQuestion = ({navigation, save}) => {
   return (
     <View style={styles.container}>
       <TouchableOpacity 
-        onPress={ () => navigation.navigate('SubBranch') }
-        style={styles.branch}> 
+        onPress={ () => navigation.navigate('SubBranch') }>
+        <Container>
         <Text style={styles.subtitle}>سوال</Text>
         <View>
           <MaterialIcon size={40} color="white" name="east" />
         </View>
+        </Container> 
       </TouchableOpacity>
       <View style={styles.save}>
       <TouchableOpacity
@@ -50,12 +67,12 @@ const styles = StyleSheet.create({
     height : 100,
     borderTopLeftRadius : 20,
     borderBottomLeftRadius : 20,
-    backgroundColor : '#4D7C8A',
+    backgroundColor : 'black',
   },
   subtitle : {
     fontFamily : 'Lalezar-Regular',
     fontSize : windowWidth / 13,
-    color : 'white',
+    color : 'black',
   },  
   save : {
     position : 'absolute',

@@ -18,7 +18,10 @@ import Swiper from 'react-native-swiper'
 import SmsInput from './SmsInput';
 
 
+
 const Phone = ({setPhoneReady}) => {
+
+
 
   const [ page , setPage ] = useState(1);
 

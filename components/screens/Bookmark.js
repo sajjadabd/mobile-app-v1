@@ -18,10 +18,22 @@ import SegmentedControlTab from "react-native-segmented-control-tab";
 import QuestionsBookmark from '../BookmarkPages/QuestionsBookmark';
 import BrancheBookmark from '../BookmarkPages/BrancheBookmark';
 
+import { useSelector } from 'react-redux';
+
+import styled from 'styled-components/native';
+
+const Container = styled.View`
+  padding-left : 50px;
+  flex : 7;
+  background-color  : ${props => props.theme.FIRST_BACKGROUND};
+`
+
 
 const Bookmark = ({ navigation }) => {
 
   const [selectedIndex , setSelectedIndex] = useState(1);
+
+  const theme = useSelector(state => state.ThemeReducer.theme)
 
   const handleIndexChange = (index) => {
     setSelectedIndex(index);
@@ -29,18 +41,32 @@ const Bookmark = ({ navigation }) => {
 
   const whichPage = navigation.getParam('whichPage');
 
+  const returnTabStyle = () => {
+    return {
+      backgroundColor : theme.FIRST_BACKGROUND,
+      borderRadius : 0,
+    }
+  }
+
+  const returnActiveTabStyle = () => {
+    return {
+      backgroundColor : theme.FIRST_BACKGROUND,
+      borderWidth : 0,
+    }
+  }
 
   return (
     <>
-    <StatusBar backgroundColor="#4D7C8A" barStyle="light-content" />
+    <StatusBar backgroundColor={theme.FIRST_BACKGROUND} barStyle="light-content" />
+    
     <View style={styles.body}>
 
       <SegmentedControlTab
           tabsContainerStyle={tabStyles.tabsContainerStyle}
-          tabStyle={tabStyles.tabStyle}
+          tabStyle={returnTabStyle()}
           firstTabStyle={tabStyles.firstTabStyle}
           lastTabStyle={tabStyles.lastTabStyle}
-          activeTabStyle={tabStyles.activeTabStyle}
+          activeTabStyle={returnActiveTabStyle()}
           activeTabTextStyle={tabStyles.activeTabTextStyle}
           tabTextStyle={tabStyles.tabTextStyle}
           allowFontScaling={false}
@@ -78,7 +104,7 @@ const Bookmark = ({ navigation }) => {
 
       </View> */}
 
-      <View style={styles.container}>
+      <Container>
 
         <ScrollView style={styles.scroll}>
           
@@ -98,7 +124,7 @@ const Bookmark = ({ navigation }) => {
 				<BrancheBookmark title="زیر شاخه" />
 			</SlidableTabBar> */}
 
-      </View>
+      </Container>
       
       
     </View>
@@ -170,33 +196,26 @@ const tabStyles = StyleSheet.create({
     borderRadius : 0,
   },
   tabStyle: {
-    //custom styles
-    backgroundColor : '#6FA6B6',
-    borderColor : '#51344D',
-    borderBottomWidth : 10,
+    backgroundColor : 'rgba(255,255,255,0.1)',
+    borderColor : 'rgba(255,255,255,0.1)',
     borderRadius : 0,
   },
   firstTabStyle: {
-    //custom styles
     borderWidth : 0,
   },
   lastTabStyle: {
-    //custom styles
     borderWidth : 0,
   },
   tabTextStyle: {
-    //custom styles
-    color : 'white',
+    color : 'black',
     fontFamily : LalezarRegular,
     fontSize : 15,
   },
   activeTabStyle: {
-    //custom styles
     backgroundColor : '#51344D',
     borderWidth : 0,
   },
   activeTabTextStyle: {
-    //custom styles
     color : 'white',
     fontFamily : LalezarRegular,
     fontSize : 30,

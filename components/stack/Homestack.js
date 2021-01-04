@@ -19,7 +19,7 @@ import Reading from '../screens/Reading';
 
 const screens = {
   Homepage : {
-    screen : Homepage,
+    screen : Branch,
     navigationOptions : {
       title : '',
       headerStyle : {

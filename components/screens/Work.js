@@ -12,19 +12,30 @@ import Footer from '../footer/Footer';
 
 import WorkCard from '../utils/WorkCard';
 
+import { useSelector } from 'react-redux';
 
+import styled from 'styled-components/native';
 
 const numbers = [1,2,3,4,5,6,7,8,9,10];
 
 
+const Container = styled.View`
+  flex : 1;
+  justify-content : space-between;
+  background-color  : ${props => props.theme.FIRST_BACKGROUND};
+`
+
+
 const Work = ({ navigation }) => {
+
+  const theme = useSelector(state => state.ThemeReducer.theme)
 
   const whichPage = navigation.getParam('whichPage');
 
   return (
     <>
-  
-      <View style={styles.body}>
+      <StatusBar backgroundColor={theme.FIRST_BACKGROUND} barStyle="light-content" />
+      <Container>
         
       <ScrollView style={styles.scroll}>
           <View style={styles.scrollContent}>
@@ -41,7 +52,7 @@ const Work = ({ navigation }) => {
 
         </ScrollView>
 
-      </View>
+      </Container>
       <Footer navigation={navigation} whichPage={whichPage}/>
     </>
   )

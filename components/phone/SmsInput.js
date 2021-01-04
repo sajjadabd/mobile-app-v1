@@ -1,5 +1,7 @@
 import React from 'react';
 
+import axios from 'axios';
+
 import { View , Text , StyleSheet , TouchableOpacity } from 'react-native'
 import { LalezarRegular } from '../utils/Fonts'
 
@@ -7,12 +9,43 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 import { setData  } from '../AsyncStorage/SecureStorage'
 
+import { CONFIRM_SMS_URL } from '../URL/Urls';
+
+
+const requestToServerForConfirmSms = async (phoneNumber , sms) => {
+  console.log(phoneNumber) 
+  console.log(CONFIRM_SMS_URL) 
+  try {
+    let result = await axios({
+      method: 'POST',
+      url: CONFIRM_SMS_URL,
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      data : {
+        "phone" : `${phoneNumber}`,
+        "sms" : `${sms}`
+      }
+    });
+    console.log(result.data);
+    return result.data;
+  } catch (e) {
+    console.log("Error on Request to Server...")
+  }
+}
+
 
 const SmsInput = ({phoneNumber , sms , scrollSwiper , setPhoneReady}) => {
   
   const savePhoneAndSms = async (phoneNumber , sms) => {
-    await setData(phoneNumber , sms);
-    setPhoneReady(true);
+    let result = await requestToServerForConfirmSms(phoneNumber , sms);
+   
+    console.log(result.success)
+    if( result && result.success == true ) {
+      // console.log("There is Success")
+      await setData(phoneNumber , sms);
+      setPhoneReady(true);
+    }
   }
   
   return (

@@ -16,6 +16,8 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import RadioButtonRN from 'radio-buttons-react-native';
 import { LalezarRegular } from '../utils/Fonts';
 
+import styled from 'styled-components/native';
+
 
 const provinces = [
   {
@@ -66,7 +68,19 @@ const provinces = [
 ];
 
 
+const Container = styled.View`
+  background-color : ${props => props.theme.SECOND_BACKGROUND};
+  flex : 1;
+`
 
+const CloseButton = styled.View`
+  padding : 10px;
+  margin : 20px 40px;
+  justify-content : center;
+  align-items : center;
+  border-radius : 35px;
+  background-color : ${props => props.theme.FIRST_BACKGROUND};
+`
 
 
 const ProvinceModal = ({visible , SubmitProvinceFromModal}) => {
@@ -80,15 +94,16 @@ const ProvinceModal = ({visible , SubmitProvinceFromModal}) => {
     
     animationType="slide"
     visible={visible}>
-      <View style={styles.container}>
+      <Container>
 
         <TouchableOpacity
-          onPress={() => SubmitProvinceFromModal()}
-          style={styles.button}>
+          onPress={() => SubmitProvinceFromModal()}>
+          <CloseButton>
           <Text
           style={styles.buttonText}>
             بستن
           </Text>
+          </CloseButton>
         </TouchableOpacity>
       
         <ScrollView>
@@ -114,7 +129,7 @@ const ProvinceModal = ({visible , SubmitProvinceFromModal}) => {
         </View>
         </ScrollView>
 
-      </View>
+      </Container>
     </Modal>
   )
 }

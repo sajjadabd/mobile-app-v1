@@ -1,4 +1,4 @@
-import React from 'react';
+import React , { useContext } from 'react';
 
 import {
   SafeAreaView,
@@ -13,6 +13,9 @@ import {
 
 import Header from '../header/Header';
 
+import { useSelector } from 'react-redux'
+
+import styled from 'styled-components/native';
 
 import { windowHeight , windowWidth } from '../utils/Dimensions';
 import SubBranch from '../utils/SubBranch';
@@ -21,8 +24,16 @@ import { FlatList } from 'react-native-gesture-handler';
 import Footer from '../footer/Footer';
 import SubChapterLogo from '../utils/SubChapterLogo';
 
+
+const Container = styled.View`
+  background-color : ${props => props.theme.FIRST_BACKGROUND};
+  flex : 1;
+`
+
 const Branch = ({ navigation }) => {
-  
+
+  const theme = useSelector(state => state.ThemeReducer.theme)
+
   const numbers = [1,2,3,4,5,6,7,8,9,10];
 
   const title = navigation.getParam('title');
@@ -32,14 +43,16 @@ const Branch = ({ navigation }) => {
   const whichPage = navigation.getParam('whichPage');
 
   return (
-    <View style={styles.container}>
+    <>
+    <StatusBar backgroundColor={theme.FIRST_BACKGROUND} barStyle="light-content" />
+    <Container>
       <Header />
 
       <View style={styles.body}>
 
         <ScrollView >
 
-          <SubChapterLogo title={title} logo={logo} />
+          {/* <SubChapterLogo title={title} logo={logo} /> */}
 
           <View style={styles.braches}>
 
@@ -65,14 +78,15 @@ const Branch = ({ navigation }) => {
       </View>
 
       <Footer navigation={navigation} whichPage={whichPage}/>
-    </View>
+    </Container>
+    </>
   )
 }
 
 
 const styles = StyleSheet.create({
   container : {
-    backgroundColor : '#6FA6B6',
+    backgroundColor : 'black',
     flex : 1,
   },
   body : {

@@ -14,12 +14,24 @@ import { LalezarRegular } from '../utils/Fonts';
 
 import { windowHeight, windowWidth } from '../utils/Dimensions';
 
+import styled from 'styled-components/native';
+
+const Item = styled.View`
+  background-color : ${props => props.theme.SECOND_BACKGROUND};
+  flex : 1;
+  padding : 10px 20px;
+  margin : 20px;
+  border-radius : 20px;
+  flex-direction : row;
+  justify-content : space-between;
+`
+
 const width = 70;
 
 const WorkCard = () => {
   return (
     <>
-      <View style={styles.item}>
+      <Item>
           <View style={styles.profile}>
             {/* <MaterialIcon size={50} color="black" name="person" /> */}
             <Image 
@@ -39,7 +51,7 @@ const WorkCard = () => {
               <Text style={styles.myText}>جوشکاری</Text>
             </View>
           </View>
-      </View>
+      </Item>
     </>
   )
 }

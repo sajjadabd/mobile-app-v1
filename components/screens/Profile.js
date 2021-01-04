@@ -30,22 +30,22 @@ import NameChangeModal from '../Modals/NameChangeModal';
 
 import { launchImageLibrary } from 'react-native-image-picker';
 
+import { useSelector } from 'react-redux'
 
-// import { Picsum } from 'picsum-photos';
+import styled from 'styled-components/native';
 
-// import {Picker} from '@react-native-picker/picker';
+const Header = styled.View`
+  background-color  : ${props => props.theme.FIRST_BACKGROUND};
+  flex : 1;
+`
 
-// import SimplePicker from 'react-native-simple-picker';
+const Container = styled.View`
+  flex : 1;
+  justify-content : space-between;
+  background-color  : ${props => props.theme.SECOND_BACKGROUND};
+`
 
 const defaultProvince = 'مازندران';
-
-
-// const getImage = async () => {
-//   const image = await Picsum.random();
-//   console.log(image);
-//   return image.download_url;
-// }
-
 
 
 const Profile = ({ navigation }) => {
@@ -65,6 +65,9 @@ const Profile = ({ navigation }) => {
   const [showNameChangeModal , setShowNameChangeModal] = useState(false);
 
   const whichPage = navigation.getParam('whichPage');
+
+
+  const theme = useSelector(state => state.ThemeReducer.theme)
 
   const changeSex = () => {
     if (sex == 'male') {
@@ -93,7 +96,7 @@ const Profile = ({ navigation }) => {
 
   return (
     <>
-    <StatusBar backgroundColor="#4D7C8A" barStyle="light-content" />
+    <StatusBar backgroundColor={theme.FIRST_BACKGROUND} barStyle="light-content" />
 
 
     <ProvinceModal 
@@ -106,10 +109,10 @@ const Profile = ({ navigation }) => {
     changeName={changeName}
     />
 
-    <View style={styles.body}>
-      <View style={styles.header}>
+    <Container>
+      <Header>
 
-      </View>
+      </Header>
       <View style={styles.insideProfile}>
         
         <View style={styles.profilePictureContainer}>
@@ -198,7 +201,7 @@ const Profile = ({ navigation }) => {
         </View>
         
       </View>
-    </View>
+    </Container>
 
     <Footer navigation={navigation} whichPage={whichPage}/>
     </>
@@ -209,11 +212,11 @@ const styles = StyleSheet.create({
   body : {
     flex : 1,
     justifyContent : 'space-between',
-    backgroundColor  : '#6FA6B6'
+    backgroundColor  : 'black'
     // backgroundColor : 'red',
   },
   header : {
-    backgroundColor  : '#4D7C8A',
+    backgroundColor  : 'blue',
     flex : 1,
   },
   insideProfile : {
@@ -223,7 +226,7 @@ const styles = StyleSheet.create({
     width : windowWidth / 2.5 ,
     height : windowWidth / 2.5 ,
     backgroundColor : '#CEE0E5' ,
-    borderRadius : windowWidth / 2.5 / PixelRatio.get(),
+    borderRadius : windowWidth / 2 / PixelRatio.get(),
     position : 'absolute',
     // borderWidth : 3,
     alignSelf : 'center',
@@ -244,7 +247,7 @@ const styles = StyleSheet.create({
     fontSize : 25,
   } , 
   infoContainer : {
-    marginTop : 100,
+    marginTop : windowHeight / 5,
   },
   info : {
     marginHorizontal : 20,

@@ -13,15 +13,29 @@ import {
 
 import MaterialICon from 'react-native-vector-icons/MaterialIcons';
 
+import styled from 'styled-components/native';
+
+const Searchbar = styled.View`
+  background-color : ${props => props.theme.SEARCH_COLOR};
+  border-radius : 10px;
+  flex-direction : row;
+  align-items : center;
+  padding : 0 10px;
+  margin : 0 20px;
+  margin-top : 20px;
+  text-align : right;
+`
+
+
 const Header = () => {
 
   return (
     <>
       <View style={styles.header}>
-        <View style={styles.searchBar}>
+        <Searchbar>
           <TextInput style={styles.input} />
           <MaterialICon style={styles.searchIcon} size={40} color="white" name="search" />
-        </View>
+        </Searchbar>
       </View>
     </>
   );
