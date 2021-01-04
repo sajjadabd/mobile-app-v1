@@ -66,7 +66,7 @@ const Header = styled.View`
 
 const Container = styled.View`
   flex : 1;
-  background-color : ${props => props.theme.SECOND_BACKGROUND};
+  background-color : ${props => props.theme.MAIN_BACKGROUND};
 `
 
 
@@ -104,13 +104,21 @@ const Chapters = ({ navigation }) => {
   }
 
 
+  const returnBigTitleText = () => {
+    return {
+      color : theme.TEXT_COLOR,
+      fontSize : 55,
+      fontFamily : LalezarRegular,
+    }
+  }
+
   return (
     <>
       <StatusBar backgroundColor={theme.BUTTON_COLOR} barStyle="light-content" />
 
       <Container>
         <Header>
-          <Text style={styles.myText}>زیر شاخه</Text>
+          <Text style={returnBigTitleText()}>زیر شاخه</Text>
           
           {
             checkExamsInSelectedOrNot() ?

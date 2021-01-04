@@ -31,7 +31,7 @@ const duration = 100;
 
 const Header = styled.View`
   flex : 3;
-  background-color : ${props => props.theme.FIRST_BACKGROUND};
+  background-color : ${props => props.theme.QUESTION_CONTAINER};
   border-bottom-left-radius : 55px;
   border-bottom-right-radius : 55px;
   padding : 40px;
@@ -40,7 +40,7 @@ const Header = styled.View`
 
 const Container = styled.View`
   flex : 1;
-  background-color : ${props => props.theme.SECOND_BACKGROUND};
+  background-color : ${props => props.theme.QUESTION_BACKGROUND};
 `
 
 
@@ -97,7 +97,7 @@ const Exam = ({navigation}) => {
 
     const returnButtonRight = () => {
       return {
-        backgroundColor : theme.FIRST_BACKGROUND ,
+        backgroundColor : theme.QUESTION_CONTAINER ,
         borderTopLeftRadius : 25 ,
         borderBottomLeftRadius : 25 ,
       } 
@@ -106,7 +106,7 @@ const Exam = ({navigation}) => {
 
     const returnButtonLeft = () => {
       return {
-        backgroundColor : theme.FIRST_BACKGROUND ,
+        backgroundColor : theme.QUESTION_CONTAINER ,
         borderTopRightRadius : 25,
         borderBottomRightRadius : 25,
       }
@@ -115,7 +115,7 @@ const Exam = ({navigation}) => {
 
     const returnDotStyle = () => {
       return {
-        backgroundColor: theme.FIRST_BACKGROUND, 
+        backgroundColor: theme.QUESTION_CONTAINER, 
         width: 22, 
         height: 22,
         borderRadius: 22 / PixelRatio.get(), 
@@ -138,7 +138,7 @@ const Exam = ({navigation}) => {
 
     return (
         <>
-        <StatusBar backgroundColor={theme.FIRST_BACKGOURND} barStyle="light-content" />
+        <StatusBar backgroundColor={theme.QUESTION_CONTAINER} barStyle="light-content" />
 
         <Container>
 

@@ -36,7 +36,7 @@ const Header = styled.View`
 
 const Container = styled.View`
   flex : 1;
-  background-color : ${props => props.theme.SECOND_BACKGROUND};
+  background-color : ${props => props.theme.MAIN_BACKGROUND};
 `
 
 
@@ -53,6 +53,22 @@ const SubBranch = ({ navigation }) => {
 
   const theme = useSelector(state => state.ThemeReducer.theme)
 
+  const returnTextStyle = () => {
+    return {
+      color : theme.TEXT_COLOR,
+      fontSize : 45,
+      fontFamily : LalezarRegular,
+    }
+  }
+
+  const returnTitleTextStyle = () => {
+    return {
+      color : theme.TEXT_COLOR,
+      fontSize : 55,
+      fontFamily : LalezarRegular,
+    }
+  }
+
   return (
     <>
       <StatusBar backgroundColor={theme.BUTTON_COLOR} barStyle="light-content" />
@@ -60,7 +76,7 @@ const SubBranch = ({ navigation }) => {
       <Container>
 
         <Header>
-          <Text style={styles.myText}>زیر شاخه</Text>
+          <Text style={returnTitleTextStyle()}>زیر شاخه</Text>
         </Header>
 
         <TouchableOpacity
@@ -68,9 +84,9 @@ const SubBranch = ({ navigation }) => {
         >
           <BlockButton>
             <View style={styles.iconContainer}>
-              <MaterialIcon size={80} color="white" name="list-alt" />
+              <MaterialIcon size={80} color={theme.TEXT_COLOR} name="list-alt" />
             </View>
-            <Text style={styles.myBlockText}>نمونه سوالات</Text>
+            <Text style={returnTextStyle()}>نمونه سوالات</Text>
           </BlockButton>
         </TouchableOpacity>
 
@@ -79,9 +95,9 @@ const SubBranch = ({ navigation }) => {
         >
         <BlockButton>
           <View style={styles.iconContainer}>
-            <MaterialIcon size={80} color="white" name="edit" />
+            <MaterialIcon size={80} color={theme.TEXT_COLOR} name="edit" />
           </View>
-          <Text style={styles.myBlockText}>آزمون جامع</Text>
+          <Text style={returnTextStyle()}>آزمون جامع</Text>
         </BlockButton>
         </TouchableOpacity>
 

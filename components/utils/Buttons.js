@@ -6,13 +6,13 @@ import { LalezarRegular } from './Fonts'
 
 import { useSelector } from 'react-redux';
 
-export const ActiveButton = ({sex , changeSex}) => {
+export const ActiveButton = ({sex , title , changeSex}) => {
 
   const theme = useSelector(state => state.ThemeReducer.theme);
 
   const activeButtonStyle = () => {
     return {
-      backgroundColor : theme.FIRST_BACKGROUND,
+      backgroundColor : theme.BUTTON_COLOR,
       width : windowWidth / 2,
       borderRadius : 55,
       justifyContent : 'center',
@@ -20,32 +20,58 @@ export const ActiveButton = ({sex , changeSex}) => {
     }
   }
 
+
+  const activeButtonText = () => {
+    return {
+      color : theme.TEXT_COLOR,
+      fontFamily : LalezarRegular,
+      fontSize : 20,
+    }
+  }
+
   return (
     <TouchableOpacity 
-      onPress={() => changeSex()}
+      onPress={() => changeSex(title)}
       style={activeButtonStyle()} >
-      <Text style={styles.activebuttonText}>{
-        sex == 'male' ?
-        'مرد'
-        :
-        'زن'
-      }</Text>
+      <Text style={activeButtonText()}>
+        {title}
+      </Text>
     </TouchableOpacity>
   )
 }
 
 
-export const DeactiveButton = ({sex , changeSex}) => {
+export const DeactiveButton = ({sex , title , changeSex}) => {
+  
+  const theme = useSelector(state => state.ThemeReducer.theme);
+
+  
+  const deactiveButtonStyle = () => {
+    return {
+      backgroundColor : theme.BUTTON_COLOR,
+      width : windowWidth / 4,
+      borderRadius : 55,
+      justifyContent : 'center',
+      alignItems : 'center'
+    }
+  }
+
+  const deactiveButtonText = () => {
+    return {
+      color : theme.MAIN_BACKGROUND,
+      fontFamily : LalezarRegular,
+      fontSize : 20,
+    }
+  }
+
+  
   return (
     <TouchableOpacity 
-      onPress={() => changeSex()}
-      style={styles.deactivebutton}>
-      <Text style={styles.deactivebuttonText}>{
-        sex == 'male' ?
-        'زن'
-        :
-        'مرد'
-      }</Text>
+      onPress={() => changeSex(title)}
+      style={deactiveButtonStyle()}>
+      <Text style={deactiveButtonText()}>
+        {title}
+      </Text>
     </TouchableOpacity>
   )
 }
@@ -62,7 +88,6 @@ const styles = StyleSheet.create({
     backgroundColor : '#CEE0E5',
     width : windowWidth / 4,
     borderRadius : 55,
-    
     justifyContent : 'center',
     alignItems : 'center'
   },

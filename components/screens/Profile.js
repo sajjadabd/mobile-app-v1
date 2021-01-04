@@ -35,14 +35,14 @@ import { useSelector } from 'react-redux'
 import styled from 'styled-components/native';
 
 const Header = styled.View`
-  background-color  : ${props => props.theme.FIRST_BACKGROUND};
+  background-color  : ${props => props.theme.BUTTON_COLOR};
   flex : 1;
 `
 
 const Container = styled.View`
   flex : 1;
   justify-content : space-between;
-  background-color  : ${props => props.theme.SECOND_BACKGROUND};
+  background-color  : ${props => props.theme.MAIN_BACKGROUND};
 `
 
 const defaultProvince = 'مازندران';
@@ -69,11 +69,19 @@ const Profile = ({ navigation }) => {
 
   const theme = useSelector(state => state.ThemeReducer.theme)
 
-  const changeSex = () => {
-    if (sex == 'male') {
-      setSex('female')
-    } else {
-      setSex('male')
+  const changeSex = (title) => {
+
+    let theTitleOfButton = title == 'مرد' ? 'male' : 'female'
+
+    console.log(theTitleOfButton);
+    console.log(sex);
+    
+    if( theTitleOfButton == sex ) {
+      if (sex == 'male') {
+        setSex('female')
+      } else {
+        setSex('male')
+      }
     }
   }
 
@@ -96,7 +104,7 @@ const Profile = ({ navigation }) => {
 
   return (
     <>
-    <StatusBar backgroundColor={theme.FIRST_BACKGROUND} barStyle="light-content" />
+    <StatusBar backgroundColor={theme.BUTTON_COLOR} barStyle="light-content" />
 
 
     <ProvinceModal 
@@ -186,13 +194,13 @@ const Profile = ({ navigation }) => {
           {
             sex == 'male' ? (
               <>
-                <ActiveButton sex={sex} changeSex={changeSex} />
-                <DeactiveButton sex={sex} changeSex={changeSex}/>
+                <ActiveButton sex={sex} title={'زن'} changeSex={changeSex} />
+                <DeactiveButton sex={sex} title={'مرد'} changeSex={changeSex}/>
               </>
             ) : (
               <>
-                <DeactiveButton sex={sex} changeSex={changeSex}/>
-                <ActiveButton sex={sex} changeSex={changeSex} />
+                <DeactiveButton sex={sex} title={'زن'} changeSex={changeSex}/>
+                <ActiveButton sex={sex} title={'مرد'} changeSex={changeSex} />
               </>
             )
           }

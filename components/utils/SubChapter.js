@@ -50,6 +50,26 @@ const SubChapter = ({navigation , item , index , changeSelectedExams}) => {
       }
     }
 
+
+
+    const seasonTextStyle = () => {
+      return {
+        color : theme.TEXT_COLOR,
+        fontSize : 45,
+        fontFamily : LalezarRegular,
+      }
+    }
+
+
+    const subjectTextStyle = () => {
+      return {
+        color : theme.TEXT_COLOR,
+        fontSize : 25,
+        fontFamily : LalezarRegular,
+        alignSelf : 'flex-start',
+      }
+    }
+
     return (
         <>
         <SeasonButton>
@@ -66,8 +86,8 @@ const SubChapter = ({navigation , item , index , changeSelectedExams}) => {
                 <TouchableOpacity
                 onPress={() => navigation.navigate('Reading')}
                 >
-                <Text style={styles.myBlockText}>{item.chapter}</Text>
-                <Text style={ styles.mySubjectText }>{item.subject}</Text>
+                <Text style={seasonTextStyle()}>{item.chapter}</Text>
+                <Text style={subjectTextStyle()}>{item.subject}</Text>
                 </TouchableOpacity>
             </View>
         </SeasonButton>

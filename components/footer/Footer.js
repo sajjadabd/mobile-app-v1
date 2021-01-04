@@ -52,7 +52,7 @@ const Footer = ({ navigation , whichPage }) => {
         <TouchableOpacity 
         style={styles.button}
         onPress={ () => navigation.navigate('Homepage' , { whichPage : 'home' }) }>
-          <MaterialIcon size={40} color={theme.TEXT_COLOR} 
+          <MaterialIcon size={40} color={theme.ICON_COLOR} 
           name={whichPage == 'home' || whichPage == undefined ? Icons.home : Icons.altHome} />
         </TouchableOpacity>
         </View>
@@ -69,7 +69,7 @@ const Footer = ({ navigation , whichPage }) => {
           <TouchableOpacity 
           style={styles.button}
           onPress={ () => navigation.navigate('Work' , { whichPage : 'work' }) }>
-            <MaterialIcon size={40} color={theme.TEXT_COLOR} 
+            <MaterialIcon size={40} color={theme.ICON_COLOR} 
             name={whichPage == 'work' ? Icons.work : Icons.altWork} />
           </TouchableOpacity>
         </View>
@@ -79,7 +79,7 @@ const Footer = ({ navigation , whichPage }) => {
           <TouchableOpacity 
           style={styles.button}
           onPress={ () => navigation.navigate('Bookmark' , { whichPage : 'bookmark' }) }>
-            <MaterialIcon size={40} color={theme.TEXT_COLOR} 
+            <MaterialIcon size={40} color={theme.ICON_COLOR} 
             name={whichPage == 'bookmark' ? Icons.bookmark : Icons.altBookmark} />
           </TouchableOpacity>
         </View>
@@ -88,7 +88,7 @@ const Footer = ({ navigation , whichPage }) => {
           <TouchableOpacity 
           style={styles.button}
           onPress={ () => navigation.navigate('Profile' , { whichPage : 'profile' }) }>
-            <MaterialIcon size={40} color={theme.TEXT_COLOR} 
+            <MaterialIcon size={40} color={theme.ICON_COLOR} 
             name={whichPage == 'profile' ? Icons.person : Icons.altPerson} />
           </TouchableOpacity>
         </View>

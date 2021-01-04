@@ -22,7 +22,7 @@ const numbers = [1,2,3,4,5,6,7,8,9,10];
 const Container = styled.View`
   flex : 1;
   justify-content : space-between;
-  background-color  : ${props => props.theme.FIRST_BACKGROUND};
+  background-color  : ${props => props.theme.MAIN_BACKGROUND};
 `
 
 
@@ -34,7 +34,7 @@ const Work = ({ navigation }) => {
 
   return (
     <>
-      <StatusBar backgroundColor={theme.FIRST_BACKGROUND} barStyle="light-content" />
+      <StatusBar backgroundColor={theme.MAIN_BACKGROUND} barStyle="light-content" />
       <Container>
         
       <ScrollView style={styles.scroll}>

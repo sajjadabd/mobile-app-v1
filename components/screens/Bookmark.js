@@ -25,7 +25,7 @@ import styled from 'styled-components/native';
 const Container = styled.View`
   padding-left : 50px;
   flex : 7;
-  background-color  : ${props => props.theme.FIRST_BACKGROUND};
+  background-color  : ${props => props.theme.MAIN_BACKGROUND};
 `
 
 
@@ -43,21 +43,21 @@ const Bookmark = ({ navigation }) => {
 
   const returnTabStyle = () => {
     return {
-      backgroundColor : theme.FIRST_BACKGROUND,
+      backgroundColor : theme.MAIN_BACKGROUND,
       borderRadius : 0,
     }
   }
 
   const returnActiveTabStyle = () => {
     return {
-      backgroundColor : theme.FIRST_BACKGROUND,
+      backgroundColor : theme.MAIN_BACKGROUND,
       borderWidth : 0,
     }
   }
 
   return (
     <>
-    <StatusBar backgroundColor={theme.FIRST_BACKGROUND} barStyle="light-content" />
+    <StatusBar backgroundColor={theme.MAIN_BACKGROUND} barStyle="light-content" />
     
     <View style={styles.body}>
 

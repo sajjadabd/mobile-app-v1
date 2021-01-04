@@ -9,6 +9,8 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import styled from 'styled-components/native';
 
 
+import { useSelector } from 'react-redux'; 
+
 const Container = styled.View`
   padding-left : 30px;
   padding-right : 30px;
@@ -19,17 +21,28 @@ const Container = styled.View`
   height : 100px;
   border-top-left-radius : 20px;
   border-bottom-left-radius : 20px;
-  background-color : ${props => props.theme.SECOND_BACKGROUND};
+  background-color : ${props => props.theme.BUTTON_COLOR};
 `
 
 
 const EachQuestion = ({navigation, save}) => {
+
+  const theme = useSelector(state => state.ThemeReducer.theme)
+
+  const returnTextStyle = () => {
+    return {
+      fontFamily : 'Lalezar-Regular',
+      fontSize : windowWidth / 13,
+      color : theme.TEXT_COLOR,
+    }
+  }
+
   return (
     <View style={styles.container}>
       <TouchableOpacity 
         onPress={ () => navigation.navigate('SubBranch') }>
         <Container>
-        <Text style={styles.subtitle}>سوال</Text>
+        <Text style={returnTextStyle()}>سوال</Text>
         <View>
           <MaterialIcon size={40} color="white" name="east" />
         </View>

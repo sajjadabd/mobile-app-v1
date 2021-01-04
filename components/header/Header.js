@@ -15,6 +15,8 @@ import MaterialICon from 'react-native-vector-icons/MaterialIcons';
 
 import styled from 'styled-components/native';
 
+import { useSelector } from 'react-redux';
+
 const Searchbar = styled.View`
   background-color : ${props => props.theme.SEARCH_COLOR};
   border-radius : 10px;
@@ -29,12 +31,14 @@ const Searchbar = styled.View`
 
 const Header = () => {
 
+  const theme = useSelector(state => state.ThemeReducer.theme)
+
   return (
     <>
       <View style={styles.header}>
         <Searchbar>
           <TextInput style={styles.input} />
-          <MaterialICon style={styles.searchIcon} size={40} color="white" name="search" />
+          <MaterialICon style={styles.searchIcon} size={40} color={theme.ICON_COLOR} name="search" />
         </Searchbar>
       </View>
     </>
@@ -63,7 +67,7 @@ const styles = StyleSheet.create({
     flex : 1,
   }, 
   searchIcon : {
-    color : 'black'
+    
   }
 });
 

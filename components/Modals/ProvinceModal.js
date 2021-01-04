@@ -69,7 +69,7 @@ const provinces = [
 
 
 const Container = styled.View`
-  background-color : ${props => props.theme.SECOND_BACKGROUND};
+  background-color : ${props => props.theme.MAIN_BACKGROUND};
   flex : 1;
 `
 
@@ -79,7 +79,7 @@ const CloseButton = styled.View`
   justify-content : center;
   align-items : center;
   border-radius : 35px;
-  background-color : ${props => props.theme.FIRST_BACKGROUND};
+  background-color : ${props => props.theme.BUTTON_COLOR};
 `
 
 

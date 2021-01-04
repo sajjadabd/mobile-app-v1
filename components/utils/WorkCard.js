@@ -16,8 +16,10 @@ import { windowHeight, windowWidth } from '../utils/Dimensions';
 
 import styled from 'styled-components/native';
 
+import { useSelector } from 'react-redux';
+
 const Item = styled.View`
-  background-color : ${props => props.theme.SECOND_BACKGROUND};
+  background-color : ${props => props.theme.BUTTON_COLOR};
   flex : 1;
   padding : 10px 20px;
   margin : 20px;
@@ -26,9 +28,26 @@ const Item = styled.View`
   justify-content : space-between;
 `
 
+const TextBlock = styled.Text`
+    color : ${props => props.theme.TEXT_COLOR};
+    font-family : LalezarRegular;
+    font-size : 25px;
+`
+
 const width = 70;
 
 const WorkCard = () => {
+
+  const theme = useSelector(state => state.ThemeReducer.theme)
+
+  const returnTextStyle = () => {
+    return {
+      fontFamily : 'Lalezar-Regular',
+      fontSize : windowWidth / 13,
+      color : theme.TEXT_COLOR,
+    }
+  }
+
   return (
     <>
       <Item>
@@ -44,11 +63,11 @@ const WorkCard = () => {
           </View>
           <View style={styles.info}>
             <View style={styles.name}>
-              <Text style={styles.myText}>محمد اکبری</Text>
+              <Text style={returnTextStyle()}>محمد اکبری</Text>
             </View>
             <View style={styles.otherInfo}>
-              <Text style={styles.myText}>ساری</Text>
-              <Text style={styles.myText}>جوشکاری</Text>
+              <Text style={returnTextStyle()}>ساری</Text>
+              <Text style={returnTextStyle()}>جوشکاری</Text>
             </View>
           </View>
       </Item>
@@ -97,7 +116,7 @@ const styles = StyleSheet.create({
     justifyContent : 'space-between',
   },
   myText : {
-    color : 'black',
+    color : '#CEE0E5',
     fontFamily : LalezarRegular,
     fontSize : 25,
   },

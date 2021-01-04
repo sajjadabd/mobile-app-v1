@@ -19,7 +19,7 @@ import {
 } from './Theme'
 
 const initialState = {
-  theme: { ...darkBlueTheme }
+  theme: { ...grayTheme }
 }
 
 let newState = {};

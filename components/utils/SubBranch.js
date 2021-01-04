@@ -9,6 +9,9 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 import styled from 'styled-components/native';
 
+import { useSelector } from 'react-redux';
+
+
 const Container = styled.View`
   padding-left : 30px;
   padding-right : 30px;
@@ -22,15 +25,33 @@ const Container = styled.View`
   background-color : ${props => props.theme.BUTTON_COLOR};
 `
 
+
+const TextBlock = styled.Text`
+  font-family : 'Lalezar-Regular';
+  font-size : windowWidth / 13;
+  color : 'white';
+`
+
 const SubBranch = ({navigation, save}) => {
+
+  const theme = useSelector(state => state.ThemeReducer.theme)
+
+  const returnTextStyle = () => {
+    return {
+      fontFamily : 'Lalezar-Regular',
+      fontSize : windowWidth / 13,
+      color : theme.TEXT_COLOR,
+    }
+  }
+
   return (
     <View style={styles.container}>
       <TouchableOpacity 
         onPress={ () => navigation.navigate('SubBranch') }>
         <Container>
-        <Text style={styles.subtitle}>زیر شاخه</Text>
+        <Text style={returnTextStyle()}>زیر شاخه</Text>
         <View>
-          <MaterialIcon size={40} color="white" name="east" />
+          <MaterialIcon size={40} color={theme.TEXT_COLOR} name="east" />
         </View>
         </Container>
       </TouchableOpacity>
@@ -42,9 +63,9 @@ const SubBranch = ({navigation, save}) => {
             { 
             save
             ?
-            <MaterialIcon size={40} color="white" name="bookmark" />
+            <MaterialIcon size={40} color={theme.TEXT_COLOR} name="bookmark" />
             : 
-            <MaterialIcon size={40} color="white" name="bookmark-outline" />
+            <MaterialIcon size={40} color={theme.TEXT_COLOR} name="bookmark-outline" />
             }
             
       </TouchableOpacity>
