@@ -6,13 +6,35 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 import { LalezarRegular } from '../utils/Fonts';
 
+
+import styled from 'styled-components/native';
+
+
+import { useSelector } from 'react-redux';
+
+
+const SeasonButton = styled.View`
+  background-color : ${props => props.theme.BUTTON_COLOR};
+  flex-direction : row;
+  border-radius : 20px;
+  margin : 20px;
+`
+
+
+const ExamButton = styled.View`
+
+`
+
+
 const SubChapter = ({navigation , item , index , changeSelectedExams}) => {
+
+    const theme = useSelector(state => state.ThemeReducer.theme)
 
     const changeStyleBasedOnSelected = (item) => {
       if(item.selectedExam) {
         return {
           justifyContent : 'center',
-          backgroundColor : '#51344D',
+          backgroundColor : 'black',
           borderRightWidth : 2,
           paddingRight : 10,
           flex : 1,
@@ -20,7 +42,7 @@ const SubChapter = ({navigation , item , index , changeSelectedExams}) => {
       } else {
         return {
           justifyContent : 'center',
-          backgroundColor : '#4D7C8A',
+          backgroundColor : theme.BUTTON_COLOR,
           borderRightWidth : 2,
           paddingRight : 10,
           flex : 1,
@@ -30,7 +52,7 @@ const SubChapter = ({navigation , item , index , changeSelectedExams}) => {
 
     return (
         <>
-        <View style={styles.block}>
+        <SeasonButton>
           <View style={changeStyleBasedOnSelected(item)}> 
             <TouchableOpacity 
             onPress={() => changeSelectedExams(index)}
@@ -48,7 +70,7 @@ const SubChapter = ({navigation , item , index , changeSelectedExams}) => {
                 <Text style={ styles.mySubjectText }>{item.subject}</Text>
                 </TouchableOpacity>
             </View>
-        </View>
+        </SeasonButton>
         </>
     )
 }
@@ -79,7 +101,6 @@ const styles = StyleSheet.create({
     },
     block : {
         backgroundColor : '#4D7C8A',
-        // backgroundColor : 'yellow',
         flexDirection : 'row',
         borderRadius : 20,
         marginHorizontal : 20,

@@ -18,43 +18,74 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import Footer from '../footer/Footer';
 import { LalezarRegular } from '../utils/Fonts';
 
+import styled from 'styled-components/native';
 
+import { useSelector } from 'react-redux';
+
+
+const Header = styled.View`
+  height : 180px;
+  background-color : ${props => props.theme.BUTTON_COLOR};
+  border-bottom-right-radius : 55px;
+  border-bottom-left-radius : 55px;
+  justify-content : flex-end;
+  align-items : center;
+  padding : 40px;
+  margin-bottom : 40px;
+`
+
+const Container = styled.View`
+  flex : 1;
+  background-color : ${props => props.theme.SECOND_BACKGROUND};
+`
+
+
+const BlockButton = styled.View`
+  background-color : ${props => props.theme.BUTTON_COLOR};
+  border-radius : 20px;
+  padding : 20px;
+  margin : 20px;
+`
 
 const SubBranch = ({ navigation }) => {
 
   const whichPage = navigation.getParam('whichPage');
 
+  const theme = useSelector(state => state.ThemeReducer.theme)
+
   return (
     <>
-      <StatusBar backgroundColor="#51344D" barStyle="light-content" />
-      <View style={styles.body}>
-        <View style={styles.header}>
+      <StatusBar backgroundColor={theme.BUTTON_COLOR} barStyle="light-content" />
+
+      <Container>
+
+        <Header>
           <Text style={styles.myText}>زیر شاخه</Text>
-        </View>
+        </Header>
 
         <TouchableOpacity
           onPress={() => navigation.navigate('Chapters')}
         >
-          <View style={styles.block}>
+          <BlockButton>
             <View style={styles.iconContainer}>
               <MaterialIcon size={80} color="white" name="list-alt" />
             </View>
             <Text style={styles.myBlockText}>نمونه سوالات</Text>
-          </View>
+          </BlockButton>
         </TouchableOpacity>
 
         <TouchableOpacity
           onPress={() => navigation.navigate('Exam')}
         >
-        <View style={styles.block}>
+        <BlockButton>
           <View style={styles.iconContainer}>
             <MaterialIcon size={80} color="white" name="edit" />
           </View>
           <Text style={styles.myBlockText}>آزمون جامع</Text>
-        </View>
+        </BlockButton>
         </TouchableOpacity>
 
-      </View>
+      </Container>
       <Footer navigation={navigation} whichPage={whichPage}/>
     </>
   )

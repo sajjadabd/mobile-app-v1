@@ -20,7 +20,12 @@ import Footer from '../footer/Footer';
 import { LalezarRegular } from '../utils/Fonts';
 import EachReadingQuestion from '../utils/EachReadingQuestion';
 
-import Swiper from 'react-native-swiper'
+import Swiper from 'react-native-swiper';
+
+
+import styled from 'styled-components/native';
+
+import { useSelector } from 'react-redux';
 
 const questions = [
   {
@@ -37,19 +42,74 @@ const questions = [
   }
 ]
 
+
+
+const Header = styled.View`
+  flex : 3;
+  background-color : ${props => props.theme.FIRST_BACKGROUND};
+  border-bottom-left-radius : 55px;
+  border-bottom-right-radius : 55px;
+  justify-content : flex-start;
+  align-items : flex-end;
+  padding : 40px;
+  margin-bottom : 40px;
+`
+
+
+const Container = styled.View`
+  flex : 1;
+  background-color : ${props => props.theme.SECOND_BACKGROUND};
+`
+
+
 const Reading = ({navigation}) => {
+
+    const theme = useSelector(state => state.ThemeReducer.theme)
 
     const mySwiper = useRef(null);
 
     const currentIndex = useRef(0);
+
     currentIndex.current = 1;
+
+    const returnButtonRight = () => {
+      return {
+        backgroundColor : theme.FIRST_BACKGROUND ,
+        borderTopLeftRadius : 25 ,
+        borderBottomLeftRadius : 25 ,
+      } 
+    }
+
+
+    const returnButtonLeft = () => {
+      return {
+        backgroundColor : theme.FIRST_BACKGROUND ,
+        borderTopRightRadius : 25,
+        borderBottomRightRadius : 25,
+      }
+    }
+
+
+    const returnDotStyle = () => {
+      return {
+        backgroundColor: theme.FIRST_BACKGROUND, 
+        width: 22, 
+        height: 22,
+        borderRadius: 22 / PixelRatio.get(), 
+        marginLeft: 3, 
+        marginRight: 3, 
+        marginTop: 3, 
+        marginBottom: 3,
+      }
+    }
 
     return (
         <>
-        <StatusBar backgroundColor="#51344D" barStyle="light-content" />
-        <View style={styles.body}>
-            <View style={styles.header}>
+        <StatusBar backgroundColor={theme.FIRST_BACKGROUND} barStyle="light-content" />
 
+        <Container>
+
+            <Header>
                 <View style={styles.swiperContainer}>
                   <Swiper 
                   horizontal={true}
@@ -58,7 +118,7 @@ const Reading = ({navigation}) => {
                   showsButtons={false}
                   paginationStyle={styles.pagination}
                   dotStyle={styles.dotStyle}
-                  activeDotStyle={styles.activeDotStyle}
+                  activeDotStyle={returnDotStyle()}
                   scrollEnabled={true}
                   >
                     {
@@ -75,12 +135,10 @@ const Reading = ({navigation}) => {
                   </Swiper>
 
                 </View>
-                
-            
-            </View>
+            </Header>
 
             <View style={styles.navigation}>
-                <View style={styles.buttonRight}>
+                <View style={returnButtonRight()}>
                     <TouchableOpacity 
                     onPress={() => {
                       // if(currentIndex.current < questions.length) {
@@ -94,7 +152,7 @@ const Reading = ({navigation}) => {
                     </TouchableOpacity>
                 </View>
                 
-                <View style={styles.buttonLeft}>
+                <View style={returnButtonLeft()}>
                     <TouchableOpacity 
                       onPress={() => {
                         // if(currentIndex.current > 1) {
@@ -109,7 +167,7 @@ const Reading = ({navigation}) => {
                 </View>
             </View>
 
-        </View>
+        </Container>
         </>
     )
 }
@@ -165,7 +223,6 @@ const styles = StyleSheet.create({
         // backgroundColor : 'yellow',
         borderTopRightRadius : 25,
         borderBottomRightRadius : 25,
-        
     },
     buttonText : {
         color : 'white',

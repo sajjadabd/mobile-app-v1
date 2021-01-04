@@ -45,6 +45,7 @@ const Branch = ({ navigation }) => {
   return (
     <>
     <StatusBar backgroundColor={theme.FIRST_BACKGROUND} barStyle="light-content" />
+    
     <Container>
       <Header />
 

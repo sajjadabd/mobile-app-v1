@@ -20,6 +20,9 @@ import { LalezarRegular } from '../utils/Fonts';
 import SubChapter from '../utils/SubChapter';
 
 
+import styled from 'styled-components/native';
+
+import { useSelector } from 'react-redux';
 
 const listOfChapters = [
   { 
@@ -51,6 +54,21 @@ const listOfChapters = [
 
 
 
+const Header = styled.View`
+  height : 180px;
+  background-color : ${props => props.theme.BUTTON_COLOR};
+  border-bottom-right-radius : 55px;
+  border-bottom-left-radius : 55px;
+  justify-content : flex-end;
+  align-items : center;
+  padding : 40px;
+`
+
+const Container = styled.View`
+  flex : 1;
+  background-color : ${props => props.theme.SECOND_BACKGROUND};
+`
+
 
 
 const Chapters = ({ navigation }) => {
@@ -59,6 +77,7 @@ const Chapters = ({ navigation }) => {
 
   const [chapters , setChapters] = useState(listOfChapters);
 
+  const theme = useSelector(state => state.ThemeReducer.theme)
 
   const checkExamsInSelectedOrNot = () => {
     let result = false;
@@ -87,9 +106,10 @@ const Chapters = ({ navigation }) => {
 
   return (
     <>
-      <StatusBar backgroundColor="#51344D" barStyle="light-content" />
-      <View style={styles.body}>
-        <View style={styles.header}>
+      <StatusBar backgroundColor={theme.BUTTON_COLOR} barStyle="light-content" />
+
+      <Container>
+        <Header>
           <Text style={styles.myText}>زیر شاخه</Text>
           
           {
@@ -105,7 +125,7 @@ const Chapters = ({ navigation }) => {
             null
           }
 
-        </View>
+        </Header>
 
         <ScrollView style={styles.scroll}>
             <View style={styles.scrollContent}>
@@ -123,7 +143,7 @@ const Chapters = ({ navigation }) => {
         </ScrollView>
 
         <Footer navigation={navigation} whichPage={whichPage}/>
-      </View>
+      </Container>
       
     </>
   )

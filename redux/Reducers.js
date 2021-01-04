@@ -5,7 +5,8 @@ import {
   DARK_GREEN_THEME , 
   DARK_THEME , 
   MAGENTA_THEME , 
-  GRAY_THEME } from './Actions'
+  GRAY_THEME 
+} from './Actions'
 
 
 import {
@@ -18,7 +19,7 @@ import {
 } from './Theme'
 
 const initialState = {
-  theme: { ...grayTheme }
+  theme: { ...darkBlueTheme }
 }
 
 let newState = {};

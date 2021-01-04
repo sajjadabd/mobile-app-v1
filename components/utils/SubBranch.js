@@ -19,7 +19,7 @@ const Container = styled.View`
   height : 100px;
   border-top-left-radius : 20px;
   border-bottom-left-radius : 20px;
-  background-color : ${props => props.theme.SECOND_BACKGROUND};
+  background-color : ${props => props.theme.BUTTON_COLOR};
 `
 
 const SubBranch = ({navigation, save}) => {
@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
   subtitle : {
     fontFamily : 'Lalezar-Regular',
     fontSize : windowWidth / 13,
-    color : 'black',
+    color : 'white',
   },  
   save : {
     position : 'absolute',
