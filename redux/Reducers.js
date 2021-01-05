@@ -1,6 +1,6 @@
 
 import { 
-  MAIN_THEME , 
+  PURPLE_THEME , 
   DARK_BLUE_THEME , 
   DARK_GREEN_THEME , 
   DARK_THEME , 
@@ -10,7 +10,7 @@ import {
 
 
 import {
-  mainTheme,
+  purpleTheme,
   darkBlueTheme ,
   darkGreenTheme ,
   darkTheme ,
@@ -26,10 +26,10 @@ let newState = {};
 
 const ThemeReducer = (state = initialState, action) => {
   switch (action.type) {
-    case MAIN_THEME:
+    case PURPLE_THEME:
       newState = {
         ...state,
-        theme: { ...mainTheme }
+        theme: { ...purpleTheme }
       }
       return newState
     case DARK_BLUE_THEME:

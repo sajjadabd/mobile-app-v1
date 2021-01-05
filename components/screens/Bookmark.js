@@ -1,19 +1,14 @@
 import React , {useState} from 'react';
 import {
-  SafeAreaView,
   StyleSheet,
   ScrollView,
   View,
   Text,
   StatusBar,
 } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import Footer from '../footer/Footer';
 
 import { LalezarRegular } from '../utils/Fonts';
-import SubBranch from '../utils/SubBranch';
-
-import SegmentedControlTab from "react-native-segmented-control-tab";
 
 import QuestionsBookmark from '../BookmarkPages/QuestionsBookmark';
 import BrancheBookmark from '../BookmarkPages/BrancheBookmark';
@@ -21,6 +16,14 @@ import BrancheBookmark from '../BookmarkPages/BrancheBookmark';
 import { useSelector } from 'react-redux';
 
 import styled from 'styled-components/native';
+
+import SwitchSelector from "react-native-switch-selector";
+
+const options = [
+  { label: "سوالات", value: "questions" },
+  { label: "زیر شاخه", value: "standards" },
+];
+
 
 const Container = styled.View`
   padding-left : 50px;
@@ -35,7 +38,13 @@ const Bookmark = ({ navigation }) => {
 
   const theme = useSelector(state => state.ThemeReducer.theme)
 
-  const handleIndexChange = (index) => {
+  const handleIndexChange = (value) => {
+    let index = 0;
+    if ( value == "standards" ) {
+      index = 1;
+    } else {
+      index = 0;
+    }
     setSelectedIndex(index);
   };
 
@@ -55,54 +64,54 @@ const Bookmark = ({ navigation }) => {
     }
   }
 
+
+  const switchStyle = () => {
+    return {
+      backgroundColor : theme.MAIN_BACKGROUND,
+    }
+  }
+
+  const switchSelectedTextStyle = () => {
+    return {
+      color : theme.TEXT_COLOR,
+      fontSize : 20,
+      fontFamily : LalezarRegular,
+    }
+  }
+
+  const switchTextStyle = () => {
+    return {
+      color : theme.MAIN_BACKGROUND,
+      fontSize : 20,
+      fontFamily : LalezarRegular,
+    }
+  }
+
   return (
     <>
     <StatusBar backgroundColor={theme.MAIN_BACKGROUND} barStyle="light-content" />
     
     <View style={styles.body}>
 
-      <SegmentedControlTab
-          tabsContainerStyle={tabStyles.tabsContainerStyle}
-          tabStyle={returnTabStyle()}
-          firstTabStyle={tabStyles.firstTabStyle}
-          lastTabStyle={tabStyles.lastTabStyle}
-          activeTabStyle={returnActiveTabStyle()}
-          activeTabTextStyle={tabStyles.activeTabTextStyle}
-          tabTextStyle={tabStyles.tabTextStyle}
-          allowFontScaling={false}
-          values={["سوالات", "زیر شاخه"]}
-          selectedIndex={selectedIndex}
-          onTabPress={handleIndexChange}
+      <SwitchSelector
+        initial={1}
+        onPress={value => handleIndexChange(value)}
+        textColor={theme.TEXT_COLOR}
+        selectedColor={theme.TEXT_COLOR}
+        buttonColor={theme.BUTTON_COLOR}
+        borderColor='transparent'
+        buttonMargin={0}
+        borderRadius={0}
+        animationDuration={300}
+        textStyle={switchTextStyle()}
+        selectedTextStyle={switchSelectedTextStyle()}
+        hasPadding={true}
+        options={options}
+        height={70}
+        fontSize={20}
+        style={switchStyle()}
       />
 
-      {/* <View style={styles.tabs}>
-
-        <View style={styles.item}>
-          <TouchableOpacity 
-          onPress={() => null}
-          style={styles.touchableButton}
-          >
-            <Text style={styles.itemText}>زیر شاخه</Text>
-          </TouchableOpacity>
-        </View>
-
-        <View style={styles.seperatorContainer}>
-          <View style={styles.seperator}>
-
-          </View>
-        </View>
-        
-
-        <View style={styles.item}>
-          <TouchableOpacity 
-          onPress={() => null}
-          style={styles.touchableButton}
-          >
-            <Text style={styles.itemText}>سوالات</Text>
-          </TouchableOpacity>
-        </View>
-
-      </View> */}
 
       <Container>
 
@@ -119,10 +128,6 @@ const Bookmark = ({ navigation }) => {
 
         </ScrollView>
 
-      {/* <SlidableTabBar>
-				<QuestionsBookmark title="سوالات" />
-				<BrancheBookmark title="زیر شاخه" />
-			</SlidableTabBar> */}
 
       </Container>
       

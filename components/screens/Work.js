@@ -1,4 +1,4 @@
-import React from 'react';
+import React , { useState } from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -10,13 +10,24 @@ import {
 } from 'react-native';
 import Footer from '../footer/Footer';
 
-import WorkCard from '../utils/WorkCard';
 
 import { useSelector } from 'react-redux';
 
 import styled from 'styled-components/native';
 
-const numbers = [1,2,3,4,5,6,7,8,9,10];
+import Karyabi from '../WorkPages/Karyabi';
+
+import KarAfarini from '../WorkPages/KarAfarini';
+
+import SwitchSelector from "react-native-switch-selector";
+import { LalezarRegular } from '../utils/Fonts';
+
+
+
+const options = [
+  { label: "کارآفرینی", value: "karafarini" },
+  { label: "کاریابی", value: "karyabi" },
+];
 
 
 const Container = styled.View`
@@ -28,29 +39,79 @@ const Container = styled.View`
 
 const Work = ({ navigation }) => {
 
+  const [selectedIndex , setSelectedIndex] = useState(1);
+
   const theme = useSelector(state => state.ThemeReducer.theme)
 
   const whichPage = navigation.getParam('whichPage');
 
+
+  const handleIndexChange = (value) => {
+    let index = 0;
+    if ( value == "karyabi" ) {
+      index = 1;
+    } else {
+      index = 0;
+    }
+    setSelectedIndex(index);
+  };
+
+  const switchStyle = () => {
+    return {
+      backgroundColor : theme.MAIN_BACKGROUND,
+    }
+  }
+
+  const switchSelectedTextStyle = () => {
+    return {
+      color : theme.TEXT_COLOR,
+      fontSize : 20,
+      fontFamily : LalezarRegular,
+    }
+  }
+
+  const switchTextStyle = () => {
+    return {
+      color : theme.MAIN_BACKGROUND,
+      fontSize : 20,
+      fontFamily : LalezarRegular,
+    }
+  }
+
   return (
     <>
       <StatusBar backgroundColor={theme.MAIN_BACKGROUND} barStyle="light-content" />
+      
+      <SwitchSelector
+        initial={1}
+        onPress={value => handleIndexChange(value)}
+        textColor={theme.TEXT_COLOR}
+        selectedColor={theme.TEXT_COLOR}
+        buttonColor={theme.BUTTON_COLOR}
+        borderColor='transparent'
+        buttonMargin={0}
+        borderRadius={0}
+        animationDuration={300}
+        textStyle={switchTextStyle()}
+        selectedTextStyle={switchSelectedTextStyle()}
+        hasPadding={true}
+        options={options}
+        height={70}
+        fontSize={20}
+        style={switchStyle()}
+      />
+
+      
       <Container>
-        
       <ScrollView style={styles.scroll}>
-          <View style={styles.scrollContent}>
-            {
-              numbers.map( (item , index) => {
-                return (
-                  <WorkCard key={index} />
-                 )
-              })
-            }
-          </View>
-
-          
-
-        </ScrollView>
+        {
+          selectedIndex == 0 
+          ?
+          <KarAfarini />
+          :
+          <Karyabi />
+        }
+      </ScrollView>
 
       </Container>
       <Footer navigation={navigation} whichPage={whichPage}/>
@@ -67,9 +128,6 @@ const styles = StyleSheet.create({
   scroll : {
     flex : 1,
     marginTop : 50,
-  },
-  scrollContent : {
-    paddingTop : 20,
   }
 });
 

@@ -44,7 +44,7 @@ const EachQuestion = ({navigation, save}) => {
         <Container>
         <Text style={returnTextStyle()}>سوال</Text>
         <View>
-          <MaterialIcon size={40} color="white" name="east" />
+          <MaterialIcon size={40} color={theme.TEXT_COLOR} name="east" />
         </View>
         </Container> 
       </TouchableOpacity>
@@ -56,9 +56,9 @@ const EachQuestion = ({navigation, save}) => {
             { 
             save
             ?
-            <MaterialIcon size={40} color="white" name="bookmark" />
+            <MaterialIcon size={40} color={theme.TEXT_COLOR} name="bookmark" />
             : 
-            <MaterialIcon size={40} color="white" name="bookmark-outline" />
+            <MaterialIcon size={40} color={theme.TEXT_COLOR} name="bookmark-outline" />
             }
             
       </TouchableOpacity>

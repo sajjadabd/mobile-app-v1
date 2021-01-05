@@ -38,7 +38,7 @@ const Header = () => {
       <View style={styles.header}>
         <Searchbar>
           <TextInput style={styles.input} />
-          <MaterialICon style={styles.searchIcon} size={40} color={theme.ICON_COLOR} name="search" />
+          <MaterialICon style={styles.searchIcon} size={40} color={theme.MAIN_BACKGROUND} name="search" />
         </Searchbar>
       </View>
     </>

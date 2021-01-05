@@ -23,14 +23,19 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import Footer from '../footer/Footer';
 import { LalezarRegular } from '../utils/Fonts';
+
+
 import ProvinceModal from '../Modals/ProvinceModal';
+import NameChangeModal from '../Modals/NameChangeModal';
+import ThemeChangeModal from '../Modals/ThemeChangeModal';
+
 
 import { ActiveButton , DeactiveButton } from '../utils/Buttons';
-import NameChangeModal from '../Modals/NameChangeModal';
+
 
 import { launchImageLibrary } from 'react-native-image-picker';
 
-import { useSelector } from 'react-redux'
+import { useSelector , useDispatch } from 'react-redux'
 
 import styled from 'styled-components/native';
 
@@ -64,10 +69,13 @@ const Profile = ({ navigation }) => {
 
   const [showNameChangeModal , setShowNameChangeModal] = useState(false);
 
+  const [showThemeChangeModal , setShowThemeChangeModal] = useState(false);
+
   const whichPage = navigation.getParam('whichPage');
 
-
   const theme = useSelector(state => state.ThemeReducer.theme)
+
+  const dispatch = useDispatch();
 
   const changeSex = (title) => {
 
@@ -99,14 +107,21 @@ const Profile = ({ navigation }) => {
     setShowProvinceModal(false);
   }
 
-
+  const SubmitThemeFromModal = (data) => {
+    if(data !== undefined ) {
+      console.log(data);
+      dispatch({
+        type : data
+      })
+    }
+    setShowThemeChangeModal(false);
+  }
   
 
   return (
     <>
     <StatusBar backgroundColor={theme.BUTTON_COLOR} barStyle="light-content" />
-
-
+    
     <ProvinceModal 
     visible={showProvinceModal} 
     SubmitProvinceFromModal={SubmitProvinceFromModal}
@@ -117,9 +132,24 @@ const Profile = ({ navigation }) => {
     changeName={changeName}
     />
 
+    <ThemeChangeModal 
+    visible={showThemeChangeModal}
+    SubmitThemeFromModal={SubmitThemeFromModal}
+    />
+
     <Container>
       <Header>
-
+      <View style={styles.iconContainer}>
+        <TouchableOpacity
+        onPress={() => setShowThemeChangeModal(true)}
+        style={{ padding : 20 }}
+        >
+          <MaterialIcon 
+            size={40} 
+            color={theme.ICON_COLOR} 
+            name={'palette'} />
+          </TouchableOpacity>
+        </View>
       </Header>
       <View style={styles.insideProfile}>
         
@@ -290,6 +320,11 @@ const styles = StyleSheet.create({
     color : 'black',
     marginHorizontal : 20,
     backgroundColor : '#CEE0E5',
+  },
+  iconContainer : {
+    position : 'absolute',
+    right : 0,
+    padding : 0,
   }
 });
 

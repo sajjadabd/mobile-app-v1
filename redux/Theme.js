@@ -6,7 +6,7 @@
 // darkTheme
 
 
-export const mainTheme = {
+export const purpleTheme = {
   name: 'main',
   MAIN_BACKGROUND : '#6FA6B6' ,
   QUESTION_CONTAINER : '#51344D',
