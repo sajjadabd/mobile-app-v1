@@ -14,9 +14,11 @@ import { windowHeight , windowWidth } from '../utils/Dimensions';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 import RadioButtonRN from 'radio-buttons-react-native';
-import { LalezarRegular } from '../utils/Fonts';
+import { LalezarRegular, ShabnamMedium } from '../utils/Fonts';
 
 import styled from 'styled-components/native';
+
+import { useSelector } from 'react-redux';
 
 
 const provinces = [
@@ -89,6 +91,8 @@ const ProvinceModal = ({visible , SubmitProvinceFromModal}) => {
     setShowProvinceModal(false);
   }
 
+  const theme = useSelector(state => state.ThemeReducer.theme)
+
   return (
     <Modal 
     
@@ -118,10 +122,9 @@ const ProvinceModal = ({visible , SubmitProvinceFromModal}) => {
             }}
             style={styles.answers}
             boxStyle={{flexDirection : 'row-reverse'}}
-            textStyle={{alignSelf : 'flex-end' , fontFamily : LalezarRegular , fontSize : 20}}
-            boxActiveBgColor='rgba(255,255,255,1)'
+            textStyle={{alignSelf : 'flex-end' , fontFamily : ShabnamMedium , fontSize : 20 , color : theme.SEARCH_COLOR}}
+            boxActiveBgColor='rgba(255,255,255,0.2)'
             boxDeactiveBgColor={null}
-            textColor='black'
             icon={
               <MaterialIcon size={20} color="black" name="check" />
             }

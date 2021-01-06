@@ -1,18 +1,41 @@
 import React from 'react';
 
 import { View , Text , StyleSheet } from 'react-native'
-import { LalezarRegular } from './Fonts';
+import { LalezarRegular, ShabnamMedium } from './Fonts';
+
+import { useSelector } from 'react-redux';
 
 const EachReadingQuestion = ({question}) => {
+
+
+  const theme = useSelector(state => state.ThemeReducer.theme);
+
+  const returnQuestionTextStyle = () => {
+    return {
+      color : 'white',
+      fontSize : 35,
+      fontFamily : ShabnamMedium,
+    }
+  }
+
+
+  const returnAnswerTextStyle = () => {
+    return {
+      color : 'white',
+      fontSize : 20,
+      fontFamily : ShabnamMedium,
+    }
+  }
+
   return (
     <>
       <View style={styles.Question}>
-          <Text style={styles.myTextQuestion}>{question.question}</Text>
+          <Text style={returnQuestionTextStyle()}>{question.question}</Text>
       </View>
       
       <View style={styles.Answer}>
-          <Text style={styles.myTextAnswer}>
-          {question.answer}
+          <Text style={returnAnswerTextStyle()}>
+            {question.answer}
           </Text>
       </View>
     </>

@@ -16,7 +16,7 @@ import { windowHeight , windowWidth } from '../utils/Dimensions';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 import Footer from '../footer/Footer';
-import { LalezarRegular } from '../utils/Fonts';
+import { LalezarRegular, ShabnamMedium } from '../utils/Fonts';
 import SubChapter from '../utils/SubChapter';
 
 
@@ -112,6 +112,16 @@ const Chapters = ({ navigation }) => {
     }
   }
 
+
+  const examButtonStyle = () => {
+    return {
+      backgroundColor : theme.MAIN_BACKGROUND,
+      paddingHorizontal : 20,
+      paddingVertical : 10,
+      borderRadius : 10,
+    }
+  }
+
   return (
     <>
       <StatusBar backgroundColor={theme.BUTTON_COLOR} barStyle="light-content" />
@@ -175,7 +185,7 @@ const styles = StyleSheet.create({
   myText : {
     color : 'white',
     fontSize : 55,
-    fontFamily : LalezarRegular,
+    fontFamily : ShabnamMedium,
   },
   scroll : {
     flex : 1,

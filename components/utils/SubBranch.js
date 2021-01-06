@@ -10,6 +10,7 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import styled from 'styled-components/native';
 
 import { useSelector } from 'react-redux';
+import { LalezarRegular, ShabnamMedium } from './Fonts';
 
 
 const Container = styled.View`
@@ -27,7 +28,7 @@ const Container = styled.View`
 
 
 const TextBlock = styled.Text`
-  font-family : 'Lalezar-Regular';
+  font-family : 'ShabnamMedium';
   font-size : windowWidth / 13;
   color : 'white';
 `
@@ -38,8 +39,8 @@ const SubBranch = ({navigation, save}) => {
 
   const returnTextStyle = () => {
     return {
-      fontFamily : 'Lalezar-Regular',
-      fontSize : windowWidth / 13,
+      fontFamily : ShabnamMedium,
+      fontSize : windowWidth / 15,
       color : theme.TEXT_COLOR,
     }
   }
@@ -90,7 +91,7 @@ const styles = StyleSheet.create({
     backgroundColor : 'black',
   },
   subtitle : {
-    fontFamily : 'Lalezar-Regular',
+    fontFamily : ShabnamMedium,
     fontSize : windowWidth / 13,
     color : 'white',
   },  

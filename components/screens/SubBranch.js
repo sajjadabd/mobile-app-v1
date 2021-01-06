@@ -16,7 +16,7 @@ import { windowHeight , windowWidth } from '../utils/Dimensions';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 import Footer from '../footer/Footer';
-import { LalezarRegular } from '../utils/Fonts';
+import { LalezarRegular, ShabnamMedium } from '../utils/Fonts';
 
 import styled from 'styled-components/native';
 
@@ -56,8 +56,8 @@ const SubBranch = ({ navigation }) => {
   const returnTextStyle = () => {
     return {
       color : theme.TEXT_COLOR,
-      fontSize : 45,
-      fontFamily : LalezarRegular,
+      fontSize : 30,
+      fontFamily : ShabnamMedium,
     }
   }
 
@@ -79,27 +79,29 @@ const SubBranch = ({ navigation }) => {
           <Text style={returnTitleTextStyle()}>زیر شاخه</Text>
         </Header>
 
-        <TouchableOpacity
-          onPress={() => navigation.navigate('Chapters')}
-        >
+        <View style={styles.touchableContainer}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('Chapters')}
+          >
+            <BlockButton>
+              <View style={styles.iconContainer}>
+                <MaterialIcon size={80} color={theme.TEXT_COLOR} name="list-alt" />
+              </View>
+              <Text style={returnTextStyle()}>نمونه سوالات</Text>
+            </BlockButton>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={() => navigation.navigate('Exam')}
+          >
           <BlockButton>
             <View style={styles.iconContainer}>
-              <MaterialIcon size={80} color={theme.TEXT_COLOR} name="list-alt" />
+              <MaterialIcon size={80} color={theme.TEXT_COLOR} name="edit" />
             </View>
-            <Text style={returnTextStyle()}>نمونه سوالات</Text>
+            <Text style={returnTextStyle()}>آزمون جامع</Text>
           </BlockButton>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          onPress={() => navigation.navigate('Exam')}
-        >
-        <BlockButton>
-          <View style={styles.iconContainer}>
-            <MaterialIcon size={80} color={theme.TEXT_COLOR} name="edit" />
-          </View>
-          <Text style={returnTextStyle()}>آزمون جامع</Text>
-        </BlockButton>
-        </TouchableOpacity>
+          </TouchableOpacity>
+        </View>
 
       </Container>
       <Footer navigation={navigation} whichPage={whichPage}/>
@@ -145,6 +147,10 @@ const styles = StyleSheet.create({
     position : 'absolute',
     left : 10,
     top : -30,
+  },
+  touchableContainer : {
+    flex : 1,
+    justifyContent : 'center',
   }
 });
 

@@ -22,7 +22,7 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import Footer from '../footer/Footer';
-import { LalezarRegular } from '../utils/Fonts';
+import { LalezarRegular, ShabnamMedium } from '../utils/Fonts';
 
 
 import ProvinceModal from '../Modals/ProvinceModal';
@@ -308,8 +308,8 @@ const styles = StyleSheet.create({
   infoText : {
     paddingHorizontal : 20,
     paddingVertical : 10,
-    fontSize : 25,
-    fontFamily : LalezarRegular,
+    fontSize : 20,
+    fontFamily : ShabnamMedium,
   } ,
   dropDownItem : {
     color : 'black',

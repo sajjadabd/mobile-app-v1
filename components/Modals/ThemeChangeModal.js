@@ -18,6 +18,8 @@ import { LalezarRegular } from '../utils/Fonts';
 
 import styled from 'styled-components/native';
 
+import { useSelector } from 'react-redux';
+
 import {
   PURPLE_THEME , 
   DARK_BLUE_THEME , 
@@ -67,6 +69,8 @@ const CloseButton = styled.View`
 
 const ThemeChangeModal = ({visible , SubmitThemeFromModal}) => {
 
+  const theme = useSelector(state => state.ThemeReducer.theme)
+
   return (
     <Modal 
     animationType="slide"
@@ -97,8 +101,8 @@ const ThemeChangeModal = ({visible , SubmitThemeFromModal}) => {
             }}
             style={styles.answers}
             boxStyle={{flexDirection : 'row-reverse'}}
-            textStyle={{alignSelf : 'flex-end' , fontFamily : LalezarRegular , fontSize : 20}}
-            boxActiveBgColor='rgba(255,255,255,1)'
+            textStyle={{alignSelf : 'flex-end' , fontFamily : LalezarRegular , fontSize : 20 , color : theme.SEARCH_COLOR}}
+            boxActiveBgColor='rgba(255,255,255,0.2)'
             boxDeactiveBgColor={null}
             textColor='black'
             icon={

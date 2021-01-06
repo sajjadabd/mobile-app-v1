@@ -14,10 +14,12 @@ import { windowHeight , windowWidth } from '../utils/Dimensions';
 
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
-import { LalezarRegular } from '../utils/Fonts';
+import { LalezarRegular, ShabnamMedium } from '../utils/Fonts';
 
 
 import styled from 'styled-components/native';
+
+import { useSelector } from 'react-redux';
 
 const Container = styled.View`
   background-color : ${props => props.theme.MAIN_BACKGROUND};
@@ -38,6 +40,18 @@ const NameChangeModal = ({visible , changeName}) => {
 
   const [name , setName] = useState('');
 
+  const theme = useSelector(state => state.ThemeReducer.theme);
+
+
+  const returnTextStyle = () => {
+    return {
+      fontFamily : ShabnamMedium ,
+      fontSize : 20,
+      marginBottom : 10,
+      color : theme.SEARCH_COLOR
+    }
+  }
+
   return (
     <>
     <Modal visible={visible}>
@@ -54,7 +68,7 @@ const NameChangeModal = ({visible , changeName}) => {
         </TouchableOpacity>
 
         <View style={styles.wrapper}>
-          <Text style={styles.myText}>
+          <Text style={returnTextStyle()}>
             نام جدید خود را وارد کنید :
           </Text>
           <TextInput 
@@ -89,7 +103,7 @@ const styles = StyleSheet.create({
     marginVertical : 20,
   },
   myText : {
-    fontFamily : LalezarRegular ,
+    fontFamily : ShabnamMedium ,
     fontSize : 20,
     marginBottom : 10,
   },
@@ -98,7 +112,7 @@ const styles = StyleSheet.create({
     backgroundColor : '#E5E5E5',
     borderWidth : 2,
     borderRadius : 35,
-    fontFamily : LalezarRegular ,
+    fontFamily : ShabnamMedium ,
     fontSize : 25,
     paddingHorizontal : 30,
     paddingVertical : 10,

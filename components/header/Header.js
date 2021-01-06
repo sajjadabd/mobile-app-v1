@@ -16,6 +16,7 @@ import MaterialICon from 'react-native-vector-icons/MaterialIcons';
 import styled from 'styled-components/native';
 
 import { useSelector } from 'react-redux';
+import { ShabnamMedium } from '../utils/Fonts';
 
 const Searchbar = styled.View`
   background-color : ${props => props.theme.SEARCH_COLOR};
@@ -61,9 +62,9 @@ const styles = StyleSheet.create({
     textAlign : 'right',
   },
   input : {
-    fontSize : 25,
+    fontSize : 20,
     height : 70,
-    fontFamily : 'Lalezar-Regular',
+    fontFamily : ShabnamMedium,
     flex : 1,
   }, 
   searchIcon : {

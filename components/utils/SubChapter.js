@@ -4,7 +4,7 @@ import { View , Text, TouchableOpacity, StyleSheet } from 'react-native'
 
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
-import { LalezarRegular } from '../utils/Fonts';
+import { LalezarRegular, ShabnamMedium } from '../utils/Fonts';
 
 
 import styled from 'styled-components/native';
@@ -22,7 +22,7 @@ const SeasonButton = styled.View`
 
 
 const ExamButton = styled.View`
-
+  
 `
 
 
@@ -55,8 +55,8 @@ const SubChapter = ({navigation , item , index , changeSelectedExams}) => {
     const seasonTextStyle = () => {
       return {
         color : theme.TEXT_COLOR,
-        fontSize : 45,
-        fontFamily : LalezarRegular,
+        fontSize : 35,
+        fontFamily : ShabnamMedium,
       }
     }
 
@@ -65,8 +65,19 @@ const SubChapter = ({navigation , item , index , changeSelectedExams}) => {
       return {
         color : theme.TEXT_COLOR,
         fontSize : 25,
-        fontFamily : LalezarRegular,
+        fontFamily : ShabnamMedium,
         alignSelf : 'flex-start',
+      }
+    }
+
+
+
+    const returnExamTextStyle = () => {
+      return {
+        color : 'white',
+        fontSize : 20,
+        fontFamily : ShabnamMedium,
+        alignSelf : 'flex-end',
       }
     }
 
@@ -78,7 +89,7 @@ const SubChapter = ({navigation , item , index , changeSelectedExams}) => {
             onPress={() => changeSelectedExams(index)}
             style={styles.icon}>
                 <MaterialIcon size={80} color="white" name="list-alt" />
-                <Text style={styles.examText}>آزمون</Text>
+                <Text style={returnExamTextStyle()}>آزمون</Text>
             </TouchableOpacity>
           </View>
           

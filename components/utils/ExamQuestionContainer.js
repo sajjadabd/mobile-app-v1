@@ -7,18 +7,40 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 import RadioButtonRN from 'radio-buttons-react-native';
 
+import { useSelector } from 'react-redux';
+
 // import Slider from '@react-native-community/slider';
 
-import { LalezarRegular } from './Fonts';
+import { LalezarRegular, ShabnamMedium } from './Fonts';
 
 
 
 
 const ExamQuestionContainer = ({radioButtonsData , color}) => {
+
+      const theme = useSelector(state => state.ThemeReducer.theme)
+
+      const returnQuestionTextStyle = () => {
+        return {
+          color : 'white',
+          fontSize : 35,
+          fontFamily : ShabnamMedium,
+        }
+      }
+    
+    
+      const returnAnswerTextStyle = () => {
+        return {
+          color : 'white',
+          fontSize : 20,
+          fontFamily : ShabnamMedium,
+        }
+      }
+
       return (
         <View style={{backgroundColor : color}}>
           <View style={styles.Question}>
-              <Text style={styles.myTextQuestion}>سوال</Text>
+              <Text style={returnQuestionTextStyle()}>سوال</Text>
           </View>
           
           {/* <View style={styles.Answer}>
@@ -34,7 +56,7 @@ const ExamQuestionContainer = ({radioButtonsData , color}) => {
               selectedBtn={() => null}
               style={styles.answers}
               boxStyle={{flexDirection : 'row-reverse'}}
-              textStyle={{alignSelf : 'flex-end' , fontFamily : LalezarRegular}}
+              textStyle={{alignSelf : 'flex-end' , fontFamily : ShabnamMedium , fontSize : 15}}
               boxActiveBgColor='dodgerblue'
               boxDeactiveBgColor={null}
               textColor='white'

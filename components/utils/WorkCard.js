@@ -10,7 +10,7 @@ import {
 
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
-import { LalezarRegular } from '../utils/Fonts';
+import { LalezarRegular, ShabnamMedium } from '../utils/Fonts';
 
 import { windowHeight, windowWidth } from '../utils/Dimensions';
 
@@ -30,7 +30,7 @@ const Item = styled.View`
 
 const TextBlock = styled.Text`
     color : ${props => props.theme.TEXT_COLOR};
-    font-family : LalezarRegular;
+    font-family : 'ShabnamMedium';
     font-size : 25px;
 `
 
@@ -42,8 +42,8 @@ const WorkCard = () => {
 
   const returnTextStyle = () => {
     return {
-      fontFamily : 'Lalezar-Regular',
-      fontSize : windowWidth / 13,
+      fontFamily : ShabnamMedium,
+      fontSize : windowWidth / 17,
       color : theme.TEXT_COLOR,
     }
   }
