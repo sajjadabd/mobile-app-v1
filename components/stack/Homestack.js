@@ -16,6 +16,7 @@ import SubBranch from '../screens/SubBranch';
 import Chapters from '../screens/Chapters';
 import Exam from '../screens/Exam';
 import Reading from '../screens/Reading';
+import Standard from '../screens/Standard';
 
 const screens = {
   Homepage : {
@@ -91,6 +92,21 @@ const screens = {
   },
   Branch : {
     screen : Branch ,
+    navigationOptions : {
+      title : '' , 
+      header : () => null ,
+      headerStyle : {
+        backgroundColor : '#51344D',
+      },
+      headerTintColor: 'white',
+      headerTitleStyle: {
+        color: 'white',
+        fontFamily : 'Lalezar-Regular'
+      }
+    }
+  },
+  Standard : {
+    screen : Standard ,
     navigationOptions : {
       title : '' , 
       header : () => null ,

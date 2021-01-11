@@ -19,9 +19,9 @@ import styled from 'styled-components/native';
 
 import { windowHeight , windowWidth } from '../utils/Dimensions';
 import SubBranch from '../utils/SubBranch';
-import { FlatList } from 'react-native-gesture-handler';
 
 import Footer from '../footer/Footer';
+import EachStandard from '../utils/EachStandard';
 import SubChapterLogo from '../utils/SubChapterLogo';
 
 
@@ -30,48 +30,15 @@ const Container = styled.View`
   flex : 1;
 `
 
-
-const numbers = [ 
-  {
-    title : 'زیر شاخه'
-  },
-  {
-    title : 'زیر شاخه'
-  },
-  {
-    title : 'زیر شاخه'
-  },
-  {
-    title : 'زیر شاخه'
-  },
-  {
-    title : 'زیر شاخه'
-  },
-  {
-    title : 'زیر شاخه'
-  },
-  {
-    title : 'زیر شاخه'
-  },
-  {
-    title : 'زیر شاخه'
-  },
-  {
-    title : 'زیر شاخه'
-  },
-  {
-    title : 'زیر شاخه'
-  },
-];
-
-
-const Branch = ({ navigation }) => {
+const Standard = ({ navigation }) => {
 
   const theme = useSelector(state => state.ThemeReducer.theme)
 
-  // const title = navigation.getParam('title');
-  // const logo = navigation.getParam('logo');
-  // const items = navigation.getParam('items');
+  const numbers = [1,2,3,4,5,6,7,8,9,10];
+
+  const title = navigation.getParam('title');
+  const logo = navigation.getParam('logo');
+  const items = navigation.getParam('items');
 
   const whichPage = navigation.getParam('whichPage');
 
@@ -86,7 +53,7 @@ const Branch = ({ navigation }) => {
 
         <ScrollView >
 
-          {/* <SubChapterLogo title={title} logo={logo} /> */}
+          <SubChapterLogo title={title} logo={logo} />
 
           <View style={styles.braches}>
 
@@ -100,7 +67,7 @@ const Branch = ({ navigation }) => {
             {
               numbers.map( (item , index) => {
                 return (
-                  <SubBranch key={index} navigation={navigation} title={item.title} />
+                  <EachStandard key={index} navigation={navigation} />
                 )
               })
             }
@@ -145,4 +112,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default Branch;
+export default Standard;

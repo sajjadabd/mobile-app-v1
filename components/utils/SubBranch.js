@@ -33,9 +33,10 @@ const TextBlock = styled.Text`
   color : 'white';
 `
 
-const SubBranch = ({navigation, save}) => {
+const SubBranch = ({navigation, save , title}) => {
 
   const theme = useSelector(state => state.ThemeReducer.theme)
+
 
   const returnTextStyle = () => {
     return {
@@ -48,7 +49,7 @@ const SubBranch = ({navigation, save}) => {
   return (
     <View style={styles.container}>
       <TouchableOpacity 
-        onPress={ () => navigation.navigate('SubBranch') }>
+        onPress={ () => navigation.navigate('Standard' , { title }) }>
         <Container>
         <Text style={returnTextStyle()}>زیر شاخه</Text>
         <View>

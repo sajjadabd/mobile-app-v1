@@ -91,7 +91,7 @@ const Work = ({ navigation }) => {
         borderColor='transparent'
         buttonMargin={0}
         borderRadius={0}
-        animationDuration={300}
+        animationDuration={100}
         textStyle={switchTextStyle()}
         selectedTextStyle={switchSelectedTextStyle()}
         hasPadding={true}

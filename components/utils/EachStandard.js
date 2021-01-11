@@ -4,13 +4,14 @@ import { View , Text , TouchableOpacity , StyleSheet } from 'react-native';
 
 import { windowWidth } from './Dimensions';
 
+
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 import styled from 'styled-components/native';
 
+import { useSelector } from 'react-redux';
+import { LalezarRegular, ShabnamMedium } from './Fonts';
 
-import { useSelector } from 'react-redux'; 
-import { ShabnamMedium } from './Fonts';
 
 const Container = styled.View`
   padding-left : 30px;
@@ -26,14 +27,20 @@ const Container = styled.View`
 `
 
 
-const EachQuestion = ({navigation, save}) => {
+const TextBlock = styled.Text`
+  font-family : 'ShabnamMedium';
+  font-size : windowWidth / 13;
+  color : 'white';
+`
+
+const EachStandard = ({navigation, save}) => {
 
   const theme = useSelector(state => state.ThemeReducer.theme)
 
   const returnTextStyle = () => {
     return {
       fontFamily : ShabnamMedium,
-      fontSize : windowWidth / 13,
+      fontSize : windowWidth / 15,
       color : theme.TEXT_COLOR,
     }
   }
@@ -43,11 +50,11 @@ const EachQuestion = ({navigation, save}) => {
       <TouchableOpacity 
         onPress={ () => navigation.navigate('SubBranch') }>
         <Container>
-        <Text style={returnTextStyle()}>سوال</Text>
+        <Text style={returnTextStyle()}>استاندارد</Text>
         <View>
           <MaterialIcon size={40} color={theme.TEXT_COLOR} name="east" />
         </View>
-        </Container> 
+        </Container>
       </TouchableOpacity>
       <View style={styles.save}>
       <TouchableOpacity
@@ -86,7 +93,7 @@ const styles = StyleSheet.create({
   subtitle : {
     fontFamily : ShabnamMedium,
     fontSize : windowWidth / 13,
-    color : 'black',
+    color : 'white',
   },  
   save : {
     position : 'absolute',
@@ -97,4 +104,5 @@ const styles = StyleSheet.create({
   }
 });
 
-export default EachQuestion
+export default EachStandard
+
