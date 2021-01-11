@@ -1,4 +1,4 @@
-import React , { useState } from 'react';
+import React , { useState , useRef } from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -23,7 +23,6 @@ import SwitchSelector from "react-native-switch-selector";
 import { LalezarRegular } from '../utils/Fonts';
 
 
-
 const options = [
   { label: "کارآفرینی", value: "karafarini" },
   { label: "کاریابی", value: "karyabi" },
@@ -32,7 +31,6 @@ const options = [
 
 const Container = styled.View`
   flex : 1;
-  justify-content : space-between;
   background-color  : ${props => props.theme.MAIN_BACKGROUND};
 `
 
@@ -53,6 +51,7 @@ const Work = ({ navigation }) => {
     } else {
       index = 0;
     }
+    console.log(selectedIndex , index);
     setSelectedIndex(index);
   };
 
@@ -77,6 +76,11 @@ const Work = ({ navigation }) => {
       fontFamily : LalezarRegular,
     }
   }
+
+
+  
+
+
 
   return (
     <>
@@ -103,17 +107,20 @@ const Work = ({ navigation }) => {
 
       
       <Container>
-      <ScrollView style={styles.scroll}>
-        {
-          selectedIndex == 0 
-          ?
-          <KarAfarini />
-          :
-          <Karyabi />
-        }
-      </ScrollView>
+        <View style={styles.scroll}>
+          <ScrollView style={styles.scrollContent}>
+            {
+              selectedIndex == 0 
+              ?
+              <KarAfarini />
+              :
+              <Karyabi  />
+            }
+          </ScrollView>
+        </View>
 
       </Container>
+
       <Footer navigation={navigation} whichPage={whichPage}/>
     </>
   )
@@ -122,12 +129,14 @@ const Work = ({ navigation }) => {
 const styles = StyleSheet.create({
   body : {
     flex : 1,
-    justifyContent : 'space-between',
-    backgroundColor  : '#6FA6B6'
   },
   scroll : {
     flex : 1,
-    marginTop : 50,
+  },
+  scrollContent : {
+    flex : 1,
+    
+
   }
 });
 

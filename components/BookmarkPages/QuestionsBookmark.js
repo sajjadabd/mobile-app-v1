@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
     fontSize : 20,
   },
   scrollContent : {
-    paddingTop : 20,
+    paddingTop : 40,
   },
 });
 

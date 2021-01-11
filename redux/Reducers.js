@@ -5,7 +5,8 @@ import {
   DARK_GREEN_THEME , 
   DARK_THEME , 
   MAGENTA_THEME , 
-  GRAY_THEME 
+  GRAY_THEME ,
+  ORANGE_THEME
 } from './Actions'
 
 
@@ -15,11 +16,12 @@ import {
   darkGreenTheme ,
   darkTheme ,
   magentaTheme ,
-  grayTheme
+  grayTheme ,
+  orangeTheme
 } from './Theme'
 
 const initialState = {
-  theme: { ...grayTheme }
+  theme: { ...orangeTheme }
 }
 
 let newState = {};
@@ -60,6 +62,12 @@ const ThemeReducer = (state = initialState, action) => {
       newState = {
         ...state,
         theme: { ...grayTheme }
+      }
+    return newState
+    case ORANGE_THEME :
+      newState = {
+        ...state,
+        theme: { ...orangeTheme }
       }
     return newState
     default:

@@ -111,3 +111,21 @@ export const grayTheme = {
 
 
 
+
+
+export const orangeTheme = {
+  name: 'orange',
+  MAIN_BACKGROUND : '#e8e8e8' ,
+  QUESTION_CONTAINER : '#595959',
+  QUESTION_BACKGROUND : '#e8e8e8',
+  HEADER : '#BBBFC6' ,
+  FOOTER : '#595959' ,
+  BUTTON_COLOR : '#F26522',
+  SEARCH_COLOR : '#a5a5a5' ,
+  ICON_COLOR : '#FFFFFF',
+  TEXT_COLOR : '#02181f',
+  WHITE_COLOR : '#ffffff',
+  BLACK_COLOR : '#000000'
+}
+
+
