@@ -33,7 +33,7 @@ const EachQuestion = ({navigation, save}) => {
   const returnTextStyle = () => {
     return {
       fontFamily : ShabnamMedium,
-      fontSize : windowWidth / 13,
+      fontSize : windowWidth / 15,
       color : theme.TEXT_COLOR,
     }
   }

@@ -11,7 +11,7 @@ import { ShabnamMedium } from '../utils/Fonts';
 import styled from 'styled-components/native';
 import AddWorkModal from '../Modals/AddWorkModal';
 
-
+import { useSelector } from 'react-redux';
 
 
 const Button = styled.View`
@@ -30,10 +30,21 @@ const Container = styled.View`
 
 const KarAfarini = () => {
 
+  const theme = useSelector(state => state.ThemeReducer.theme)
+
   const [showAddWorkModal , setShowAddWorkModal] = useState(false);
 
   const addWork = () => {
     setShowAddWorkModal(false)
+  }
+
+
+  const retunTextStyle = () => {
+    return {
+      fontSize : 20,
+      fontFamily : ShabnamMedium,
+      color : theme.TEXT_COLOR
+    }
   }
   
   return (
@@ -47,7 +58,7 @@ const KarAfarini = () => {
         <TouchableOpacity
         onPress={() => setShowAddWorkModal(true)}>
           <Button>
-            <Text style={styles.myText}>
+            <Text style={retunTextStyle()}>
               ایجاد شغل
             </Text>
           </Button>

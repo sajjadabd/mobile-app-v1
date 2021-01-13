@@ -26,7 +26,8 @@ import {
   DARK_GREEN_THEME , 
   DARK_THEME , 
   MAGENTA_THEME , 
-  GRAY_THEME 
+  GRAY_THEME, 
+  ORANGE_THEME 
 } from '../../redux/Actions';
 
 
@@ -48,6 +49,9 @@ const themes = [
   },
   {
     label: GRAY_THEME
+  },
+  {
+    label : ORANGE_THEME
   }
 ];
 
