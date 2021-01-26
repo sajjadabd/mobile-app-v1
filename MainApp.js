@@ -53,9 +53,9 @@ const MainApp = () => {
 
   const ThemeContext = createContext(theme);
 
-  const [splash , setSplash] = useState(true);
+  const [splash , setSplash] = useState(false);
 
-  const [phoneReady , setPhoneReady]   = useState(false);
+  const [phoneReady , setPhoneReady]   = useState(true);
 
   useEffect( () => {
     const doTheJob = async () => {
@@ -81,7 +81,9 @@ const MainApp = () => {
         // console.log('3')
       }
     }
-    doTheJob();
+
+    // doTheJob();
+    
     // setTimeout( () => {
     //   setSplash(false);
     // } , 1000)
@@ -91,7 +93,7 @@ const MainApp = () => {
     return (
       <Splashscreen />
     );
-  } else if( phoneReady == false) {
+  } else if( phoneReady == false ) {
     return (
       <Phone setPhoneReady={setPhoneReady}/>
     );

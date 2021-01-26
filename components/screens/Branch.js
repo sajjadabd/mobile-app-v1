@@ -9,6 +9,7 @@ import {
   StatusBar,
   Image,
   TouchableOpacity,
+  ImageBackground
 } from 'react-native';
 
 import Header from '../header/Header';
@@ -23,6 +24,7 @@ import { FlatList } from 'react-native-gesture-handler';
 
 import Footer from '../footer/Footer';
 import SubChapterLogo from '../utils/SubChapterLogo';
+
 
 
 const Container = styled.View`
@@ -80,15 +82,21 @@ const Branch = ({ navigation }) => {
     <StatusBar backgroundColor={theme.MAIN_BACKGROUND} barStyle="light-content" />
     
     <Container>
-      <Header />
+      <ImageBackground
+      style={styles.image}
+      source={require('../images/bg.png') }
+      >
 
-      <View style={styles.body}>
+        
+          <Header />
 
-        <ScrollView >
+          <View style={styles.body}>
 
-          {/* <SubChapterLogo title={title} logo={logo} /> */}
+          <ScrollView >
 
-          <View style={styles.braches}>
+            {/* <SubChapterLogo title={title} logo={logo} /> */}
+
+            <View style={styles.braches}>
 
             {/* <FlatList
               style={styles.list}
@@ -99,20 +107,25 @@ const Branch = ({ navigation }) => {
 
             {
               numbers.map( (item , index) => {
-                return (
-                  <SubBranch key={index} navigation={navigation} title={item.title} />
-                )
+              return (
+                <SubBranch key={index} navigation={navigation} title={item.title} />
+              )
               })
             }
 
+            </View>
+
+          </ScrollView>
+          
           </View>
 
-        </ScrollView>
+          <Footer navigation={navigation} whichPage={whichPage}/>
         
-      </View>
+      
 
-      <Footer navigation={navigation} whichPage={whichPage}/>
-    </Container>
+      </ImageBackground>
+
+      </Container>
     </>
   )
 }
@@ -136,12 +149,24 @@ const styles = StyleSheet.create({
     marginLeft : 80,
     marginTop : 40,
     flex : 1,
-  } , 
+  }, 
   list : {
     marginBottom : 2,
     // borderColor : 'yellow',
     // borderWidth : 2,
     flex : 1,
+  },
+  image: {
+    flex : 1,
+    width: '100%',
+    height: '100%',
+    resizeMode : 'cover',
+  },
+  test : {
+    flex : 1,
+    justifyContent : 'center',
+    alignItems : 'center',
+    // backgroundColor : 'blue',
   }
 });
 
