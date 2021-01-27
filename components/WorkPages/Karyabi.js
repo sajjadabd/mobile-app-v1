@@ -4,7 +4,53 @@ import { View , StyleSheet } from 'react-native'
 
 import WorkCard from '../utils/WorkCard';
 
-const numbers = [1,2,3,4,5,6,7,8,9,10];
+import LinearGradient from 'react-native-linear-gradient';
+
+
+const numbers = [
+  {
+    name : 'محمد اکبری',
+    main_skill : 'جوشکاری',
+    city : 'ساری',
+    image : 'https://randomuser.me/api/portraits/men/20.jpg'
+  },
+  {
+    name : 'مرتضی علوی',
+    main_skill : 'کامپیوتر',
+    city : 'نکا',
+    image : 'https://randomuser.me/api/portraits/men/43.jpg'
+  },
+  {
+    name : 'پیمان احسانی',
+    main_skill : 'فلزکاری',
+    city : 'بهشهر',
+    image : 'https://randomuser.me/api/portraits/men/11.jpg'
+  },
+  {
+    name : 'نگار آشکاران',
+    main_skill : 'خیاطی',
+    city : 'نکا',
+    image : 'https://randomuser.me/api/portraits/women/64.jpg'
+  },
+  {
+    name : 'ستاره یعقوبی',
+    main_skill : 'آرایشگری',
+    city : 'بابل',
+    image : 'https://randomuser.me/api/portraits/women/57.jpg'
+  },
+  {
+    name : 'هادی امامی',
+    main_skill : 'برق کاری',
+    city : 'بابلسر',
+    image : 'https://randomuser.me/api/portraits/men/1.jpg'
+  },
+  {
+    name : 'مریم گرجی',
+    main_skill : 'آشپزی',
+    city : 'چالوس',
+    image : 'https://randomuser.me/api/portraits/women/68.jpg'
+  }
+];
 
 const Karyabi = () => {
   return (
@@ -13,7 +59,7 @@ const Karyabi = () => {
         {
           numbers.map( (item , index) => {
             return (
-              <WorkCard key={index} />
+              <WorkCard key={index} item={item} />
             )
           })
         }

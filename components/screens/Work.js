@@ -6,7 +6,8 @@ import {
   View,
   Text,
   StatusBar,
-  PixelRatio
+  PixelRatio,
+  ImageBackground
 } from 'react-native';
 import Footer from '../footer/Footer';
 
@@ -21,6 +22,7 @@ import KarAfarini from '../WorkPages/KarAfarini';
 
 import SwitchSelector from "react-native-switch-selector";
 import { LalezarRegular } from '../utils/Fonts';
+
 
 
 const options = [
@@ -107,6 +109,12 @@ const Work = ({ navigation }) => {
 
       
       <Container>
+
+        <ImageBackground
+        style={styles.image}
+        source={require('../images/bg.png') }
+        >
+
         <View style={styles.scroll}>
           <ScrollView style={styles.scrollContent}>
             {
@@ -119,6 +127,8 @@ const Work = ({ navigation }) => {
           </ScrollView>
         </View>
 
+        </ImageBackground>
+
       </Container>
 
       <Footer navigation={navigation} whichPage={whichPage}/>
@@ -130,13 +140,17 @@ const styles = StyleSheet.create({
   body : {
     flex : 1,
   },
+  image: {
+    flex : 1,
+    width: '100%',
+    height: '100%',
+    resizeMode : 'cover',
+  },
   scroll : {
     flex : 1,
   },
   scrollContent : {
     flex : 1,
-    
-
   }
 });
 

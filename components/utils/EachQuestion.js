@@ -12,6 +12,9 @@ import styled from 'styled-components/native';
 import { useSelector } from 'react-redux'; 
 import { ShabnamMedium } from './Fonts';
 
+import LinearGradient from 'react-native-linear-gradient';
+
+
 const Container = styled.View`
   padding-left : 30px;
   padding-right : 30px;
@@ -35,6 +38,9 @@ const EachQuestion = ({navigation, save}) => {
       fontFamily : ShabnamMedium,
       fontSize : windowWidth / 15,
       color : theme.TEXT_COLOR,
+      position : 'absolute',
+      paddingHorizontal : 20,
+      paddingVertical : 20,
     }
   }
 
@@ -42,13 +48,25 @@ const EachQuestion = ({navigation, save}) => {
     <View style={styles.container}>
       <TouchableOpacity 
         onPress={ () => navigation.navigate('SubBranch') }>
-        <Container>
-        <Text style={returnTextStyle()}>سوال</Text>
-        <View>
-          <MaterialIcon size={40} color={theme.TEXT_COLOR} name="east" />
-        </View>
-        </Container> 
+        <LinearGradient 
+        colors={['rgba(255,255,255,0.1)', 'rgba(255,255,255,0.2)', 'rgba(255,255,255,0.7)']} style={styles.card}
+        >
+        
+        </LinearGradient>
       </TouchableOpacity>
+
+
+      <Text style={returnTextStyle()}>سوال</Text>
+      
+      <View style={styles.eastIcon}>
+        <TouchableOpacity
+        onPress={ () => navigation.navigate('SubBranch') }
+        >
+        <MaterialIcon size={40} color={theme.TEXT_COLOR} name="east" />
+        </TouchableOpacity>
+      </View>
+
+
       <View style={styles.save}>
       <TouchableOpacity
       onPress={() => null}
@@ -72,6 +90,20 @@ const styles = StyleSheet.create({
   container : {
     marginBottom : 20,
   },
+  card : {
+    paddingLeft : 30,
+    paddingRight : 30,
+    marginBottom : 20,
+    flexDirection : 'row',
+    justifyContent : 'space-between',
+    alignItems : 'center',
+    height : 100,
+    borderTopLeftRadius : 20,
+    opacity : 0.7,
+    borderWidth : 1,
+    borderStyle : 'solid',
+    borderColor : 'white',
+  },
   branch : {
     paddingHorizontal : 30,
     marginBottom : 20,
@@ -88,6 +120,13 @@ const styles = StyleSheet.create({
     fontSize : windowWidth / 13,
     color : 'black',
   },  
+  eastIcon : {
+    position : 'absolute',
+    right : 0,
+    bottom : 0,
+    paddingVertical : 30,
+    paddingHorizontal : 20,
+  },
   save : {
     position : 'absolute',
     bottom : 0,

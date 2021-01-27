@@ -9,6 +9,7 @@ import {
   Image,
   StatusBar,
   PixelRatio,
+  ImageBackground,
   Modal
 } from 'react-native';
 
@@ -35,7 +36,7 @@ import { ActiveButton , DeactiveButton } from '../utils/Buttons';
 
 import { launchImageLibrary } from 'react-native-image-picker';
 
-import { useSelector , useDispatch } from 'react-redux'
+import { useSelector , useDispatch } from 'react-redux';
 
 import styled from 'styled-components/native';
 
@@ -55,7 +56,7 @@ const defaultProvince = 'مازندران';
 
 const Profile = ({ navigation }) => {
 
-  const [imageURI , setImageURI] = useState('https://reactjs.org/logo-og.png');
+  const [imageURI , setImageURI] = useState('https://randomuser.me/api/portraits/women/67.jpg');
 
   const [province , setProvince] = useState(defaultProvince);
 
@@ -138,11 +139,23 @@ const Profile = ({ navigation }) => {
     />
 
     <Container>
+
+      <ImageBackground
+      style={styles.image}
+      source={require('../images/bg.png') }
+      >
+
       <Header>
+
+      <ImageBackground
+      style={styles.image}
+      source={require('../images/night.jpg') }
+      >
+      
       <View style={styles.iconContainer}>
         <TouchableOpacity
         onPress={() => setShowThemeChangeModal(true)}
-        style={{ padding : 20 }}
+        style={styles.pallete}
         >
           <MaterialIcon 
             size={40} 
@@ -150,7 +163,12 @@ const Profile = ({ navigation }) => {
             name={'palette'} />
           </TouchableOpacity>
         </View>
+
+      </ImageBackground>
+
       </Header>
+
+
       <View style={styles.insideProfile}>
         
         <View style={styles.profilePictureContainer}>
@@ -239,6 +257,9 @@ const Profile = ({ navigation }) => {
         </View>
         
       </View>
+
+      </ImageBackground>
+
     </Container>
 
     <Footer navigation={navigation} whichPage={whichPage}/>
@@ -256,6 +277,19 @@ const styles = StyleSheet.create({
   header : {
     backgroundColor  : 'blue',
     flex : 1,
+  },
+  iconContainer : {
+    position : 'absolute' ,
+    right : -windowWidth / 10 ,
+    top : -windowWidth / 10 ,
+  },
+  pallete : {
+    backgroundColor : 'black',
+    borderRadius : windowWidth / 2 / PixelRatio.get(),
+    paddingRight : 50 ,
+    paddingTop : 50 ,
+    paddingBottom : 20,
+    paddingLeft : 20,
   },
   insideProfile : {
     flex : 3,
@@ -321,11 +355,12 @@ const styles = StyleSheet.create({
     marginHorizontal : 20,
     backgroundColor : '#CEE0E5',
   },
-  iconContainer : {
-    position : 'absolute',
-    right : 0,
-    padding : 0,
-  }
+  image: {
+    flex : 1,
+    width: '100%',
+    height: '100%',
+    resizeMode : 'cover',
+  },
 });
 
 

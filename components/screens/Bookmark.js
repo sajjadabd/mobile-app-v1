@@ -5,6 +5,7 @@ import {
   View,
   Text,
   StatusBar,
+  ImageBackground
 } from 'react-native';
 import Footer from '../footer/Footer';
 
@@ -26,7 +27,6 @@ const options = [
 
 
 const Container = styled.View`
-  padding-left : 50px;
   flex : 7;
   background-color  : ${props => props.theme.MAIN_BACKGROUND};
 `
@@ -115,6 +115,12 @@ const Bookmark = ({ navigation }) => {
 
       <Container>
 
+        <ImageBackground
+          style={styles.image}
+          source={require('../images/bg.png') }
+        >
+        
+
         <ScrollView style={styles.scroll}>
           
           {
@@ -128,12 +134,16 @@ const Bookmark = ({ navigation }) => {
 
         </ScrollView>
 
+        <Footer navigation={navigation} whichPage={whichPage} />
+        
+        
+        </ImageBackground>
 
       </Container>
       
       
     </View>
-    <Footer navigation={navigation} whichPage={whichPage} />
+    
     </>
   )
 }
@@ -189,7 +199,13 @@ const styles = StyleSheet.create({
     height : '100%',
     justifyContent : 'center',
     alignItems : 'center',
-  }
+  },
+  image: {
+    flex : 1,
+    width: '100%',
+    height: '100%',
+    resizeMode : 'cover',
+  },
 });
 
 

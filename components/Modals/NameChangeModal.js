@@ -7,6 +7,7 @@ import {
   TextInput,
   Modal , 
   TouchableOpacity , 
+  ImageBackground,
   ScrollView, TouchableOpacityBase 
 } from 'react-native';
 
@@ -55,7 +56,13 @@ const NameChangeModal = ({visible , changeName}) => {
   return (
     <>
     <Modal visible={visible}>
+      
       <Container>
+
+      <ImageBackground
+      style={styles.image}
+      source={require('../images/bg.png') }
+      >
 
         <TouchableOpacity
           onPress={() => changeName()}>
@@ -83,6 +90,8 @@ const NameChangeModal = ({visible , changeName}) => {
           </TouchableOpacity>
         </View>
         
+        </ImageBackground>
+
       </Container>
       </Modal>
     </>
@@ -136,7 +145,13 @@ const styles = StyleSheet.create({
     marginHorizontal : 20,
     paddingHorizontal : 20,
     paddingVertical : 20,
-  }
+  },
+  image: {
+    flex : 1,
+    width: '100%',
+    height: '100%',
+    resizeMode : 'cover',
+  },
 });
 
 export default NameChangeModal

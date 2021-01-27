@@ -5,7 +5,8 @@ import {
   Text , 
   StyleSheet , 
   PixelRatio ,
-  Image
+  Image,
+  TouchableOpacity
 } from 'react-native'
 
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
@@ -17,6 +18,10 @@ import { windowHeight, windowWidth } from '../utils/Dimensions';
 import styled from 'styled-components/native';
 
 import { useSelector } from 'react-redux';
+
+import LinearGradient from 'react-native-linear-gradient';
+
+
 
 const Item = styled.View`
   background-color : ${props => props.theme.BUTTON_COLOR};
@@ -36,7 +41,7 @@ const TextBlock = styled.Text`
 
 const width = 70;
 
-const WorkCard = () => {
+const WorkCard = ({ item }) => {
 
   const theme = useSelector(state => state.ThemeReducer.theme)
 
@@ -50,12 +55,22 @@ const WorkCard = () => {
 
   return (
     <>
-      <Item>
+      <TouchableOpacity
+      onPress={ () => null }
+      >
+      <LinearGradient 
+      colors={[
+        'rgba(255,255,255,0.3)', 
+        'rgba(255,255,255,0)', 
+        'rgba(255,255,255,0.3)',
+      ]} 
+      style={styles.card}
+      >
           <View style={styles.profile}>
             {/* <MaterialIcon size={50} color="black" name="person" /> */}
             <Image 
             style={styles.profilePicture}
-            source={{ uri : 'https://reactjs.org/logo-og.png' }}
+            source={{ uri : item.image }}
             />
             <View style={styles.blueTick}>
               <MaterialIcon size={width/3} color="white" name="check" />
@@ -63,14 +78,15 @@ const WorkCard = () => {
           </View>
           <View style={styles.info}>
             <View style={styles.name}>
-              <Text style={returnTextStyle()}>محمد اکبری</Text>
+              <Text style={returnTextStyle()}>{item.name}</Text>
             </View>
             <View style={styles.otherInfo}>
-              <Text style={returnTextStyle()}>ساری</Text>
-              <Text style={returnTextStyle()}>جوشکاری</Text>
+              <Text style={returnTextStyle()}>{item.city}</Text>
+              <Text style={returnTextStyle()}>{item.main_skill}</Text>
             </View>
           </View>
-      </Item>
+      </LinearGradient>
+      </TouchableOpacity>
     </>
   )
 }
@@ -140,6 +156,15 @@ const styles = StyleSheet.create({
     borderRadius : width / PixelRatio.get(),
     // resizeMode : 'contain',
   },
+  card : {
+    flex : 1,
+    padding : 20,
+    marginHorizontal : 20,
+    marginVertical : 10,
+    borderRadius : 20,
+    flexDirection : 'row',
+    justifyContent : 'space-between',
+  }
 });
 
 export default WorkCard

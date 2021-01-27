@@ -13,6 +13,10 @@ import AddWorkModal from '../Modals/AddWorkModal';
 
 import { useSelector } from 'react-redux';
 
+import LinearGradient from 'react-native-linear-gradient';
+
+import AwesomeButton from "react-native-really-awesome-button";
+
 
 const Button = styled.View`
   background-color : ${(props) => props.theme.BUTTON_COLOR};

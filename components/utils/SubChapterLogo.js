@@ -3,11 +3,16 @@ import React from 'react';
 import { View , Text , Image , StyleSheet } from 'react-native'
 import { windowHeight, windowWidth } from './Dimensions';
 
+import LinearGradient from 'react-native-linear-gradient';
+import { withTheme } from 'styled-components/native';
+
 
 const SubChapterLogo = ({ title , logo }) => {
 
   return (
-    <View style={styles.slide}>
+    <LinearGradient 
+    colors={['transparent', 'transparent', 'rgba(255,255,255,0.3)']}
+    style={styles.slide}>
         <Image
           style={styles.chapterLogo}
           source={logo}
@@ -15,7 +20,7 @@ const SubChapterLogo = ({ title , logo }) => {
         <View style={styles.information}>
           <Text style={styles.title}>{ title }</Text>
         </View>
-    </View>
+    </LinearGradient>
   )
 }
 
@@ -32,8 +37,9 @@ const styles = StyleSheet.create({
     height : 100 ,
     justifyContent : 'flex-end',
     alignContent : 'flex-end',
-    backgroundColor : '#4D7C8A',
+    // backgroundColor : '#4D7C8A',
     borderRadius : 20,
+    borderBottomColor : 'white',
     overflow : 'visible',
     position : 'relative',
   }, 

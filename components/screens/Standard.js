@@ -9,6 +9,7 @@ import {
   StatusBar,
   Image,
   TouchableOpacity,
+  ImageBackground
 } from 'react-native';
 
 import Header from '../header/Header';
@@ -23,6 +24,8 @@ import SubBranch from '../utils/SubBranch';
 import Footer from '../footer/Footer';
 import EachStandard from '../utils/EachStandard';
 import SubChapterLogo from '../utils/SubChapterLogo';
+
+
 
 
 const Container = styled.View`
@@ -47,6 +50,12 @@ const Standard = ({ navigation }) => {
     <StatusBar backgroundColor={theme.MAIN_BACKGROUND} barStyle="light-content" />
     
     <Container>
+      
+      <ImageBackground
+      style={styles.image}
+      source={require('../images/bg.png') }
+      >
+
       <Header />
 
       <View style={styles.body}>
@@ -79,6 +88,8 @@ const Standard = ({ navigation }) => {
       </View>
 
       <Footer navigation={navigation} whichPage={whichPage}/>
+
+      </ImageBackground>
     </Container>
     </>
   )
@@ -89,6 +100,12 @@ const styles = StyleSheet.create({
   container : {
     backgroundColor : 'black',
     flex : 1,
+  },
+  image: {
+    flex : 1,
+    width: '100%',
+    height: '100%',
+    resizeMode : 'cover',
   },
   body : {
     flex : 1,

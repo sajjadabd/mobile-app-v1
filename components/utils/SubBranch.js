@@ -62,12 +62,22 @@ const SubBranch = ({navigation, save , title}) => {
       <TouchableOpacity 
         onPress={ () => navigation.navigate('Standard' , { title }) }
         >
-        <LinearGradient colors={['rgba(255,255,255,0.1)', 'rgba(255,255,255,0.2)', 'rgba(255,255,255,0.7)']} style={styles.card}>
+        <LinearGradient 
+        colors={[
+          'rgba(255,255,255,0.1)', 
+          'rgba(255,255,255,0.2)', 
+          'rgba(255,255,255,0.7)'
+        ]} 
+        style={styles.card}
+        >
         
         </LinearGradient>
       </TouchableOpacity>
+      
+      
       <Text style={returnTextStyle()}>زیر شاخه</Text>
       
+
       <View style={styles.eastIcon}>
         <TouchableOpacity
         onPress={ () => navigation.navigate('Standard' , { title }) }

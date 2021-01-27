@@ -33,7 +33,9 @@ const styles = StyleSheet.create({
     fontSize : 20,
   },
   scrollContent : {
-    paddingTop : 40,
+    marginLeft : 80,
+    marginTop : 40,
+    flex : 1,
   },
 });
 

@@ -8,6 +8,7 @@ import {
   Text,
   StatusBar,
   Image,
+  ImageBackground,
   TouchableOpacity,
 } from 'react-native';
 
@@ -21,6 +22,8 @@ import { LalezarRegular, ShabnamMedium } from '../utils/Fonts';
 import styled from 'styled-components/native';
 
 import { useSelector } from 'react-redux';
+
+import LinearGradient from 'react-native-linear-gradient';
 
 
 const Header = styled.View`
@@ -75,33 +78,58 @@ const SubBranch = ({ navigation }) => {
 
       <Container>
 
+        <ImageBackground
+        style={styles.image}
+        source={require('../images/bg.png') }
+        >
+
         <Header>
           <Text style={returnTitleTextStyle()}>زیر شاخه</Text>
         </Header>
+
+        
 
         <View style={styles.touchableContainer}>
           <TouchableOpacity
             onPress={() => navigation.navigate('Chapters')}
           >
-            <BlockButton>
+            <View >
+            <LinearGradient 
+              colors={[
+                'rgba(255,255,255,0.3)', 
+                'rgba(255,255,255,0)', 
+                'rgba(255,255,255,0.3)']} 
+              style={styles.blockButton}
+            >
               <View style={styles.iconContainer}>
                 <MaterialIcon size={80} color={theme.TEXT_COLOR} name="list-alt" />
               </View>
               <Text style={returnTextStyle()}>نمونه سوالات</Text>
-            </BlockButton>
+            </LinearGradient>
+            </View>
           </TouchableOpacity>
 
           <TouchableOpacity
             onPress={() => navigation.navigate('Exam')}
           >
-          <BlockButton>
+          <View>
+            <LinearGradient 
+              colors={[
+                'rgba(255,255,255,0.3)', 
+                'rgba(255,255,255,0)', 
+                'rgba(255,255,255,0.3)']} 
+              style={styles.blockButton}
+            >
             <View style={styles.iconContainer}>
               <MaterialIcon size={80} color={theme.TEXT_COLOR} name="edit" />
             </View>
             <Text style={returnTextStyle()}>آزمون جامع</Text>
-          </BlockButton>
+            </LinearGradient>
+          </View>
           </TouchableOpacity>
         </View>
+
+        </ImageBackground>
 
       </Container>
       <Footer navigation={navigation} whichPage={whichPage}/>
@@ -151,7 +179,19 @@ const styles = StyleSheet.create({
   touchableContainer : {
     flex : 1,
     justifyContent : 'center',
-  }
+  },
+  blockButton : {
+    borderRadius : 20,
+    paddingHorizontal : 20,
+    paddingVertical : 25,
+    margin : 20,
+  },
+  image: {
+    flex : 1,
+    width: '100%',
+    height: '100%',
+    resizeMode : 'cover',
+  },
 });
 
 export default SubBranch

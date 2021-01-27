@@ -8,6 +8,7 @@ import {
   Text,
   StatusBar,
   Image,
+  ImageBackground,
   TouchableOpacity,
 } from 'react-native';
 
@@ -18,7 +19,6 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import Footer from '../footer/Footer';
 import { LalezarRegular, ShabnamMedium } from '../utils/Fonts';
 import SubChapter from '../utils/SubChapter';
-
 
 import styled from 'styled-components/native';
 
@@ -122,11 +122,25 @@ const Chapters = ({ navigation }) => {
     }
   }
 
+
+  const examButtonText = () => {
+    return {
+      color: theme.TEXT_COLOR ,
+      fontFamily : LalezarRegular ,
+    }
+  }
+
   return (
     <>
       <StatusBar backgroundColor={theme.BUTTON_COLOR} barStyle="light-content" />
 
       <Container>
+
+        <ImageBackground
+          style={styles.image}
+          source={require('../images/bg.png')}
+        >
+
         <Header>
           <Text style={returnBigTitleText()}>زیر شاخه</Text>
           
@@ -135,8 +149,8 @@ const Chapters = ({ navigation }) => {
             <TouchableOpacity
             onPress={() => navigation.navigate('Exam')}
             >
-              <View style={styles.examButton}>
-                <Text style={styles.examButtonText}>آزمون از فصل های انتخاب شده</Text>
+              <View style={examButtonStyle()}>
+                <Text style={examButtonText()}>آزمون از فصل های انتخاب شده</Text>
               </View>
             </TouchableOpacity>
             :
@@ -161,6 +175,9 @@ const Chapters = ({ navigation }) => {
         </ScrollView>
 
         <Footer navigation={navigation} whichPage={whichPage}/>
+
+        </ImageBackground>
+
       </Container>
       
     </>
@@ -203,7 +220,13 @@ const styles = StyleSheet.create({
   examButtonText : {
     color: 'white',
     fontFamily : LalezarRegular,
-  }
+  },
+  image: {
+    flex : 1,
+    width: '100%',
+    height: '100%',
+    resizeMode : 'cover',
+  },
 });
 
 export default Chapters

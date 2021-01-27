@@ -96,7 +96,7 @@ const Branch = ({ navigation }) => {
 
             {/* <SubChapterLogo title={title} logo={logo} /> */}
 
-            <View style={styles.braches}>
+            <View style={styles.branches}>
 
             {/* <FlatList
               style={styles.list}
@@ -145,7 +145,7 @@ const styles = StyleSheet.create({
     padding : 20,
     fontSize : windowWidth / 9,
   },
-  braches : {
+  branches : {
     marginLeft : 80,
     marginTop : 40,
     flex : 1,
