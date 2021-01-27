@@ -44,9 +44,7 @@ const EachStandard = ({navigation, save}) => {
       fontFamily : ShabnamMedium,
       fontSize : windowWidth / 15,
       color : theme.TEXT_COLOR,
-      position : 'absolute',
-      paddingHorizontal : 20,
-      paddingVertical : 20,
+      
     }
   }
 
@@ -61,7 +59,11 @@ const EachStandard = ({navigation, save}) => {
         </LinearGradient>
       </TouchableOpacity>
 
-      <Text style={returnTextStyle()}>استاندارد</Text>
+      <TouchableOpacity 
+      onPress={ () => navigation.navigate('SubBranch') }
+      style={styles.titleContainer}>
+        <Text style={returnTextStyle()}>استاندارد</Text>
+      </TouchableOpacity>
       
       <View style={styles.eastIcon}>
         <TouchableOpacity
@@ -93,6 +95,11 @@ const EachStandard = ({navigation, save}) => {
 const styles = StyleSheet.create({
   container : {
     marginBottom : 20,
+  },
+  titleContainer : {
+    position : 'absolute',
+    paddingHorizontal : 20,
+    paddingVertical : 20,
   },
   card : {
     paddingLeft : 30,

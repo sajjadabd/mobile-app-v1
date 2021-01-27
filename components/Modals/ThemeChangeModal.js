@@ -6,7 +6,9 @@ import {
   StyleSheet , 
   Modal , 
   TouchableOpacity , 
-  ScrollView, TouchableOpacityBase 
+  ImageBackground,
+  ScrollView, 
+  TouchableOpacityBase 
 } from 'react-native';
 
 import { windowHeight , windowWidth } from '../utils/Dimensions';
@@ -81,6 +83,11 @@ const ThemeChangeModal = ({visible , SubmitThemeFromModal}) => {
     visible={visible}>
       <Container>
 
+        <ImageBackground
+        style={styles.image}
+        source={require('../images/bg.png') }
+        >
+
         <TouchableOpacity
           onPress={() => {
             SubmitThemeFromModal()
@@ -116,6 +123,8 @@ const ThemeChangeModal = ({visible , SubmitThemeFromModal}) => {
         </View>
         </ScrollView>
 
+        </ImageBackground>
+
       </Container>
     </Modal>
   )
@@ -145,7 +154,13 @@ const styles = StyleSheet.create({
     marginHorizontal : 20,
     paddingHorizontal : 20,
     paddingVertical : 20,
-  }
+  },
+  image: {
+    flex : 1,
+    width: '100%',
+    height: '100%',
+    resizeMode : 'cover',
+  },
 });
 
 export default ThemeChangeModal

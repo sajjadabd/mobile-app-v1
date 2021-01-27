@@ -51,9 +51,6 @@ const SubBranch = ({navigation, save , title}) => {
       fontFamily : ShabnamMedium,
       fontSize : windowWidth / 15,
       color : theme.TEXT_COLOR,
-      position : 'absolute',
-      paddingHorizontal : 20,
-      paddingVertical : 20,
     }
   }
 
@@ -75,7 +72,11 @@ const SubBranch = ({navigation, save , title}) => {
       </TouchableOpacity>
       
       
-      <Text style={returnTextStyle()}>زیر شاخه</Text>
+      <TouchableOpacity 
+      onPress={ () => navigation.navigate('Standard' , { title }) }
+      style={styles.titleContainer}>
+        <Text style={returnTextStyle()}>زیر شاخه</Text>
+      </TouchableOpacity>
       
 
       <View style={styles.eastIcon}>
@@ -108,6 +109,11 @@ const SubBranch = ({navigation, save , title}) => {
 const styles = StyleSheet.create({
   container : {
     marginBottom : 20,
+  },
+  titleContainer : {
+    position : 'absolute',
+    paddingHorizontal : 20,
+    paddingVertical : 20,
   },
   card : {
     paddingLeft : 30,

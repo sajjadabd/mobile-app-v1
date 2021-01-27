@@ -61,7 +61,7 @@ const KarAfarini = () => {
       <View style={styles.container}>
         <TouchableOpacity
         onPress={() => setShowAddWorkModal(true)}>
-          <Button>
+           <Button>
             <Text style={retunTextStyle()}>
               ایجاد شغل
             </Text>
@@ -83,6 +83,13 @@ const styles = StyleSheet.create({
   myText : {
     fontSize : 20,
     fontFamily : ShabnamMedium
+  }, 
+  button : {
+    display : 'flex',
+    justifyContent : 'center',
+    alignItems : 'center',
+    borderRadius : 10,
+    padding : 10,
   }
 });
 

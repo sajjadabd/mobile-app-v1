@@ -38,9 +38,7 @@ const EachQuestion = ({navigation, save}) => {
       fontFamily : ShabnamMedium,
       fontSize : windowWidth / 15,
       color : theme.TEXT_COLOR,
-      position : 'absolute',
-      paddingHorizontal : 20,
-      paddingVertical : 20,
+      
     }
   }
 
@@ -56,7 +54,11 @@ const EachQuestion = ({navigation, save}) => {
       </TouchableOpacity>
 
 
-      <Text style={returnTextStyle()}>سوال</Text>
+      <TouchableOpacity 
+      onPress={ () => navigation.navigate('SubBranch') }
+      style={styles.titleContainer}>
+        <Text style={returnTextStyle()}>سوال</Text>
+      </TouchableOpacity>
       
       <View style={styles.eastIcon}>
         <TouchableOpacity
@@ -89,6 +91,11 @@ const EachQuestion = ({navigation, save}) => {
 const styles = StyleSheet.create({
   container : {
     marginBottom : 20,
+  },
+  titleContainer : {
+    position : 'absolute',
+    paddingHorizontal : 20,
+    paddingVertical : 20,
   },
   card : {
     paddingLeft : 30,
