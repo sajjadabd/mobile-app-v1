@@ -102,6 +102,7 @@ const SubBranch = ({navigation, save , title}) => {
               
         </TouchableOpacity>
       </View>
+      
     </View>
   )
 }

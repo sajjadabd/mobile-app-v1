@@ -25,11 +25,10 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import Footer from '../footer/Footer';
 import { LalezarRegular, ShabnamMedium } from '../utils/Fonts';
 
-
 import ProvinceModal from '../Modals/ProvinceModal';
 import NameChangeModal from '../Modals/NameChangeModal';
 import ThemeChangeModal from '../Modals/ThemeChangeModal';
-
+import CityModal from '../Modals/CityModal';
 
 import { ActiveButton , DeactiveButton } from '../utils/Buttons';
 
@@ -39,6 +38,7 @@ import { launchImageLibrary } from 'react-native-image-picker';
 import { useSelector , useDispatch } from 'react-redux';
 
 import styled from 'styled-components/native';
+
 
 const Header = styled.View`
   background-color  : ${props => props.theme.BUTTON_COLOR};
@@ -58,7 +58,9 @@ const Profile = ({ navigation }) => {
 
   const [imageURI , setImageURI] = useState('https://randomuser.me/api/portraits/women/67.jpg');
 
-  const [province , setProvince] = useState(defaultProvince);
+  const [province , setProvince] = useState('');
+
+  const [city , setCity] = useState('');
 
   const [ sex , setSex ] = useState('male');
 
@@ -67,6 +69,8 @@ const Profile = ({ navigation }) => {
   const picker = useRef();
 
   const [showProvinceModal , setShowProvinceModal] = useState(false);
+
+  const [showCityModal , setShowCityModal] = useState(false);
 
   const [showNameChangeModal , setShowNameChangeModal] = useState(false);
 
@@ -101,6 +105,13 @@ const Profile = ({ navigation }) => {
     setShowNameChangeModal(false);
   }
 
+  const SubmitCityFromModal = (data) => {
+    if(data !== undefined ) {
+      setCity(data);
+    }
+    setShowCityModal(false);
+  }
+
   const SubmitProvinceFromModal = (data) => {
     if(data !== undefined ) {
       setProvince(data);
@@ -121,8 +132,14 @@ const Profile = ({ navigation }) => {
 
   return (
     <>
-    <StatusBar backgroundColor={theme.BUTTON_COLOR} barStyle="light-content" />
+    <StatusBar backgroundColor={theme.MAIN_BACKGROUND} barStyle="light-content" />
     
+
+    <CityModal
+    visible={showCityModal} 
+    SubmitCityFromModal={SubmitCityFromModal}
+    />
+
     <ProvinceModal 
     visible={showProvinceModal} 
     SubmitProvinceFromModal={SubmitProvinceFromModal}
@@ -140,33 +157,39 @@ const Profile = ({ navigation }) => {
 
     <Container>
 
+    
+
       <ImageBackground
       style={styles.image}
       source={require('../images/bg.png') }
       >
 
+      
+
       <Header>
 
       <ImageBackground
-      style={styles.image}
-      source={require('../images/night.jpg') }
+        style={styles.image}
+        source={require('../images/night.jpg') }
       >
       
-      <View style={styles.iconContainer}>
-        <TouchableOpacity
-        onPress={() => setShowThemeChangeModal(true)}
-        style={styles.pallete}
-        >
-          <MaterialIcon 
-            size={40} 
-            color={theme.ICON_COLOR} 
-            name={'palette'} />
+        <View style={styles.iconContainer}>
+          <TouchableOpacity
+          onPress={() => setShowThemeChangeModal(true)}
+          style={styles.pallete}
+          >
+            <MaterialIcon 
+              size={40} 
+              color={'white'} 
+              name={'palette'} />
           </TouchableOpacity>
         </View>
 
       </ImageBackground>
 
       </Header>
+
+      
 
 
       <View style={styles.insideProfile}>
@@ -194,71 +217,119 @@ const Profile = ({ navigation }) => {
           {/* <Image 
           style={styles.profilePicture}
           source={require('../logo/worker.png')} /> */}
+
           <Image 
           style={styles.profilePicture}
           source={{ uri : imageURI }}
           />
+
           </TouchableOpacity>
         </View>
-        
-        
-          <View style={styles.infoContainer}>
-            
-              <View style={styles.info}>
-                <TouchableOpacity
-                onPress={() => setShowNameChangeModal(true)}
-                >
-                  <Text style={styles.infoText}>
-                    { name == '' 
-                    ?
-                    'نام خود را وارد کنید'   
-                    :
-                    name
-                    }
-                  </Text>
-                </TouchableOpacity>
-              </View>
-            
-          </View>
-        
-        
-
-
-
-        <TouchableOpacity
-        onPress={() => {setShowProvinceModal(true)}}
-        >
-          <View style={styles.info}>
-            <Text style={styles.infoText}>{province}</Text>
-          </View>
-        </TouchableOpacity>
-        
 
         
         
+        
+        <View style={styles.infoContainer}>
 
+        <ScrollView >
 
-        <View style={styles.buttonContainer}>
-          {
-            sex == 'male' ? (
-              <>
-                <ActiveButton sex={sex} title={'زن'} changeSex={changeSex} />
-                <DeactiveButton sex={sex} title={'مرد'} changeSex={changeSex}/>
-              </>
-            ) : (
-              <>
-                <DeactiveButton sex={sex} title={'زن'} changeSex={changeSex}/>
-                <ActiveButton sex={sex} title={'مرد'} changeSex={changeSex} />
-              </>
-            )
-          }
+            <View>
+              <Text style={[styles.infoText , styles.infoTextWhite]}>نام کاربری : </Text>
+            </View>
           
-                         
+            <View style={styles.info}>
+              <TouchableOpacity
+              onPress={() => setShowNameChangeModal(true)}
+              >
+                <Text style={styles.infoText}>
+                  { 
+                  name == '' 
+                  ?
+                  'نام کاربری خود را انتخاب کنید'   
+                  :
+                  name
+                  }
+                </Text>
+              </TouchableOpacity>
+            </View>
+
+            <View>
+              <Text style={[styles.infoText , styles.infoTextWhite]}>استان : </Text>
+            </View>
+
+            <View style={styles.info}>
+              <TouchableOpacity
+              onPress={() => {setShowProvinceModal(true)}}
+              >
+                  <Text style={styles.infoText}>
+                  { 
+                    province == '' 
+                    ?
+                    'نام استان خود را وارد کنید'   
+                    :
+                    province
+                  }
+                  </Text>
+              </TouchableOpacity>
+            </View>
+
+            <View>
+              <Text style={[styles.infoText , styles.infoTextWhite]}>شهر : </Text>
+            </View>
+
+            <View style={styles.info}>
+              <TouchableOpacity
+              onPress={() => {setShowCityModal(true)}}
+              >
+                  <Text style={styles.infoText}>
+                  { 
+                    city == '' 
+                    ?
+                    'نام شهر خود را وارد کنید'   
+                    :
+                    city
+                  }
+                  </Text>
+              </TouchableOpacity>
+            </View>
+
+
+            <View>
+              <Text style={[styles.infoText , styles.infoTextWhite]}>جنسیت : </Text>
+            </View>
+
+            <View style={styles.buttonContainer}>
+            {
+              sex == 'male' ? (
+                <>
+                  <ActiveButton sex={sex} title={'زن'} changeSex={changeSex} />
+                  <DeactiveButton sex={sex} title={'مرد'} changeSex={changeSex}/>
+                </>
+              ) : (
+                <>
+                  <DeactiveButton sex={sex} title={'زن'} changeSex={changeSex}/>
+                  <ActiveButton sex={sex} title={'مرد'} changeSex={changeSex} />
+                </>
+              )
+            }             
+          </View>
+
+          </ScrollView>
+          
         </View>
+
+        
+
+    
+        
         
       </View>
 
+      
+      
       </ImageBackground>
+
+      
 
     </Container>
 
@@ -297,7 +368,7 @@ const styles = StyleSheet.create({
   profilePictureContainer : {
     width : windowWidth / 2.5 ,
     height : windowWidth / 2.5 ,
-    backgroundColor : '#CEE0E5' ,
+    backgroundColor : 'transparent' ,
     borderRadius : windowWidth / 2 / PixelRatio.get(),
     position : 'absolute',
     // borderWidth : 3,
@@ -319,7 +390,7 @@ const styles = StyleSheet.create({
     fontSize : 25,
   } , 
   infoContainer : {
-    marginTop : windowHeight / 5,
+    marginTop : windowHeight / 8,
   },
   info : {
     marginHorizontal : 20,
@@ -345,6 +416,9 @@ const styles = StyleSheet.create({
     fontSize : 20,
     fontFamily : ShabnamMedium,
   } ,
+  infoTextWhite : {
+    color : 'white',
+  },
   dropDownItem : {
     color : 'black',
     textAlign : 'right',

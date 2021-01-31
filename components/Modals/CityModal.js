@@ -6,7 +6,7 @@ import {
   StyleSheet , 
   Modal , 
   TouchableOpacity , 
-  ImageBackground,
+  ImageBackground ,
   ScrollView, 
   TouchableOpacityBase 
 } from 'react-native';
@@ -22,46 +22,41 @@ import styled from 'styled-components/native';
 
 import { useSelector } from 'react-redux';
 
-import {
-  PURPLE_THEME , 
-  DARK_BLUE_THEME , 
-  DARK_GREEN_THEME , 
-  DARK_THEME , 
-  MAGENTA_THEME , 
-  GRAY_THEME, 
-  ORANGE_THEME 
-} from '../../redux/Actions';
 
-
-const themes = [
+const cities = [
   {
-    text : DARK_BLUE_THEME,
-    label : 'تم آبی تیره'
+    label: 'بهشهر'
   },
   {
-    text : DARK_GREEN_THEME,
-    label : 'تم سبز تیره'
+    label: 'نکا'
   },
   {
-    text : DARK_THEME,
-    label : 'تم تیره'
+    label: 'ساری'
   },
   {
-    text : MAGENTA_THEME,
-    label : 'تم سرخ'
+    label: 'بابل'
   },
   {
-    text : GRAY_THEME,
-    label : 'تم خاکستری'
+    label: 'بابلسر'
   },
   {
-    text  : ORANGE_THEME,
-    label : 'تم برمآموز'
+    label: 'نور'
   },
   {
-    text : PURPLE_THEME,
-    label : 'تم بنفش تیره'
+    label: 'چالوس'
   },
+  {
+    label: 'فریدونکنار'
+  },
+  {
+    label: 'محمود آباد'
+  },
+  {
+    label: 'تنکابن'
+  },
+  {
+    label: 'رامسر'
+  }
 ];
 
 
@@ -80,7 +75,11 @@ const CloseButton = styled.View`
 `
 
 
-const ThemeChangeModal = ({visible , SubmitThemeFromModal}) => {
+const CityModal = ({visible , SubmitCityFromModal}) => {
+
+  const SubmitCity = (e) => {
+    setShowCityModal(false);
+  }
 
   const theme = useSelector(state => state.ThemeReducer.theme)
 
@@ -88,6 +87,7 @@ const ThemeChangeModal = ({visible , SubmitThemeFromModal}) => {
     <Modal 
     animationType="slide"
     visible={visible}>
+      
       <Container>
 
         <ImageBackground
@@ -96,9 +96,7 @@ const ThemeChangeModal = ({visible , SubmitThemeFromModal}) => {
         >
 
         <TouchableOpacity
-          onPress={() => {
-            SubmitThemeFromModal()
-          }}>
+          onPress={() => SubmitCityFromModal()}>
           <CloseButton>
           <Text
           style={styles.buttonText}>
@@ -108,26 +106,20 @@ const ThemeChangeModal = ({visible , SubmitThemeFromModal}) => {
         </TouchableOpacity>
       
         <ScrollView>
-        <View style={styles.themes}>
+        <View style={styles.provinces}>
           <RadioButtonRN
-            data={themes}
+            data={cities}
             animationTypes={['shake']}
             selectedBtn={(e) => {
               setTimeout( () => {
-                SubmitThemeFromModal(e.text);
+                SubmitCityFromModal(e.label);
               },500);
             }}
             style={styles.answers}
             boxStyle={{flexDirection : 'row-reverse'}}
-            textStyle={{ 
-              alignSelf : 'flex-end' , 
-              fontFamily : ShabnamMedium , 
-              fontSize : 20 , 
-              color : theme.TEXT_COLOR
-            }}
+            textStyle={{alignSelf : 'flex-end' , fontFamily : ShabnamMedium , fontSize : 20 , color : theme.SEARCH_COLOR}}
             boxActiveBgColor='rgba(255,255,255,0.2)'
             boxDeactiveBgColor={null}
-            textColor='black'
             icon={
               <MaterialIcon size={20} color="black" name="check" />
             }
@@ -162,7 +154,7 @@ const styles = StyleSheet.create({
     fontSize : 30,
     fontFamily : LalezarRegular,
   },
-  themes : {
+  provinces : {
     marginHorizontal : 20,
     paddingHorizontal : 20,
     paddingVertical : 20,
@@ -175,4 +167,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ThemeChangeModal
+export default CityModal

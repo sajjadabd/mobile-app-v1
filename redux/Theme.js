@@ -104,7 +104,7 @@ export const grayTheme = {
   BUTTON_COLOR : '#BBBFC6',
   SEARCH_COLOR : '#F4F4F2' ,
   ICON_COLOR : '#495464',
-  TEXT_COLOR : '#02181f',
+  TEXT_COLOR : '#F4F4F2',
   WHITE_COLOR : '#FFFFFF',
   BLACK_COLOR : '#000000'
 }
@@ -115,15 +115,15 @@ export const grayTheme = {
 
 export const orangeTheme = {
   name: 'orange',
-  MAIN_BACKGROUND : '#e8e8e8' ,
+  MAIN_BACKGROUND : '#595959' ,
   QUESTION_CONTAINER : '#595959',
   QUESTION_BACKGROUND : '#e8e8e8',
   HEADER : '#BBBFC6' ,
-  FOOTER : '#595959' ,
+  FOOTER : '#F26522' ,
   BUTTON_COLOR : '#F26522',
   SEARCH_COLOR : '#a5a5a5' ,
   ICON_COLOR : '#FFFFFF',
-  TEXT_COLOR : '#02181f',
+  TEXT_COLOR : '#e8e8e8',
   WHITE_COLOR : '#ffffff',
   BLACK_COLOR : '#000000'
 }

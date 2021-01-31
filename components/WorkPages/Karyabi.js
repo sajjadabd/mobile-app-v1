@@ -49,7 +49,21 @@ const numbers = [
     main_skill : 'آشپزی',
     city : 'چالوس',
     image : 'https://randomuser.me/api/portraits/women/68.jpg'
-  }
+  },
+  {
+    name : 'نسترن عقیلی',
+    main_skill : 'خراطی',
+    city : 'رامسر',
+    image : 'https://randomuser.me/api/portraits/women/0.jpg'
+  },
+  {
+    name : 'صابر دوستدار',
+    main_skill : 'صافکاری',
+    city : 'بهشهر',
+    image : 'https://randomuser.me/api/portraits/men/81.jpg'
+  },
+
+  
 ];
 
 const Karyabi = () => {
