@@ -2,10 +2,18 @@ import React from 'react';
 
 import axios from 'axios';
 
-import { View , Text , StyleSheet , TouchableOpacity } from 'react-native'
+import { 
+  View , 
+  Text , 
+  StyleSheet , 
+  TouchableOpacity ,
+  TextInput ,
+} from 'react-native'
 import { LalezarRegular } from '../utils/Fonts'
 
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+
+import { useSelector } from 'react-redux';
 
 import { setData  } from '../AsyncStorage/SecureStorage'
 
@@ -35,8 +43,11 @@ const requestToServerForConfirmSms = async (phoneNumber , sms) => {
 }
 
 
-const SmsInput = ({phoneNumber , sms , scrollSwiper , setPhoneReady}) => {
+const SmsInput = ({phoneNumber , sms , setSMS , scrollSwiper , setPhoneReady}) => {
   
+
+  const theme = useSelector(state => state.ThemeReducer.theme)
+
   const savePhoneAndSms = async (phoneNumber , sms) => {
     let result = await requestToServerForConfirmSms(phoneNumber , sms);
    
@@ -63,11 +74,19 @@ const SmsInput = ({phoneNumber , sms , scrollSwiper , setPhoneReady}) => {
         </View>
 
         <View style={styles.phoneNumberMessage}>
-          <Text style={styles.myText}>کد دریافت شده را وارد کنید</Text>
+          <Text style={[styles.myText , { color : theme.TEXT_COLOR}]}>کد دریافت شده را وارد کنید</Text>
         </View>
 
         <View style={styles.phoneNumberShow}>
-          <Text style={styles.myPhoneNumberText}>{sms}</Text>
+          {/* <Text style={styles.myPhoneNumberText}>{sms}</Text> */}
+
+          <TextInput
+            style={styles.textInputStyle}
+            onChangeText={text => setSMS(text)}
+            value={sms}
+            keyboardType='number-pad'
+          />
+
           {
             sms.length >= 6
             ?
@@ -76,15 +95,15 @@ const SmsInput = ({phoneNumber , sms , scrollSwiper , setPhoneReady}) => {
               savePhoneAndSms(phoneNumber , sms);
             }}
             >
-            <View style={styles.next}>
-                <MaterialIcon size={40} color="black" name={'arrow-forward'} />
-            </View>
+              <View style={styles.next}>
+                  <MaterialIcon size={40} color={theme.TEXT_COLOR} name={'arrow-forward'} />
+              </View>
             </TouchableOpacity>
             :
             null
           }
         </View>
-        <View style={styles.bottomLine}></View>
+        {/* <View style={styles.bottomLine}></View> */}
       </View>
     </>
   )
@@ -95,21 +114,30 @@ const styles = StyleSheet.create({
     // backgroundColor : 'purple',
     paddingTop : 10,
     alignItems : 'center',
-    flex : 1,
+    // flex : 1,
   }, 
   phoneNumberMessage : {
     // backgroundColor : 'gray',
+    paddingBottom : 20,
     justifyContent : 'center',
     alignItems : 'center',
     flexDirection : 'row',
-    flex : 1,
+    // flex : 1,
   },
   phoneNumberShow : {
     // backgroundColor : 'gray',
     justifyContent : 'center',
     alignItems : 'center',
     flexDirection : 'row',
+    // flex : 1,
+  },
+  textInputStyle : {
     flex : 1,
+    fontSize : 20,
+    borderWidth : 1,
+    marginHorizontal : 20,
+    paddingHorizontal : 10,
+    backgroundColor : 'white',
   },
   myPhoneNumberText : {
     fontSize : 40,
@@ -136,6 +164,7 @@ const styles = StyleSheet.create({
     justifyContent : 'center',
     alignItems : 'center',
     borderRadius : 10,
+    marginBottom : 20,
   }, 
   buttonText : {
     fontSize : 20,
@@ -145,7 +174,8 @@ const styles = StyleSheet.create({
     paddingVertical : 5,
   },
   next : {
-    padding : 10,
+    // paddingVertical : 10,
+    paddingHorizontal : 30,
     // backgroundColor : 'gray'
   }
 })

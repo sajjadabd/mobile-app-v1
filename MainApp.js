@@ -53,9 +53,9 @@ const MainApp = () => {
 
   const ThemeContext = createContext(theme);
 
-  const [splash , setSplash] = useState(false);
+  const [splash , setSplash] = useState(true);
 
-  const [phoneReady , setPhoneReady]   = useState(true);
+  const [phoneReady , setPhoneReady]   = useState(false);
 
   useEffect( () => {
     const doTheJob = async () => {
@@ -68,21 +68,21 @@ const MainApp = () => {
           if ( result && result.success == true ) {
             setSplash(false);
             setPhoneReady(true);
-            // console.log('1')
+            console.log('1')
           } else {
             setSplash(false);
             setPhoneReady(false);
-            // console.log('2')
+            console.log('2')
           }
           
       } else {
         // removeData();
         setSplash(false);
-        // console.log('3')
+        console.log('3')
       }
     }
 
-    // doTheJob();
+    doTheJob();
     
     // setTimeout( () => {
     //   setSplash(false);
