@@ -6,7 +6,8 @@ import {
   StyleSheet , 
   TouchableOpacity ,
   TextInput ,
-  SafeAreaView
+  SafeAreaView ,
+  Image
 } from 'react-native'
 
 import {
@@ -16,7 +17,7 @@ import {
   useClearByFocusCell,
 } from 'react-native-confirmation-code-field';
 
-import { LalezarRegular } from '../utils/Fonts'
+import { LalezarRegular, ShabnamMedium, UbuntoMedium } from '../utils/Fonts'
 
 import axios from 'axios';
 
@@ -25,6 +26,7 @@ import { useSelector } from 'react-redux';
 
 
 import { GET_SMS_URL } from '../URL/Urls';
+import { windowHeight, windowWidth } from '../utils/Dimensions';
 
 const requestToServerForSms = async (phoneNumber) => {
   console.log(phoneNumber)
@@ -67,7 +69,11 @@ const NumberInput = ({phoneNumber , setPhoneNumber , scrollSwiper}) => {
     if( phoneNumber.length < 11 ) {
       return (
         <>
-          <Text style={[styles.myText , { color : theme.TEXT_COLOR}]}>شماره موبایل خود را وارد کنید</Text>
+          {/* <Text style={[styles.myText , { color : theme.TEXT_COLOR}]}>شماره موبایل خود را وارد کنید</Text> */}
+          <Image
+            style={styles.logo}
+            source={require('../logo/phone.png')}
+          />
         </>
       )
     } else {
@@ -75,9 +81,11 @@ const NumberInput = ({phoneNumber , setPhoneNumber , scrollSwiper}) => {
         <>
         <View style={styles.button}>
           <TouchableOpacity
-          onPress={() => {
-            sendSms(phoneNumber);
-          }}
+          onPress={
+            () => {
+              sendSms(phoneNumber);
+            }
+          }
           >
             <Text style={styles.buttonText}>
               دریافت کد تایید
@@ -93,16 +101,21 @@ const NumberInput = ({phoneNumber , setPhoneNumber , scrollSwiper}) => {
     <>
       <View style={styles.phoneNumber}>
         <View style={styles.phoneNumberMessage}>
-          {checkPhoneNumber()}
+          {/* {checkPhoneNumber()} */}
+          <Text style={[styles.myText , { color : theme.TEXT_COLOR}]}>شماره موبایل خود را وارد کنید</Text>
         </View>
         <View style={styles.phoneNumberShow}>
           {/* <Text style={styles.myPhoneNumberText}>{phoneNumber}</Text> */}
-          {/* <TextInput 
+          {
+          /*
+          <TextInput 
             style={styles.textInputStyle}
             onChangeText={text => setPhoneNumber(text)}
             value={phoneNumber}
             keyboardType='number-pad'
-          /> */}
+          />
+          */
+          }
           <SafeAreaView style={phoneStyle.root}>
             {/* <Text style={phoneStyle.title}>Social Security number</Text> */}
             <CodeField
@@ -115,7 +128,9 @@ const NumberInput = ({phoneNumber , setPhoneNumber , scrollSwiper}) => {
               keyboardType="number-pad"
               textContentType="oneTimeCode"
               renderCell={({index, symbol, isFocused}) => (
-                <Fragment key={index}>
+                <Fragment 
+                  key={index} 
+                >
                   <Text
                     key={`value-${index}`}
                     style={[phoneStyle.cell, isFocused && phoneStyle.focusCell]}
@@ -129,6 +144,10 @@ const NumberInput = ({phoneNumber , setPhoneNumber , scrollSwiper}) => {
               )}
             />
           </SafeAreaView>
+        </View>
+
+        <View style={styles.getSmsCode}>
+          {checkPhoneNumber()}
         </View>
         {/* <View style={styles.bottomLine}></View> */}
       </View>
@@ -184,7 +203,7 @@ const styles = StyleSheet.create({
   },
   myText : {
     fontSize : 25,
-    fontFamily : LalezarRegular,
+    fontFamily : ShabnamMedium,
     alignSelf : 'center',
     paddingHorizontal : 10,
     paddingVertical : 5,
@@ -197,10 +216,21 @@ const styles = StyleSheet.create({
   }, 
   buttonText : {
     fontSize : 25,
-    fontFamily : LalezarRegular,
+    fontFamily : ShabnamMedium,
     color : 'white',
-    paddingHorizontal : 10,
-    paddingVertical : 5,
+    paddingHorizontal : 20,
+    paddingVertical : 10,
+  },
+  getSmsCode : {
+    paddingTop : 30,
+    justifyContent : 'center',
+    alignItems : 'center',
+    flexDirection : 'row',
+  },
+  logo : {
+    width : windowWidth  ,
+    height : windowHeight / 3 - 50,
+    resizeMode : 'contain',
   }
 })
 
@@ -218,15 +248,18 @@ const phoneStyle = StyleSheet.create({
     marginTop: 20
   },
   cell: {
-    width: 30,
-    height: 35,
-    lineHeight: 35,
-    fontSize: 30,
-    borderWidth: 2,
+    width: 28,
+    height: 32,
+    lineHeight: 30,
+    fontSize: 23,
+    fontFamily : UbuntoMedium,
     borderRadius: 3,
-    borderColor: '#00000030',
-    backgroundColor : 'white',
+    borderBottomWidth : 2,
+    borderBottomColor: 'white',
+    backgroundColor : 'rgba(255,255,255,0.1)',
     textAlign: 'center',
+    alignSelf : 'center',
+    color : 'white',
   },
   separator: {
     height: 2,
@@ -237,7 +270,7 @@ const phoneStyle = StyleSheet.create({
   },
   focusCell: {
     borderColor: 'white',
-  },
+  }
 });
 
 export default NumberInput

@@ -6,7 +6,7 @@ import {
   StyleSheet , 
   PixelRatio , 
   ImageBackground ,
-  StatusBar
+  StatusBar ,
 } from 'react-native';
 
 import { windowHeight , windowWidth } from '../utils/Dimensions';
