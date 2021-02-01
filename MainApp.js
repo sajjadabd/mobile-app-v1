@@ -53,7 +53,7 @@ const MainApp = () => {
 
   const ThemeContext = createContext(theme);
 
-  const [splash , setSplash] = useState(false);
+  const [splash , setSplash] = useState(true);
 
   const [phoneReady , setPhoneReady]   = useState(false);
 

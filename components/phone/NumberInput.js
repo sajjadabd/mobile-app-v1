@@ -26,6 +26,7 @@ import { useSelector } from 'react-redux';
 
 
 import { GET_SMS_URL } from '../URL/Urls';
+
 import { windowHeight, windowWidth } from '../utils/Dimensions';
 
 const requestToServerForSms = async (phoneNumber) => {
@@ -42,7 +43,7 @@ const requestToServerForSms = async (phoneNumber) => {
       }
     });
   } catch (e) {
-    
+    console.log("Error Happens for sending sms ...");
   }
 }
 

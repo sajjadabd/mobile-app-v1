@@ -54,7 +54,7 @@ const requestToServerForConfirmSms = async (phoneNumber , sms) => {
     console.log(result.data);
     return result.data;
   } catch (e) {
-    console.log("Error on Request to Server...")
+    console.log("Error on Request to Server ...")
   }
 }
 
