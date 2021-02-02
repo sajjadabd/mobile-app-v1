@@ -52,9 +52,7 @@ const MainApp = () => {
   const theme = useSelector(state => state.ThemeReducer.theme)
 
   const ThemeContext = createContext(theme);
-
   const [splash , setSplash] = useState(true);
-
   const [phoneReady , setPhoneReady]   = useState(false);
 
   useEffect( () => {
@@ -74,7 +72,6 @@ const MainApp = () => {
             setPhoneReady(false);
             console.log('2');
           }
-          
       } else {
         // removeData();
         setSplash(false);
