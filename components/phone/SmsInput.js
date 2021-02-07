@@ -21,6 +21,9 @@ import {
   useClearByFocusCell,
 } from 'react-native-confirmation-code-field';
 
+import Circle from 'react-native-progress/Circle'
+
+import CircleSnail from 'react-native-progress/CircleSnail'
 
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
@@ -64,6 +67,9 @@ const SmsInput = ({phoneNumber , sms , setSMS , scrollSwiper , setPhoneReady}) =
 
   const theme = useSelector(state => state.ThemeReducer.theme)
 
+
+  const [send, setSend] = useState(false);
+
   const [value, setValue] = useState('');
   const ref = useBlurOnFulfill({value, cellCount: CELL_COUNT});
   const [props, getCellOnLayoutHandler] = useClearByFocusCell({
@@ -74,13 +80,16 @@ const SmsInput = ({phoneNumber , sms , setSMS , scrollSwiper , setPhoneReady}) =
 
 
   const savePhoneAndSms = async (phoneNumber , sms) => {
+    setSend(true);
     let result = await requestToServerForConfirmSms(phoneNumber , sms);
-   
+    
     console.log(result.success)
     if( result && result.success == true ) {
       // console.log("There is Success")
       await setData(phoneNumber , sms);
       setPhoneReady(true);
+    } else {
+      setSend(false);
     }
   }
   
@@ -145,16 +154,24 @@ const SmsInput = ({phoneNumber , sms , setSMS , scrollSwiper , setPhoneReady}) =
             {
               sms.length >= 4
               ?
-              <TouchableOpacity
-              onPress={() => {
-                savePhoneAndSms(phoneNumber , sms);
-              }}
-              >
-                <View style={styles.next}>
-                    <Text style={styles.enterButtonText}>ورود</Text>
-                    <MaterialIcon size={40} color={theme.BLACK_COLOR} name={'arrow-forward'} />
-                </View>
-              </TouchableOpacity>
+                send == false 
+                ?
+                <TouchableOpacity
+                onPress={() => {
+                  savePhoneAndSms(phoneNumber , sms);
+                }}
+                >
+                  <View style={styles.next}>
+                      <Text style={styles.enterButtonText}>ورود</Text>
+                      <MaterialIcon size={40} color={theme.BLACK_COLOR} name={'arrow-forward'} />
+                  </View>
+                </TouchableOpacity>
+                :
+                <CircleSnail
+                  style={styles.progressBar} 
+                  size={50} 
+                  color={[ '#ffffff' , '#f3f3f3' ]}
+                />    
               :
               <Image
                 style={styles.logo}
@@ -268,6 +285,9 @@ const styles = StyleSheet.create({
     height : windowHeight / 3 - 50,
     marginTop : 40,
     resizeMode : 'contain',
+  },
+  progressBar : {
+    marginTop : 20,
   }
 })
 
@@ -305,7 +325,7 @@ const smsStyle = StyleSheet.create({
   focusCell: {
     borderBottomColor: '#007AFF',
     borderBottomWidth: 2,
-  },
+  }
 });
 
 export default SmsInput

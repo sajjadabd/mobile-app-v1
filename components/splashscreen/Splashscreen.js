@@ -17,6 +17,10 @@ import {
   Image
 } from 'react-native';
 
+import Circle from 'react-native-progress/Circle'
+
+import CircleSnail from 'react-native-progress/CircleSnail'
+
 
 const Splashscreen = () => {
 
@@ -29,6 +33,18 @@ const Splashscreen = () => {
             style={styles.logo}
             source={require("../logo/logo.png")}
           />
+
+          {/* <Circle 
+          style={styles.progressBar} 
+          size={30} 
+          indeterminate={true} /> */}
+
+          <CircleSnail
+          style={styles.progressBar} 
+          size={50} 
+          color={[ '#595959' , '#F26522' ]}
+          />
+
         </View>
         
       </View>
@@ -67,6 +83,9 @@ const styles = StyleSheet.create({
   logoContainer : {
     justifyContent : 'center',
     alignItems : 'center',
+  },
+  progressBar : {
+    marginTop : 40,
   }
 });
 

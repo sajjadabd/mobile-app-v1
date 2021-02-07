@@ -16,6 +16,8 @@ import Phone from './components/phone/Phone';
 
 import axios from 'axios';
 
+
+
 import { useSelector , useDispatch } from 'react-redux'
 
 import { CONFIRM_SMS_URL } from './components/URL/Urls';
@@ -24,6 +26,7 @@ import { getData , removeData , existsData } from './components/AsyncStorage/Sec
 
 
 import { ThemeProvider } from 'styled-components';
+
 
 
 const requestToServerForConfirmSms = async (userInfo) => {
@@ -59,24 +62,25 @@ const MainApp = () => {
     const doTheJob = async () => {
       // await removeData();
       let userInfo = await getData();
-      console.log(userInfo);
+      console.log('userInfo : ' , userInfo);
       let result = await requestToServerForConfirmSms(userInfo);
       console.log(result);
       if( userInfo && userInfo.phoneNumber && userInfo.sms ) {
           if ( result && result.success == true ) {
             setSplash(false);
             setPhoneReady(true);
-            console.log('1');
+            console.log(1);
           } else {
             setSplash(false);
             setPhoneReady(false);
-            console.log('2');
+            console.log(2);
           }
       } else {
         // removeData();
         setSplash(false);
-        console.log('3');
+        console.log(3);
       }
+      console.log(4)
     }
 
     doTheJob();
