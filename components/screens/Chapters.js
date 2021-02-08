@@ -74,6 +74,7 @@ const Container = styled.View`
 const Chapters = ({ navigation }) => {
 
   const whichPage = navigation.getParam('whichPage');
+  const seasons = navigation.getParam('seasons');
 
   const [chapters , setChapters] = useState(listOfChapters);
 
@@ -161,7 +162,7 @@ const Chapters = ({ navigation }) => {
 
         <ScrollView style={styles.scroll}>
             <View style={styles.scrollContent}>
-            {chapters.map( ( item , index ) => {
+            {seasons.map( ( item , index ) => {
                 return (
                     <SubChapter 
                     key={index} 

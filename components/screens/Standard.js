@@ -41,7 +41,8 @@ const Standard = ({ navigation }) => {
 
   const title = navigation.getParam('title');
   const logo = navigation.getParam('logo');
-  const items = navigation.getParam('items');
+  const standards = navigation.getParam('standards');
+  const branch = navigation.getParam('branch');
 
   const whichPage = navigation.getParam('whichPage');
 
@@ -52,8 +53,8 @@ const Standard = ({ navigation }) => {
     <Container>
       
       <ImageBackground
-      style={styles.image}
-      source={require('../images/bg.png') }
+        style={styles.image}
+        source={require('../images/bg.png')}
       >
 
       <Header />
@@ -62,7 +63,7 @@ const Standard = ({ navigation }) => {
 
         <ScrollView >
 
-          <SubChapterLogo title={title} logo={logo} />
+          <SubChapterLogo title={branch} logo={logo} />
 
           <View style={styles.braches}>
 
@@ -74,9 +75,13 @@ const Standard = ({ navigation }) => {
             /> */}
 
             {
-              numbers.map( (item , index) => {
+              standards.map( (item , index) => {
                 return (
-                  <EachStandard key={index} navigation={navigation} />
+                  <EachStandard 
+                  key={index} 
+                  navigation={navigation} 
+                  item={item} 
+                  />
                 )
               })
             }

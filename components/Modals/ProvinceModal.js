@@ -104,7 +104,7 @@ const ProvinceModal = ({visible , SubmitProvinceFromModal}) => {
 
         <ImageBackground
         style={styles.image}
-        source={require('../images/bg.png') }
+        source={require('../images/bg.png')}
         >
 
         <TouchableOpacity

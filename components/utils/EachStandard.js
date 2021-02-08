@@ -35,39 +35,53 @@ const TextBlock = styled.Text`
   color : 'white';
 `
 
-const EachStandard = ({navigation, save}) => {
+const EachStandard = ({navigation, save , item}) => {
 
   const theme = useSelector(state => state.ThemeReducer.theme)
+
+
+  const standardData = {
+    seasons : item.seasons
+  }
 
   const returnTextStyle = () => {
     return {
       fontFamily : ShabnamMedium,
       fontSize : windowWidth / 15,
       color : theme.TEXT_COLOR,
-      
     }
   }
 
   return (
     <View style={styles.container}>
       <TouchableOpacity 
-        onPress={ () => navigation.navigate('SubBranch') }>
+        onPress={ () => navigation.navigate('SubBranch' , standardData ) }>
         <LinearGradient 
-        colors={['rgba(255,255,255,0.1)', 'rgba(255,255,255,0.2)', 'rgba(255,255,255,0.7)']} style={styles.card}
+        colors=
+          {[
+           'rgba(255,255,255,0.1)', 
+           'rgba(255,255,255,0.2)', 
+           'rgba(255,255,255,0.7)' 
+          ]} 
+          style={styles.card}
         >
           
         </LinearGradient>
       </TouchableOpacity>
 
       <TouchableOpacity 
-      onPress={ () => navigation.navigate('SubBranch') }
+      onPress={ () => navigation.navigate('SubBranch' , standardData) }
       style={styles.titleContainer}>
-        <Text style={returnTextStyle()}>استاندارد</Text>
+        <Text style={returnTextStyle()}>
+          {
+            item.standard
+          }
+        </Text>
       </TouchableOpacity>
       
       <View style={styles.eastIcon}>
         <TouchableOpacity
-        onPress={ () => navigation.navigate('SubBranch') }
+          onPress={ () => navigation.navigate('SubBranch' , standardData) }
         >
         <MaterialIcon size={40} color={theme.TEXT_COLOR} name="east" />
         </TouchableOpacity>
@@ -75,17 +89,16 @@ const EachStandard = ({navigation, save}) => {
 
       <View style={styles.save}>
       <TouchableOpacity
-      onPress={() => null}
-      style={styles.saveButton}
+        onPress={() => null}
+        style={styles.saveButton}
       >
-            { 
-            save
-            ?
-            <MaterialIcon size={40} color={theme.TEXT_COLOR} name="bookmark" />
-            : 
-            <MaterialIcon size={40} color={theme.TEXT_COLOR} name="bookmark-outline" />
-            }
-            
+        {
+        save
+        ?
+        <MaterialIcon size={40} color={theme.TEXT_COLOR} name="bookmark" />
+        : 
+        <MaterialIcon size={40} color={theme.TEXT_COLOR} name="bookmark-outline" />
+        }
       </TouchableOpacity>
       </View>
     </View>

@@ -45,7 +45,7 @@ const EachQuestion = ({navigation, save}) => {
   return (
     <View style={styles.container}>
       <TouchableOpacity 
-        onPress={ () => navigation.navigate('SubBranch') }>
+        onPress={ () => navigation.navigate('Reading') }>
         <LinearGradient 
         colors={['rgba(255,255,255,0.1)', 'rgba(255,255,255,0.2)', 'rgba(255,255,255,0.7)']} style={styles.card}
         >
@@ -55,14 +55,14 @@ const EachQuestion = ({navigation, save}) => {
 
 
       <TouchableOpacity 
-      onPress={ () => navigation.navigate('SubBranch') }
+      onPress={ () => navigation.navigate('Reading') }
       style={styles.titleContainer}>
         <Text style={returnTextStyle()}>سوال</Text>
       </TouchableOpacity>
       
       <View style={styles.eastIcon}>
         <TouchableOpacity
-        onPress={ () => navigation.navigate('SubBranch') }
+        onPress={ () => navigation.navigate('Reading') }
         >
         <MaterialIcon size={40} color={theme.TEXT_COLOR} name="east" />
         </TouchableOpacity>

@@ -37,9 +37,9 @@ const CloseButton = styled.View`
 `
 
 
-const NameChangeModal = ({visible , changeName}) => {
+const NameChangeModal = ({visible , changeName , username}) => {
 
-  const [name , setName] = useState('');
+  const [name , setName] = useState(username);
 
   const theme = useSelector(state => state.ThemeReducer.theme);
 

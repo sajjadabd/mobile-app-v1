@@ -1,22 +1,30 @@
 import React from 'react';
 
 import { View , Text , StyleSheet } from 'react-native'
-import EachQuestion from '../utils/EachQuestion';
+import SubBranch from '../utils/SubBranch';
 
-const numbers = [1,2,3,4,5,6,7,8,9,10];
+import { useSelector } from 'react-redux';
 
+// const numbers = [1,2,3,4,5,6,7,8,9,10];
 
-const QuestionsBookmark = ({navigation}) => {
+const BranchBookmark = ({navigation}) => {
+
+  const branches = useSelector(state => state.BranchReducer.branches);
+
+  console.log('branches : ' , branches);
+
   return (
     <>
       <View style={styles.scrollContent}>
         {
-          numbers.map( ( item , index ) => {
+          branches.data.map( ( item , index ) => {
             return (
-              <EachQuestion 
+              <SubBranch 
               key={index} 
               navigation={navigation} 
               save={true} 
+              item={item} 
+              branch={item.branch}
               />
             )
           })
@@ -42,4 +50,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default QuestionsBookmark
+export default BranchBookmark

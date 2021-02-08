@@ -30,7 +30,7 @@ import {
   MAGENTA_THEME , 
   GRAY_THEME, 
   ORANGE_THEME 
-} from '../../redux/Actions';
+} from '../../redux/ThemeActions';
 
 
 const themes = [

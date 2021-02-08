@@ -56,43 +56,49 @@ const defaultProvince = 'مازندران';
 
 const Profile = ({ navigation }) => {
 
-  const [imageURI , setImageURI] = useState('https://randomuser.me/api/portraits/women/67.jpg');
+  const theme = useSelector(state => state.ThemeReducer.theme);
 
-  const [province , setProvince] = useState('');
+  const UserInformation = useSelector(state => state.UserReducer.user);
 
-  const [city , setCity] = useState('');
+  const [ imageURI , setImageURI ] = useState('https://randomuser.me/api/portraits/women/67.jpg');
 
-  const [ sex , setSex ] = useState('male');
+  const [ province , setProvince ] = useState(UserInformation.province);
 
-  const [ name , setName ] = useState('');
+  const [ city , setCity] = useState(UserInformation.city);
+
+  const [ sex , setSex ] = useState(UserInformation.gender);
+
+  const [ name , setName ] = useState(UserInformation.username);
 
   const picker = useRef();
 
-  const [showProvinceModal , setShowProvinceModal] = useState(false);
+  const [ showProvinceModal , setShowProvinceModal ] = useState(false);
 
-  const [showCityModal , setShowCityModal] = useState(false);
+  const [ showCityModal , setShowCityModal ] = useState(false);
 
-  const [showNameChangeModal , setShowNameChangeModal] = useState(false);
+  const [ showNameChangeModal , setShowNameChangeModal ] = useState(false);
 
-  const [showThemeChangeModal , setShowThemeChangeModal] = useState(false);
+  const [ showThemeChangeModal , setShowThemeChangeModal ] = useState(false);
 
   const whichPage = navigation.getParam('whichPage');
 
-  const theme = useSelector(state => state.ThemeReducer.theme)
+  
 
   const dispatch = useDispatch();
 
   const changeSex = (title) => {
 
-    let theTitleOfButton = title == 'مرد' ? 'male' : 'female'
+    let theTitleOfButton = ( title == 'مرد' ? 'male' : 'female' )
 
     console.log(theTitleOfButton);
     console.log(sex);
     
     if( theTitleOfButton == sex ) {
+      
+    } else {
       if (sex == 'male') {
         setSex('female')
-      } else {
+      } else if (sex == 'female') {
         setSex('male')
       }
     }
@@ -143,11 +149,13 @@ const Profile = ({ navigation }) => {
     <ProvinceModal 
     visible={showProvinceModal} 
     SubmitProvinceFromModal={SubmitProvinceFromModal}
+    province={province}
     />
 
     <NameChangeModal 
     visible={showNameChangeModal}
     changeName={changeName}
+    username={name}
     />
 
     <ThemeChangeModal 
@@ -302,14 +310,14 @@ const Profile = ({ navigation }) => {
             {
               sex == 'male' ? (
                 <>
-                  <ActiveButton sex={sex} title={'زن'} changeSex={changeSex} />
-                  <DeactiveButton sex={sex} title={'مرد'} changeSex={changeSex}/>
-                </>
-              ) : (
-                <>
                   <DeactiveButton sex={sex} title={'زن'} changeSex={changeSex}/>
                   <ActiveButton sex={sex} title={'مرد'} changeSex={changeSex} />
                 </>
+              ) : (
+                <>
+                <ActiveButton sex={sex} title={'زن'} changeSex={changeSex} />
+                <DeactiveButton sex={sex} title={'مرد'} changeSex={changeSex}/>
+              </>
               )
             }             
           </View>
@@ -376,7 +384,7 @@ const styles = StyleSheet.create({
     justifyContent : 'center',
     alignItems : 'center',
     top : -70,
-    overflow : 'hidden'
+    overflow : 'hidden',
   },
   profilePicture : {
     flex : 1,

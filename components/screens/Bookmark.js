@@ -12,7 +12,7 @@ import Footer from '../footer/Footer';
 import { LalezarRegular } from '../utils/Fonts';
 
 import QuestionsBookmark from '../BookmarkPages/QuestionsBookmark';
-import BrancheBookmark from '../BookmarkPages/BrancheBookmark';
+import BranchBookmark from '../BookmarkPages/BranchBookmark';
 
 import { useSelector } from 'react-redux';
 
@@ -128,7 +128,7 @@ const Bookmark = ({ navigation }) => {
             ?
             <QuestionsBookmark navigation={navigation} />
             :
-            <BrancheBookmark navigation={navigation} />
+            <BranchBookmark navigation={navigation} />
           }
 
 

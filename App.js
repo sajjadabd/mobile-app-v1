@@ -5,9 +5,17 @@ import { Provider } from 'react-redux'
 import { createStore, applyMiddleware, combineReducers } from 'redux'
 import thunk from 'redux-thunk'
 
-import ThemeReducer from './redux/Reducers'
+import ThemeReducer from './redux/ThemeReducer';
+import UserReducer from './redux/UserReducer';
+import BranchReducer from './redux/BranchReducer';
+import SavedReducer from './redux/SavedReducer';
 
-const rootReducer = combineReducers({ ThemeReducer });
+const rootReducer = combineReducers({ 
+  ThemeReducer ,
+  BranchReducer ,
+  UserReducer ,
+  SavedReducer
+ });
 
 const store = createStore(
   rootReducer,

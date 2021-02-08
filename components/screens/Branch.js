@@ -69,7 +69,11 @@ const numbers = [
 
 const Branch = ({ navigation }) => {
 
-  const theme = useSelector(state => state.ThemeReducer.theme)
+  const theme = useSelector(state => state.ThemeReducer.theme);
+
+  const branches = useSelector(state => state.BranchReducer.branches);
+
+  console.log('branches : ' , branches);
 
   // const title = navigation.getParam('title');
   // const logo = navigation.getParam('logo');
@@ -83,8 +87,8 @@ const Branch = ({ navigation }) => {
     
     <Container>
       <ImageBackground
-      style={styles.image}
-      source={require('../images/bg.png') }
+        style={styles.image}
+        source={require('../images/bg.png') }
       >
 
         
@@ -106,10 +110,15 @@ const Branch = ({ navigation }) => {
             /> */}
 
             {
-              numbers.map( (item , index) => {
-              return (
-                <SubBranch key={index} navigation={navigation} title={item.title} />
-              )
+              branches.data.map( (item , index) => {
+                return (
+                  <SubBranch 
+                    key={index} 
+                    navigation={navigation} 
+                    item={item} 
+                    branch={item.branch}
+                  />
+                )
               })
             }
 

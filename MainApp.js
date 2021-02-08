@@ -55,8 +55,8 @@ const MainApp = () => {
   const theme = useSelector(state => state.ThemeReducer.theme)
 
   const ThemeContext = createContext(theme);
-  const [splash , setSplash] = useState(true);
-  const [phoneReady , setPhoneReady]   = useState(false);
+  const [splash , setSplash] = useState(false);
+  const [phoneReady , setPhoneReady]   = useState(true);
 
   useEffect( () => {
     const doTheJob = async () => {

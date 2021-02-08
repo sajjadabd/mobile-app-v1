@@ -41,31 +41,36 @@ const TextBlock = styled.Text`
   color : 'white';
 `
 
-const SubBranch = ({navigation, save , title}) => {
+const SubBranch = ({navigation, save , item , branch }) => {
 
   const theme = useSelector(state => state.ThemeReducer.theme)
+
+  const branchData = {
+    standards : item.standards,
+    branch : branch
+  }
 
 
   const returnTextStyle = () => {
     return {
-      fontFamily : ShabnamMedium,
-      fontSize : windowWidth / 15,
-      color : theme.TEXT_COLOR,
+      fontFamily : ShabnamMedium ,
+      fontSize : windowWidth / 15 ,
+      color : theme.TEXT_COLOR ,
     }
   }
 
   return (
     <View style={styles.container}>
       <TouchableOpacity 
-        onPress={ () => navigation.navigate('Standard' , { title }) }
+        onPress={ () => navigation.navigate('Standard' , branchData ) }
         >
         <LinearGradient 
-        colors={[
-          'rgba(255,255,255,0.1)', 
-          'rgba(255,255,255,0.2)', 
-          'rgba(255,255,255,0.7)'
-        ]} 
-        style={styles.card}
+          colors={[
+            'rgba(255,255,255,0.1)', 
+            'rgba(255,255,255,0.2)', 
+            'rgba(255,255,255,0.7)'
+          ]}
+          style={styles.card}
         >
         
         </LinearGradient>
@@ -73,15 +78,19 @@ const SubBranch = ({navigation, save , title}) => {
       
       
       <TouchableOpacity 
-      onPress={ () => navigation.navigate('Standard' , { title }) }
+      onPress={ () => navigation.navigate('Standard' , branchData) }
       style={styles.titleContainer}>
-        <Text style={returnTextStyle()}>زیر شاخه</Text>
+        <Text style={returnTextStyle()}>
+          {
+            item.branch
+          }
+        </Text>
       </TouchableOpacity>
       
 
       <View style={styles.eastIcon}>
         <TouchableOpacity
-        onPress={ () => navigation.navigate('Standard' , { title }) }
+        onPress={ () => navigation.navigate('Standard' , branchData ) }
         >
         <MaterialIcon size={40} color={theme.TEXT_COLOR} name="east" />
         </TouchableOpacity>
@@ -92,14 +101,13 @@ const SubBranch = ({navigation, save , title}) => {
         onPress={() => null}
         style={styles.saveButton}
         >
-              { 
-              save
-              ?
-              <MaterialIcon size={40} color={theme.TEXT_COLOR} name="bookmark" />
-              : 
-              <MaterialIcon size={40} color={theme.TEXT_COLOR} name="bookmark-outline" />
-              }
-              
+          {
+          save
+          ?
+          <MaterialIcon size={40} color={theme.TEXT_COLOR} name="bookmark" />
+          : 
+          <MaterialIcon size={40} color={theme.TEXT_COLOR} name="bookmark-outline" />
+          }
         </TouchableOpacity>
       </View>
       
