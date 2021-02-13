@@ -5,6 +5,7 @@ import {
   Text , 
   StyleSheet , 
   TouchableOpacity ,
+  TouchableWithoutFeedback,
   TextInput ,
   SafeAreaView ,
   Image
@@ -55,7 +56,9 @@ const NumberInput = ({phoneNumber , setPhoneNumber , scrollSwiper}) => {
   const theme = useSelector(state => state.ThemeReducer.theme)
 
   const [value, setValue] = useState('');
+
   const ref = useBlurOnFulfill({value, cellCount: CELL_COUNT});
+  // ref.current.focus();
   const [props, getCellOnLayoutHandler] = useClearByFocusCell({
     value,
     setValue,
@@ -98,8 +101,12 @@ const NumberInput = ({phoneNumber , setPhoneNumber , scrollSwiper}) => {
     }
   }
 
+  
+
   return (
-    <>
+    <TouchableWithoutFeedback 
+    onPress={() => ref.current.focus()}
+    >
       <View style={styles.phoneNumber}>
         <View style={styles.phoneNumberMessage}>
           {/* {checkPhoneNumber()} */}
@@ -124,6 +131,7 @@ const NumberInput = ({phoneNumber , setPhoneNumber , scrollSwiper}) => {
               {...props}
               value={phoneNumber}
               onChangeText={text => setPhoneNumber(text)}
+              // onContentSizeChange={() => this.refs.list.scrollToEnd()}
               cellCount={CELL_COUNT}
               rootStyle={phoneStyle.codeFieldRoot}
               keyboardType="number-pad"
@@ -152,7 +160,7 @@ const NumberInput = ({phoneNumber , setPhoneNumber , scrollSwiper}) => {
         </View>
         {/* <View style={styles.bottomLine}></View> */}
       </View>
-    </>
+    </TouchableWithoutFeedback>
   )
 
   

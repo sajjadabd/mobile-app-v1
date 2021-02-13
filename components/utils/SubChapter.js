@@ -32,6 +32,8 @@ const SubChapter = ({navigation , item , index , changeSelectedExams}) => {
 
     const theme = useSelector(state => state.ThemeReducer.theme)
 
+    console.log(item);
+
     const changeStyleBasedOnSelected = (item) => {
       if(item.selectedExam) {
         return {

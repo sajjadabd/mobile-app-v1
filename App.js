@@ -9,12 +9,14 @@ import ThemeReducer from './redux/ThemeReducer';
 import UserReducer from './redux/UserReducer';
 import BranchReducer from './redux/BranchReducer';
 import SavedReducer from './redux/SavedReducer';
+import WorkReducer from './redux/WorkReducer';
 
 const rootReducer = combineReducers({ 
   ThemeReducer ,
   BranchReducer ,
   UserReducer ,
-  SavedReducer
+  SavedReducer ,
+  WorkReducer
  });
 
 const store = createStore(

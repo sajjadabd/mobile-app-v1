@@ -66,12 +66,18 @@ const initialState = {
             seasons : [
               {
                 id : 1,
-                season : 1 
+                season : 1 ,
+                chapter : 'فصل 1',
+                subject : 'تراز بندی',
+                selectedExam : false
               },
               {
                 id : 2,
-                season : 2 
-              },
+                season : 2,
+                chapter : 'فصل 2',
+                subject : 'ذخیره سازی',
+                selectedExam : false
+              }
             ]
           },
           {
@@ -80,15 +86,24 @@ const initialState = {
             seasons : [
               {
                 id : 1,
-                season : 1 
+                season : 1 ,
+                chapter : 'فصل 1',
+                subject : 'آشنایی با رنگ ها',
+                selectedExam : false
               },
               {
                 id : 2,
-                season : 2 
+                season : 2,
+                chapter : 'فصل 2',
+                subject : 'لایه ها در فتوشاپ',
+                selectedExam : false
               },
               {
                 id : 3,
-                season : 3 
+                season : 3,
+                chapter : 'فصل 3',
+                subject : 'ادغام لایه ها',
+                selectedExam : false
               },
             ]
           }

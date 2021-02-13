@@ -1,4 +1,4 @@
-const localHost = 'http://192.168.1.10:3000';
+const localHost = 'http://192.168.2.10:3000';
 
 const herokuHost = 'https://fanniherfei.herokuapp.com';
 
@@ -9,3 +9,7 @@ localHost + '/auth/signup';
 
 export const CONFIRM_SMS_URL = 
 localHost + '/auth/login';
+
+
+export const UPDATE_USER_URL =
+localHost + '/users/update';

@@ -7,6 +7,7 @@ import {
   Text , 
   StyleSheet , 
   TouchableOpacity ,
+  TouchableWithoutFeedback,
   TextInput ,
   PixelRatio ,
   SafeAreaView ,
@@ -72,6 +73,7 @@ const SmsInput = ({phoneNumber , sms , setSMS , scrollSwiper , setPhoneReady}) =
 
   const [value, setValue] = useState('');
   const ref = useBlurOnFulfill({value, cellCount: CELL_COUNT});
+  // ref.current.focus();
   const [props, getCellOnLayoutHandler] = useClearByFocusCell({
     value,
     setValue,
@@ -92,9 +94,13 @@ const SmsInput = ({phoneNumber , sms , setSMS , scrollSwiper , setPhoneReady}) =
       setSend(false);
     }
   }
+
+  
   
   return (
-    <>
+    <TouchableWithoutFeedback
+    onPress={() => ref.current.focus()}
+    >
       <View style={styles.phoneNumber}>
 
         <View style={styles.button}>
@@ -129,6 +135,7 @@ const SmsInput = ({phoneNumber , sms , setSMS , scrollSwiper , setPhoneReady}) =
               {...props}
               value={sms}
               onChangeText={text => setSMS(text)}
+              // onContentSizeChange={() => this.refs.list.scrollToEnd()}
               cellCount={CELL_COUNT}
               rootStyle={smsStyle.codeFieldRoot}
               keyboardType="number-pad"
@@ -184,7 +191,7 @@ const SmsInput = ({phoneNumber , sms , setSMS , scrollSwiper , setPhoneReady}) =
         </View>
         {/* <View style={styles.bottomLine}></View> */}
       </View>
-    </>
+    </TouchableWithoutFeedback>
   )
 }
 

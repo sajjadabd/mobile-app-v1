@@ -35,9 +35,23 @@ import { ActiveButton , DeactiveButton } from '../utils/Buttons';
 
 import { launchImageLibrary } from 'react-native-image-picker';
 
+
+
 import { useSelector , useDispatch } from 'react-redux';
 
 import styled from 'styled-components/native';
+
+import axios from 'axios';
+
+import { 
+  getData , 
+  removeData , 
+  existsData ,
+  setTheme , 
+  getTheme
+} from '../AsyncStorage/SecureStorage';
+
+import { UPDATE_USER_URL } from '../URL/Urls';
 
 
 const Header = styled.View`
@@ -59,6 +73,8 @@ const Profile = ({ navigation }) => {
   const theme = useSelector(state => state.ThemeReducer.theme);
 
   const UserInformation = useSelector(state => state.UserReducer.user);
+
+  console.log(UserInformation);
 
   const [ imageURI , setImageURI ] = useState('https://randomuser.me/api/portraits/women/67.jpg');
 
@@ -86,54 +102,110 @@ const Profile = ({ navigation }) => {
 
   const dispatch = useDispatch();
 
-  const changeSex = (title) => {
+
+
+
+  const sendRequestToUpdateUser = async (userInfo , data) => {  
+    try {
+      let result = await axios({
+        method: 'POST',
+        url: UPDATE_USER_URL,
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        data : {
+          "phone" : `${userInfo.phoneNumber}`,
+          "sms" : `${userInfo.sms}`,
+          "updatedValues" : data
+        }
+      });
+      // console.log(result.data);
+      return result.data;
+    } catch (e) {
+      console.log("Error on Request to Server...")
+    }
+  }
+
+
+  const changeSex = async (title) => {
 
     let theTitleOfButton = ( title == 'مرد' ? 'male' : 'female' )
 
     console.log(theTitleOfButton);
     console.log(sex);
+
+    let userInfo = await getData();
+    console.log('userInfo : ' , userInfo);
+      
     
     if( theTitleOfButton == sex ) {
       
     } else {
       if (sex == 'male') {
-        setSex('female')
+        setSex('female');
+        const result = await sendRequestToUpdateUser(userInfo , {
+          gender : 'female'
+        });
       } else if (sex == 'female') {
-        setSex('male')
+        setSex('male');
+        const result = await sendRequestToUpdateUser(userInfo , {
+          gender : 'male'
+        });
       }
     }
   }
 
-  const changeName = (data) => {
+  const changeName = async (data) => {
     if(data != undefined) {
+      let userInfo = await getData();
+      console.log('userInfo : ' , userInfo);
+      const result = await sendRequestToUpdateUser(userInfo , {
+        username : data
+      });
       setName(data);
     }
     setShowNameChangeModal(false);
   }
 
-  const SubmitCityFromModal = (data) => {
+  const SubmitCityFromModal = async (data) => {
     if(data !== undefined ) {
+      let userInfo = await getData();
+      console.log('userInfo : ' , userInfo);
+      const result = await sendRequestToUpdateUser(userInfo , {
+        city : data
+      });
       setCity(data);
     }
     setShowCityModal(false);
   }
 
-  const SubmitProvinceFromModal = (data) => {
+
+  
+
+
+  const SubmitProvinceFromModal = async (data) => {
     if(data !== undefined ) {
+      let userInfo = await getData();
+      console.log('userInfo : ' , userInfo);
+      const result = await sendRequestToUpdateUser(userInfo , {
+        province : data
+      });
       setProvince(data);
     }
     setShowProvinceModal(false);
   }
 
-  const SubmitThemeFromModal = (data) => {
+  const SubmitThemeFromModal = async (data) => {
     if(data !== undefined ) {
       console.log(data);
+      await setTheme(data);
       dispatch({
         type : data
       })
     }
     setShowThemeChangeModal(false);
   }
+  
   
 
   return (
@@ -251,7 +323,7 @@ const Profile = ({ navigation }) => {
               >
                 <Text style={styles.infoText}>
                   { 
-                  name == '' 
+                  name == null || name == ''
                   ?
                   'نام کاربری خود را انتخاب کنید'   
                   :
@@ -271,7 +343,7 @@ const Profile = ({ navigation }) => {
               >
                   <Text style={styles.infoText}>
                   { 
-                    province == '' 
+                    province == null || province == '' 
                     ?
                     'نام استان خود را وارد کنید'   
                     :
@@ -291,7 +363,7 @@ const Profile = ({ navigation }) => {
               >
                   <Text style={styles.infoText}>
                   { 
-                    city == '' 
+                    city == null || city == '' 
                     ?
                     'نام شهر خود را وارد کنید'   
                     :

@@ -22,8 +22,14 @@ import { useSelector , useDispatch } from 'react-redux'
 
 import { CONFIRM_SMS_URL } from './components/URL/Urls';
 
-import { getData , removeData , existsData } from './components/AsyncStorage/SecureStorage';
+import { 
+  getData , 
+  removeData , 
+  existsData ,
+  getTheme ,
+} from './components/AsyncStorage/SecureStorage';
 
+import { UPDATE_USER } from './redux/UserActions';
 
 import { ThemeProvider } from 'styled-components';
 
@@ -52,35 +58,63 @@ const requestToServerForConfirmSms = async (userInfo) => {
 
 const MainApp = () => {
 
-  const theme = useSelector(state => state.ThemeReducer.theme)
+  const theme = useSelector(state => state.ThemeReducer.theme);
+  const dispatch = useDispatch();
+
+  
 
   const ThemeContext = createContext(theme);
-  const [splash , setSplash] = useState(false);
-  const [phoneReady , setPhoneReady]   = useState(true);
+  const [splash , setSplash] = useState(true);
+  const [phoneReady , setPhoneReady] = useState(false);
+  // const [savedTheme , setSavedTheme] = useState(restoreTheme);
+
+  /* const fetchTheme = async () => {
+    let savedTheme = await getTheme();
+    console.log( 'theme : ' , savedTheme.theme );
+    dispatch({ type : savedTheme.theme });
+  }
+
+  fetchTheme(); */
+  
 
   useEffect( () => {
+
     const doTheJob = async () => {
       // await removeData();
       let userInfo = await getData();
       console.log('userInfo : ' , userInfo);
       let result = await requestToServerForConfirmSms(userInfo);
-      console.log(result);
+      dispatch({ type : UPDATE_USER , payload : result.user });
+
+      let savedTheme = await getTheme();
+      console.log( 'theme : ' , savedTheme.theme );
+      if ( savedTheme == undefined || savedTheme == null ) {
+        
+      } else {
+        dispatch({ type : savedTheme.theme });
+      }
+      
+
+
+      
+      
+
+      console.log('result : ' , result);
       if( userInfo && userInfo.phoneNumber && userInfo.sms ) {
-          if ( result && result.success == true ) {
-            setSplash(false);
-            setPhoneReady(true);
-            console.log(1);
-          } else {
-            setSplash(false);
-            setPhoneReady(false);
-            console.log(2);
-          }
+        if ( result && result.success == true ) {
+          setSplash(false);
+          setPhoneReady(true);
+          console.log(1);
+        } else {
+          setSplash(false);
+          setPhoneReady(false);
+          console.log(2);
+        }
       } else {
         // removeData();
         setSplash(false);
         console.log(3);
       }
-      console.log(4)
     }
 
     doTheJob();
@@ -90,13 +124,16 @@ const MainApp = () => {
     // } , 1000)
   } );
 
+  
+  
+
   if(splash) {
     return (
       <Splashscreen />
     );
   } else if( phoneReady == false ) {
     return (
-      <Phone setPhoneReady={setPhoneReady}/>
+      <Phone setPhoneReady={setPhoneReady} />
     );
   } else {
     return (

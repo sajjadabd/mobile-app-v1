@@ -22,10 +22,7 @@ const UserReducer = (state = initialState, action) => {
     case UPDATE_USER:
       newState = {
         ...state,
-        user: { 
-          ...user ,
-          ...action.payload ,
-        }
+        user : action.payload
       }
       return newState
     default:
