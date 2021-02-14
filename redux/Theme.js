@@ -7,7 +7,7 @@
 
 
 export const purpleTheme = {
-  name: 'main',
+  name: 'PURPLE_THEME',
   MAIN_BACKGROUND : '#6FA6B6' ,
   QUESTION_CONTAINER : '#51344D',
   QUESTION_BACKGROUND : '#6FA6B6',
@@ -22,7 +22,7 @@ export const purpleTheme = {
 }
 
 export const darkBlueTheme = {
-  name: 'darkBlue',
+  name: 'DARK_BLUE_THEME',
   MAIN_BACKGROUND : '#0F3057' ,
   QUESTION_CONTAINER : '#0F3057',
   QUESTION_BACKGROUND : '#008891',
@@ -40,7 +40,7 @@ export const darkBlueTheme = {
 
 
 export const darkGreenTheme = {
-  name: 'darkGreen',
+  name: 'DARK_GREEN_THEME',
   MAIN_BACKGROUND : '#1C2B2D' ,
   QUESTION_CONTAINER : '#1C2B2D',
   QUESTION_BACKGROUND : '#99A8B2',
@@ -58,7 +58,7 @@ export const darkGreenTheme = {
 
 
 export const darkTheme = {
-  name: 'dark',
+  name: 'DARK_THEME',
   MAIN_BACKGROUND : '#2F3641' ,
   QUESTION_CONTAINER : '#2F3641',
   QUESTION_BACKGROUND : '#4A5059',
@@ -76,7 +76,7 @@ export const darkTheme = {
 
 
 export const magentaTheme = {
-  name: 'magenta',
+  name: 'MAGENTA_THEME',
   MAIN_BACKGROUND : '#794C74' ,
   QUESTION_CONTAINER : '#51344D',
   QUESTION_BACKGROUND : '#FADCAA',
@@ -95,7 +95,7 @@ export const magentaTheme = {
 
 
 export const grayTheme = {
-  name: 'gray',
+  name: 'GRAY_THEME',
   MAIN_BACKGROUND : '#495464' ,
   QUESTION_CONTAINER : '#02181f',
   QUESTION_BACKGROUND : '#BBBFC6',
@@ -114,7 +114,7 @@ export const grayTheme = {
 
 
 export const orangeTheme = {
-  name: 'orange',
+  name: 'ORANGE_THEME',
   MAIN_BACKGROUND : '#595959' ,
   QUESTION_CONTAINER : '#595959',
   QUESTION_BACKGROUND : '#e8e8e8',

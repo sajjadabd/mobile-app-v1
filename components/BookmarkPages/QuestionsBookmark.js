@@ -3,20 +3,26 @@ import React from 'react';
 import { View , Text , StyleSheet } from 'react-native'
 import EachQuestion from '../utils/EachQuestion';
 
-const numbers = [1,2,3,4,5,6,7,8,9,10];
+// const numbers = [1,2,3,4,5,6,7,8,9,10];
 
+import { useSelector } from 'react-redux';
 
 const QuestionsBookmark = ({navigation}) => {
+
+  const questions = useSelector(state => state.SavedReducer.saved.questions);
+
+  console.log('questions : ' , questions);
+
   return (
     <>
       <View style={styles.scrollContent}>
         {
-          numbers.map( ( item , index ) => {
+          questions.map( ( item , index ) => {
             return (
               <EachQuestion 
               key={index} 
               navigation={navigation} 
-              save={true} 
+              item={item}
               />
             )
           })

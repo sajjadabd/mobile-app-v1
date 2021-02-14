@@ -59,13 +59,28 @@ const requestToServerForConfirmSms = async (userInfo) => {
 const MainApp = () => {
 
   const theme = useSelector(state => state.ThemeReducer.theme);
+  
   const dispatch = useDispatch();
-
   
 
   const ThemeContext = createContext(theme);
+
   const [splash , setSplash] = useState(true);
   const [phoneReady , setPhoneReady] = useState(false);
+
+  /* const [info , setInfo] = useState({
+    splash : true,
+    phoneReady : false,
+  }); */
+
+
+  /* const setPhoneReady = (value) => {
+    setInfo({
+      splash : false,
+      phoneReady : value,
+    })
+  } */
+
   // const [savedTheme , setSavedTheme] = useState(restoreTheme);
 
   /* const fetchTheme = async () => {
@@ -82,37 +97,48 @@ const MainApp = () => {
     const doTheJob = async () => {
       // await removeData();
       let userInfo = await getData();
-      console.log('userInfo : ' , userInfo);
+      // console.log('userInfo :' , userInfo);
       let result = await requestToServerForConfirmSms(userInfo);
       dispatch({ type : UPDATE_USER , payload : result.user });
 
       let savedTheme = await getTheme();
-      console.log( 'theme : ' , savedTheme.theme );
+      console.log( 'theme :' , savedTheme.theme );
+      
       if ( savedTheme == undefined || savedTheme == null ) {
         
       } else {
-        dispatch({ type : savedTheme.theme });
+        if( savedTheme.theme != theme.name ) {
+          dispatch({ type : savedTheme.theme });
+        }
       }
-      
 
 
-      
-      
-
-      console.log('result : ' , result);
+      console.log('result :' , result);
       if( userInfo && userInfo.phoneNumber && userInfo.sms ) {
         if ( result && result.success == true ) {
           setSplash(false);
           setPhoneReady(true);
+          /* setInfo({
+            splash : false,
+            phoneReady : true,
+          }) */
           console.log(1);
         } else {
           setSplash(false);
           setPhoneReady(false);
+          /* setInfo({
+            splash : false, 
+            phoneReady : false,
+          }); */
           console.log(2);
         }
       } else {
         // removeData();
         setSplash(false);
+        /* setInfo({
+          splash : false,
+          phoneReady : false,
+        }); */
         console.log(3);
       }
     }

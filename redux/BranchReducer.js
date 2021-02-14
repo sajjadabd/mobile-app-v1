@@ -1,8 +1,7 @@
 import { GET_BRANCHES } from "./BranchActions";
 
 const initialState = {
-  branches : {
-    data : [
+  branches : [
       {
         id : 1,
         branch : 'مراقبت و زیبایی',
@@ -10,6 +9,7 @@ const initialState = {
           {
             id : 1,
             standard : 'پیرایش مو و ابرو',
+            save : false,
             seasons : [
               {
                 id : 1,
@@ -30,6 +30,7 @@ const initialState = {
           {
             id : 2,
             standard : 'رنگ مو',
+            save : false,
             seasons : [
               {
                 id : 1,
@@ -63,6 +64,7 @@ const initialState = {
           {
             id : 1,
             standard : 'کاربر آفیس',
+            save : false,
             seasons : [
               {
                 id : 1,
@@ -83,6 +85,7 @@ const initialState = {
           {
             id : 2,
             standard : 'کاربر فتوشاپ',
+            save : false,
             seasons : [
               {
                 id : 1,
@@ -110,7 +113,6 @@ const initialState = {
         ]
       } ,
     ]
-  }
 }
 
 

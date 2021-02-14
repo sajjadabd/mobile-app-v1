@@ -35,19 +35,14 @@ const Container = styled.View`
 // background-color : ${props => props.theme.BUTTON_COLOR};
 
 
-const TextBlock = styled.Text`
-  font-family : 'ShabnamMedium';
-  font-size : windowWidth / 13;
-  color : 'white';
-`
-
-const SubBranch = ({navigation, save , item , branch }) => {
+const SubBranch = ({navigation, branchName , branchID , standards }) => {
 
   const theme = useSelector(state => state.ThemeReducer.theme)
 
   const branchData = {
-    standards : item.standards,
-    branch : branch
+    standards , 
+    branchName , 
+    branchID , 
   }
 
 
@@ -82,7 +77,7 @@ const SubBranch = ({navigation, save , item , branch }) => {
       style={styles.titleContainer}>
         <Text style={returnTextStyle()}>
           {
-            item.branch
+            branchName
           }
         </Text>
       </TouchableOpacity>
@@ -96,7 +91,8 @@ const SubBranch = ({navigation, save , item , branch }) => {
         </TouchableOpacity>
       </View>
 
-      <View style={styles.save}>
+      {
+      /* <View style={styles.save}>
         <TouchableOpacity
         onPress={() => null}
         style={styles.saveButton}
@@ -109,7 +105,8 @@ const SubBranch = ({navigation, save , item , branch }) => {
           <MaterialIcon size={40} color={theme.TEXT_COLOR} name="bookmark-outline" />
           }
         </TouchableOpacity>
-      </View>
+      </View> */
+      }
       
     </View>
   )
@@ -150,9 +147,9 @@ const styles = StyleSheet.create({
     backgroundColor : 'black',
   },
   subtitle : {
-    fontFamily : ShabnamMedium,
-    fontSize : windowWidth / 13,
-    color : 'white',
+    fontFamily : ShabnamMedium ,
+    fontSize : windowWidth / 13 ,
+    color : 'white' ,
   },  
   save : {
     position : 'absolute',
@@ -170,4 +167,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default SubBranch
+export default SubBranch;

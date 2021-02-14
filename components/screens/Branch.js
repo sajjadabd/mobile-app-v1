@@ -33,39 +33,6 @@ const Container = styled.View`
 `
 
 
-const numbers = [ 
-  {
-    title : 'زیر شاخه'
-  },
-  {
-    title : 'زیر شاخه'
-  },
-  {
-    title : 'زیر شاخه'
-  },
-  {
-    title : 'زیر شاخه'
-  },
-  {
-    title : 'زیر شاخه'
-  },
-  {
-    title : 'زیر شاخه'
-  },
-  {
-    title : 'زیر شاخه'
-  },
-  {
-    title : 'زیر شاخه'
-  },
-  {
-    title : 'زیر شاخه'
-  },
-  {
-    title : 'زیر شاخه'
-  },
-];
-
 
 const Branch = ({ navigation }) => {
 
@@ -110,13 +77,14 @@ const Branch = ({ navigation }) => {
             /> */}
 
             {
-              branches.data.map( (item , index) => {
+              branches.map( (item , index) => {
                 return (
                   <SubBranch 
                     key={index} 
                     navigation={navigation} 
-                    item={item} 
-                    branch={item.branch}
+                    standards={item.standards} 
+                    branchName={item.branch}
+                    branchID={item.id}
                   />
                 )
               })

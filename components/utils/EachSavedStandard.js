@@ -35,7 +35,7 @@ const TextBlock = styled.Text`
   color : 'white';
 `
 
-const EachStandard = ({ navigation , item , branchName , branchID }) => {
+const EachSavedStandard = ({ navigation , item , branchName , branchID }) => {
 
   const theme = useSelector( state => state.ThemeReducer.theme );
 
@@ -43,10 +43,9 @@ const EachStandard = ({ navigation , item , branchName , branchID }) => {
     seasons : item.seasons
   }
 
-  const { id , standard , save  } = item;
-  console.log( id , standard , save);
+  const { branch_id , standard_id , standard , save  } = item;
 
-  const standardID = id;
+  console.log(item);
 
   const returnTextStyle = () => {
     return {
@@ -86,7 +85,7 @@ const EachStandard = ({ navigation , item , branchName , branchID }) => {
       style={styles.titleContainer}>
         <Text style={returnTextStyle()}>
           {
-            item.standard
+            standard
           }
         </Text>
       </TouchableOpacity>
@@ -108,8 +107,8 @@ const EachStandard = ({ navigation , item , branchName , branchID }) => {
         ?
         <TouchableOpacity
           onPress={() => unSaveStandard({
-            branch_id : branchID ,
-            standard_id : standardID
+            branch_id ,
+            standard_id
           })}
         >
           <MaterialIcon 
@@ -121,8 +120,8 @@ const EachStandard = ({ navigation , item , branchName , branchID }) => {
         : 
         <TouchableOpacity
           onPress={() => saveStandard({
-            branch_id : branchID ,
-            standard_id : standardID
+            branch_id ,
+            standard_id
           })}
         >
           <MaterialIcon 
@@ -193,5 +192,5 @@ const styles = StyleSheet.create({
   }
 });
 
-export default EachStandard
+export default EachSavedStandard
 

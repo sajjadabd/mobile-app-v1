@@ -37,12 +37,13 @@ const Standard = ({ navigation }) => {
 
   const theme = useSelector(state => state.ThemeReducer.theme)
 
-  const numbers = [1,2,3,4,5,6,7,8,9,10];
+  // const numbers = [1,2,3,4,5,6,7,8,9,10];
 
   const title = navigation.getParam('title');
   const logo = navigation.getParam('logo');
   const standards = navigation.getParam('standards');
-  const branch = navigation.getParam('branch');
+  const branchName = navigation.getParam('branchName');
+  const branchID = navigation.getParam('branchID');
 
   const whichPage = navigation.getParam('whichPage');
 
@@ -63,7 +64,7 @@ const Standard = ({ navigation }) => {
 
         <ScrollView >
 
-          <SubChapterLogo title={branch} logo={logo} />
+          <SubChapterLogo title={branchName} logo={logo} />
 
           <View style={styles.braches}>
 
@@ -81,6 +82,8 @@ const Standard = ({ navigation }) => {
                   key={index} 
                   navigation={navigation} 
                   item={item} 
+                  branchName={branchName}
+                  branchID={branchID}
                   />
                 )
               })

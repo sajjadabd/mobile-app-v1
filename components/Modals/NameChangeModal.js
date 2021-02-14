@@ -1,4 +1,4 @@
-import React , { useState } from 'react';
+import React , { useState , useRef , useEffect } from 'react';
 
 import { 
   View , 
@@ -43,6 +43,9 @@ const NameChangeModal = ({visible , changeName , username}) => {
 
   const theme = useSelector(state => state.ThemeReducer.theme);
 
+  // const inputBox = useRef(null);
+
+  
 
   const returnTextStyle = () => {
     return {
@@ -79,6 +82,8 @@ const NameChangeModal = ({visible , changeName , username}) => {
             نام جدید خود را وارد کنید :
           </Text>
           <TextInput 
+          ref={input => input && input.focus()}
+          // autoFocus 
           value={name}
           onChangeText={(value) => setName(value)}
           style={styles.input}/>

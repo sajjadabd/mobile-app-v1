@@ -7,12 +7,16 @@ const initialState = {
   saved : {
     standards : [
       {
-        id : 1,
-        standard : 'پیرایش مو'
+        branch_id : 1,
+        standard_id : 1,
+        standard : 'پیرایش مو و ابرو',
+        save : true,
       },
       {
-        id : 2,
-        standard : 'رنگ مو'
+        branch_id : 1,
+        standard_id : 2,
+        standard : 'رنگ مو',
+        save : true,
       }
     ],
     questions : [

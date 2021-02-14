@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { View , Text , StyleSheet } from 'react-native'
-import SubBranch from '../utils/SubBranch';
+import EachSavedStandard from '../utils/EachSavedStandard';
 
 import { useSelector } from 'react-redux';
 
@@ -9,22 +9,20 @@ import { useSelector } from 'react-redux';
 
 const BranchBookmark = ({navigation}) => {
 
-  const branches = useSelector(state => state.BranchReducer.branches);
+  const standards = useSelector(state => state.SavedReducer.saved.standards);
 
-  console.log('branches : ' , branches);
+  console.log('standards : ' , standards);
 
   return (
     <>
       <View style={styles.scrollContent}>
         {
-          branches.data.map( ( item , index ) => {
+          standards.map( ( item , index ) => {
             return (
-              <SubBranch 
+              <EachSavedStandard 
               key={index} 
               navigation={navigation} 
-              save={true} 
               item={item} 
-              branch={item.branch}
               />
             )
           })

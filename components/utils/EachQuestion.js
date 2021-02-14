@@ -8,7 +8,6 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 import styled from 'styled-components/native';
 
-
 import { useSelector } from 'react-redux'; 
 import { ShabnamMedium } from './Fonts';
 
@@ -29,14 +28,16 @@ const Container = styled.View`
 `
 
 
-const EachQuestion = ({navigation, save}) => {
+const EachQuestion = ({navigation, save , item}) => {
 
   const theme = useSelector(state => state.ThemeReducer.theme)
+
+  console.log(item);
 
   const returnTextStyle = () => {
     return {
       fontFamily : ShabnamMedium,
-      fontSize : windowWidth / 15,
+      fontSize : windowWidth / 20,
       color : theme.TEXT_COLOR,
       
     }
@@ -47,7 +48,12 @@ const EachQuestion = ({navigation, save}) => {
       <TouchableOpacity 
         onPress={ () => navigation.navigate('Reading') }>
         <LinearGradient 
-        colors={['rgba(255,255,255,0.1)', 'rgba(255,255,255,0.2)', 'rgba(255,255,255,0.7)']} style={styles.card}
+        colors={[
+          'rgba(255,255,255,0.1)', 
+          'rgba(255,255,255,0.2)', 
+          'rgba(255,255,255,0.7)', 
+        ]} 
+        style={styles.card}
         >
         
         </LinearGradient>
@@ -57,7 +63,11 @@ const EachQuestion = ({navigation, save}) => {
       <TouchableOpacity 
       onPress={ () => navigation.navigate('Reading') }
       style={styles.titleContainer}>
-        <Text style={returnTextStyle()}>سوال</Text>
+        <Text style={returnTextStyle()}>
+          {
+            item.question.substring(0, 25) + '...'
+          }
+        </Text>
       </TouchableOpacity>
       
       <View style={styles.eastIcon}>
@@ -70,19 +80,17 @@ const EachQuestion = ({navigation, save}) => {
 
 
       <View style={styles.save}>
-      <TouchableOpacity
-      onPress={() => null}
+      <View
       style={styles.saveButton}
       >
-            { 
-            save
-            ?
-            <MaterialIcon size={40} color={theme.TEXT_COLOR} name="bookmark" />
-            : 
-            <MaterialIcon size={40} color={theme.TEXT_COLOR} name="bookmark-outline" />
-            }
-            
-      </TouchableOpacity>
+          { 
+          save
+          ?
+          <MaterialIcon size={40} color={theme.TEXT_COLOR} name="bookmark" />
+          : 
+          <MaterialIcon size={40} color={theme.TEXT_COLOR} name="bookmark-outline" />
+          }
+      </View>
       </View>
     </View>
   )
@@ -94,8 +102,8 @@ const styles = StyleSheet.create({
   },
   titleContainer : {
     position : 'absolute',
-    paddingHorizontal : 20,
-    paddingVertical : 20,
+    top : '25%',
+    paddingLeft : 20,
   },
   card : {
     paddingLeft : 30,
