@@ -11,7 +11,11 @@ const SubChapterLogo = ({ title , logo }) => {
 
   return (
     <LinearGradient 
-    colors={['transparent', 'transparent', 'rgba(255,255,255,0.3)']}
+    colors={[
+      'rgba(255,255,255,0.3)', 
+      'transparent', 
+      'rgba(255,255,255,0.3)'
+    ]}
     style={styles.slide}>
         <Image
           style={styles.chapterLogo}

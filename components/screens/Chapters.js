@@ -22,35 +22,9 @@ import SubChapter from '../utils/SubChapter';
 
 import styled from 'styled-components/native';
 
-import { useSelector } from 'react-redux';
+import { useSelector , useDispatch } from 'react-redux';
 
-const listOfChapters = [
-  { 
-    chapter : 'فصل 1',
-    subject : 'موضوع',
-    selectedExam : false
-  },
-  { 
-    chapter : 'فصل 2',
-    subject : 'موضوع',
-    selectedExam : false
-  },
-  { 
-    chapter : 'فصل 3',
-    subject : 'موضوع',
-    selectedExam : false
-  },
-  { 
-    chapter : 'فصل 4',
-    subject : 'موضوع',
-    selectedExam : false
-  },
-  { 
-    chapter : 'فصل 5',
-    subject : 'موضوع',
-    selectedExam : false
-  }
-]
+import { SELECT_EXAM , DESELECT_EXAM } from '../../redux/BranchActions'
 
 
 
@@ -73,35 +47,49 @@ const Container = styled.View`
 
 const Chapters = ({ navigation }) => {
 
+  const theme = useSelector(state => state.ThemeReducer.theme)
+
+  const dispatch = useDispatch();
+
   const whichPage = navigation.getParam('whichPage');
   const seasons = navigation.getParam('seasons');
+  const standardID = navigation.getParam('standardID');
+  const branchID = navigation.getParam('branchID');
 
-  const [chapters , setChapters] = useState(listOfChapters);
-
-  const theme = useSelector(state => state.ThemeReducer.theme)
+  const [chapters , setChapters] = useState(seasons);
+  const [selectedSeasons , setSelectedSeasons] = useState(Array(seasons.length).fill(false));
+  
 
   const checkExamsInSelectedOrNot = () => {
     let result = false;
-    result = chapters.find( item => {
-      if(item.selectedExam) {
+    result = selectedSeasons.find( (item , index) => {
+      if(item == true) {
         return true;
       }
     })
     return result;
   }
 
-  const changeSelectedExams = (index) => {
-    let newChapter = chapters.map( (item , i) => {
-      if(index === i) {
-        return {
-          ...item,
-          selectedExam : !item.selectedExam
-        }
+  const changeSelectedExams = (targetIndex , standardID , branchID) => {
+    const data = { 
+      standard_id : standardID , 
+      branch_id : branchID , 
+      season_id : targetIndex+1 
+    };
+
+    console.log(data);
+
+    let newSelectedSeasons = selectedSeasons.map( (item,index) => {
+      if(targetIndex == index) {
+        return !item;
       } else {
         return item;
       }
-    });
-    setChapters(newChapter);
+    })
+
+    console.log(newSelectedSeasons);
+
+    setSelectedSeasons(newSelectedSeasons);
   }
 
 
@@ -169,7 +157,11 @@ const Chapters = ({ navigation }) => {
                     index={index}
                     changeSelectedExams={changeSelectedExams}
                     navigation={navigation} 
-                    item={item}/>
+                    item={item}
+                    standardID={standardID}
+                    branchID={branchID}
+                    selectedSeasons={selectedSeasons}
+                    />
                 )
             })}
             </View>

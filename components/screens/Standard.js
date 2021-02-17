@@ -14,7 +14,7 @@ import {
 
 import Header from '../header/Header';
 
-import { useSelector } from 'react-redux'
+import { useSelector } from 'react-redux';
 
 import styled from 'styled-components/native';
 
@@ -26,8 +26,6 @@ import EachStandard from '../utils/EachStandard';
 import SubChapterLogo from '../utils/SubChapterLogo';
 
 
-
-
 const Container = styled.View`
   background-color : ${props => props.theme.MAIN_BACKGROUND};
   flex : 1;
@@ -37,13 +35,17 @@ const Standard = ({ navigation }) => {
 
   const theme = useSelector(state => state.ThemeReducer.theme)
 
-  // const numbers = [1,2,3,4,5,6,7,8,9,10];
-
   const title = navigation.getParam('title');
   const logo = navigation.getParam('logo');
   const standards = navigation.getParam('standards');
   const branchName = navigation.getParam('branchName');
   const branchID = navigation.getParam('branchID');
+
+  // const standards = useSelector(state => state.BranchReducer.branches[branchID-1].standards); 
+
+  // const numbers = [1,2,3,4,5,6,7,8,9,10];
+
+  
 
   const whichPage = navigation.getParam('whichPage');
 
@@ -79,11 +81,11 @@ const Standard = ({ navigation }) => {
               standards.map( (item , index) => {
                 return (
                   <EachStandard 
-                  key={index} 
-                  navigation={navigation} 
-                  item={item} 
-                  branchName={branchName}
-                  branchID={branchID}
+                    key={index} 
+                    navigation={navigation} 
+                    item={item} 
+                    branchName={branchName} 
+                    branchID={branchID} 
                   />
                 )
               })

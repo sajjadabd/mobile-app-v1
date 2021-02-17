@@ -1,4 +1,4 @@
-import React from 'react';
+import React , { useState } from 'react';
 
 import { View , Text , TouchableOpacity , StyleSheet } from 'react-native';
 
@@ -9,10 +9,15 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 import styled from 'styled-components/native';
 
-import { useSelector } from 'react-redux';
+import { useSelector , useDispatch } from 'react-redux';
 import { LalezarRegular, ShabnamMedium } from './Fonts';
 
 import LinearGradient from 'react-native-linear-gradient';
+
+import {
+  UPDATE_SAVE_STANDARD_IN_BRANCH ,
+  UPDATE_UNSAVE_STANDARD_IN_BRANCH
+} from '../../redux/BranchActions';
 
 
 const Container = styled.View`
@@ -39,29 +44,47 @@ const EachStandard = ({ navigation , item , branchName , branchID }) => {
 
   const theme = useSelector( state => state.ThemeReducer.theme );
 
-  const standardData = {
-    seasons : item.seasons
-  }
+  const dispatch = useDispatch();
 
-  const { id , standard , save  } = item;
-  console.log( id , standard , save);
+  
+
+  let { 
+    id , 
+    standard ,   
+  } = item;
 
   const standardID = id;
 
+  const standardData = {
+    seasons : item.seasons ,
+    standardID ,
+    branchID
+  }
+
+  const [save , setSave] = useState(item.save);
+
+  console.log( id , standard , save);
+
+  
+
   const returnTextStyle = () => {
     return {
-      fontFamily : ShabnamMedium,
-      fontSize : windowWidth / 15,
-      color : theme.TEXT_COLOR,
+      fontFamily : ShabnamMedium ,
+      fontSize : windowWidth / 15 ,
+      color : theme.TEXT_COLOR ,
     }
   }
 
   const unSaveStandard = (data) => {
     console.log(data);
+    dispatch({ type : UPDATE_UNSAVE_STANDARD_IN_BRANCH , payload : data });
+    setSave(false);
   }
 
   const saveStandard = (data) => {
     console.log(data);
+    dispatch({ type : UPDATE_SAVE_STANDARD_IN_BRANCH , payload : data });
+    setSave(true);
   }
 
   return (
@@ -82,7 +105,7 @@ const EachStandard = ({ navigation , item , branchName , branchID }) => {
       </TouchableOpacity>
 
       <TouchableOpacity 
-      onPress={ () => navigation.navigate('SubBranch' , standardData) }
+      onPress={ () => navigation.navigate('SubBranch' , standardData ) }
       style={styles.titleContainer}>
         <Text style={returnTextStyle()}>
           {

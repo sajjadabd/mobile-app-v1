@@ -55,7 +55,7 @@ const Branch = ({ navigation }) => {
     <Container>
       <ImageBackground
         style={styles.image}
-        source={require('../images/bg.png') }
+        source={require('../images/bg.png')}
       >
 
         

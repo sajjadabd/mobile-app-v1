@@ -9,10 +9,15 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 import styled from 'styled-components/native';
 
-import { useSelector } from 'react-redux';
+import { useSelector , useDispatch } from 'react-redux';
 import { LalezarRegular, ShabnamMedium } from './Fonts';
 
 import LinearGradient from 'react-native-linear-gradient';
+
+import { 
+  UPDATE_SAVE_STANDARD , 
+  UPDATE_UNSAVE_STANDARD 
+} from '../../redux/SavedActions';
 
 
 const Container = styled.View`
@@ -39,11 +44,18 @@ const EachSavedStandard = ({ navigation , item , branchName , branchID }) => {
 
   const theme = useSelector( state => state.ThemeReducer.theme );
 
+  const dispatch = useDispatch();
+
   const standardData = {
     seasons : item.seasons
   }
 
-  const { branch_id , standard_id , standard , save  } = item;
+  const { 
+    branch_id , 
+    standard_id , 
+    standard , 
+    save  
+  } = item;
 
   console.log(item);
 
@@ -56,11 +68,11 @@ const EachSavedStandard = ({ navigation , item , branchName , branchID }) => {
   }
 
   const unSaveStandard = (data) => {
-    console.log(data);
+    dispatch({ type : UPDATE_UNSAVE_STANDARD , payload : data });
   }
 
   const saveStandard = (data) => {
-    console.log(data);
+    dispatch({ type : UPDATE_SAVE_STANDARD , payload : data });
   }
 
   return (

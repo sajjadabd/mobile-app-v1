@@ -54,8 +54,15 @@ const SubBranch = ({ navigation }) => {
 
   const whichPage = navigation.getParam('whichPage');
 
-  // const standards = navigation.getParam('standards');
+  const standardID = navigation.getParam('standardID');
+  const branchID = navigation.getParam('branchID');
   const seasons = navigation.getParam('seasons');
+
+  const chapterData = {
+    seasons ,
+    standardID ,
+    branchID
+  }
 
   const theme = useSelector(state => state.ThemeReducer.theme)
 
@@ -94,14 +101,15 @@ const SubBranch = ({ navigation }) => {
 
         <View style={styles.touchableContainer}>
           <TouchableOpacity
-            onPress={() => navigation.navigate('Chapters' , { seasons } )}
+            onPress={() => navigation.navigate('Chapters' , chapterData )}
           >
             <View >
             <LinearGradient 
               colors={[
                 'rgba(255,255,255,0.3)', 
                 'rgba(255,255,255,0)', 
-                'rgba(255,255,255,0.3)']} 
+                'rgba(255,255,255,0.3)',
+              ]} 
               style={styles.blockButton}
             >
               <View style={styles.iconContainer}>
@@ -113,7 +121,7 @@ const SubBranch = ({ navigation }) => {
           </TouchableOpacity>
 
           <TouchableOpacity
-            onPress={() => navigation.navigate('Exam' , { seasons } )}
+            onPress={() => navigation.navigate('Exam' , chapterData )}
           >
           <View>
             <LinearGradient 

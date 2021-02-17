@@ -1,4 +1,4 @@
-import React from 'react'
+import React , { useState } from 'react'
 
 import { View , Text, TouchableOpacity, StyleSheet } from 'react-native'
 
@@ -28,14 +28,15 @@ const ExamButton = styled.View`
 `
 
 
-const SubChapter = ({navigation , item , index , changeSelectedExams}) => {
+const SubChapter = ({navigation , item , index  , selectedSeasons , changeSelectedExams , standardID , branchID}) => {
 
-    const theme = useSelector(state => state.ThemeReducer.theme)
+    const theme = useSelector(state => state.ThemeReducer.theme);
+    
 
     console.log(item);
 
-    const changeStyleBasedOnSelected = (item) => {
-      if(item.selectedExam) {
+    const changeStyleBasedOnSelected = (index) => {
+      if(selectedSeasons[index]) {
         return {
           justifyContent : 'center',
           backgroundColor : 'black',
@@ -55,6 +56,17 @@ const SubChapter = ({navigation , item , index , changeSelectedExams}) => {
           borderBottomLeftRadius : 20,
         }
       }
+    }
+
+
+    const changeSeasonSelectedStatus = (targetIndex) => {
+      let newSelectedSeasons = selectedSeasons.map( (item , index) => {
+         if ( targetIndex == index) {
+           return true;
+         } else {
+           return false;
+         }
+      })
     }
 
 
@@ -99,9 +111,10 @@ const SubChapter = ({navigation , item , index , changeSelectedExams}) => {
         ]} 
         style={styles.card}
         >
-          <View style={changeStyleBasedOnSelected(item)}> 
+          <View style={changeStyleBasedOnSelected(index)}> 
             <TouchableOpacity 
-              onPress={() => changeSelectedExams(index)}
+              onPress={() => changeSelectedExams(index , standardID , branchID)}
+              // onPress={ () => changeSeasonSelectedStatus(index) }
               style={styles.icon}
             >
                 <MaterialIcon size={80} color="white" name="list-alt" />
@@ -140,7 +153,7 @@ const styles = StyleSheet.create({
         fontSize : 25,
         fontFamily : LalezarRegular,
         alignSelf : 'flex-end',
-    },    
+    },
     info : {
         flexDirection : 'column',
         justifyContent : 'center',

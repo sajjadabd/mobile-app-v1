@@ -1,7 +1,9 @@
 import { 
   GET_SAVED_QUESTIONS, 
-  GET_SAVED_STANDARDS 
-} from "./SavedActions";
+  GET_SAVED_STANDARDS,
+  UPDATE_SAVE_STANDARD,
+  UPDATE_UNSAVE_STANDARD,
+} from './SavedActions';
 
 const initialState = {
   saved : {
@@ -43,6 +45,57 @@ let newState = {
 
 const SavedReducer = (state = initialState, action) => {
   switch (action.type) {
+    case UPDATE_SAVE_STANDARD :
+
+      newState = {
+        ...state ,
+      }
+
+      newState.saved.standards = state.saved.standards.map((item , index) => {
+        if ( item.standard_id == action.payload.standard_id ) {
+          return {
+            ...item ,
+            save : true,
+          }
+        } else {
+          return item;
+        }
+      })
+
+      return newState
+    case UPDATE_UNSAVE_STANDARD :
+
+      newState = {
+        ...state ,
+      }
+
+      /* newState.saved.standards = state.saved.standards.map((item , index) => {
+        if ( item.standard_id == action.payload.standard_id ) {
+          return {
+            ...item ,
+            save : false ,
+          }
+        } else {
+          return item;
+        }
+      }) */
+
+      newState.saved.standards = state.saved.standards.filter((item , index) => {
+        return item.standard_id != action.payload.standard_id 
+      })
+
+      /* newState = newState.saved.standards.map( (item , index) => {
+        if ( item.standard_id == action.payload.standard_id ) {
+          return {
+            ...item ,
+            save : false,
+          }
+        } else {
+          return item;
+        }
+      } ); */
+
+      return newState
     case GET_SAVED_STANDARDS:
       newState = {
         ...state,
