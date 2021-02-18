@@ -1,4 +1,4 @@
-import React , { useState } from 'react';
+import React , { useState , useEffect } from 'react';
 
 import { View , Text , TouchableOpacity , StyleSheet } from 'react-native';
 
@@ -18,6 +18,11 @@ import {
   UPDATE_SAVE_STANDARD_IN_BRANCH ,
   UPDATE_UNSAVE_STANDARD_IN_BRANCH
 } from '../../redux/BranchActions';
+
+import { SAVE_STANDARD , UNSAVE_STANDARD } from '../URL/Urls'
+
+import axios from 'axios';
+import { getData } from '../AsyncStorage/SecureStorage';
 
 
 const Container = styled.View`
@@ -44,9 +49,20 @@ const EachStandard = ({ navigation , item , branchName , branchID }) => {
 
   const theme = useSelector( state => state.ThemeReducer.theme );
 
-  const dispatch = useDispatch();
+  let userInfo;
 
+
+  useEffect( () => {
+    const getUserData = async () => {
+      userInfo = await getData();
+      console.log(userInfo);
+    }
+
+    getUserData();
+  });
   
+
+  const dispatch = useDispatch();
 
   let { 
     id , 
@@ -65,25 +81,67 @@ const EachStandard = ({ navigation , item , branchName , branchID }) => {
 
   console.log( id , standard , save);
 
-  
 
   const returnTextStyle = () => {
     return {
       fontFamily : ShabnamMedium ,
-      fontSize : windowWidth / 15 ,
+      fontSize : windowWidth / 20 ,
       color : theme.TEXT_COLOR ,
     }
   }
 
-  const unSaveStandard = (data) => {
+
+  const requestToServerForSaveStandards = async () => {
+    console.log(SAVE_STANDARD + branchID + '/' + standardID + '/' + userInfo.user_id);
+    try {
+      const result = await axios({
+        method: 'GET',
+        url: SAVE_STANDARD + branchID + '/' + standardID + '/' + userInfo.user_id,
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        data : {
+          
+        }
+      });
+      setStandards(result.data.result);
+    } catch (e) {
+      console.log("Error Happens for save standard ...");
+    }
+  }
+
+
+  const requestToServerForUnSaveStandards = async () => {
+    console.log(UNSAVE_STANDARD + branchID + '/' + standardID + '/' + userInfo.user_id);
+    try {
+      const result = await axios({
+        method: 'GET',
+        url: UNSAVE_STANDARD + branchID + '/' + standardID + '/' + userInfo.user_id,
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        data : {
+          
+        }
+      });
+      setStandards(result.data.result);
+    } catch (e) {
+      console.log("Error Happens for unsave standard ...");
+    }
+  }
+
+
+  const unSaveStandard = async (data) => {
     console.log(data);
-    dispatch({ type : UPDATE_UNSAVE_STANDARD_IN_BRANCH , payload : data });
+    // dispatch({ type : UPDATE_UNSAVE_STANDARD_IN_BRANCH , payload : data });
+    await requestToServerForUnSaveStandards();
     setSave(false);
   }
 
-  const saveStandard = (data) => {
+  const saveStandard = async (data) => {
     console.log(data);
-    dispatch({ type : UPDATE_SAVE_STANDARD_IN_BRANCH , payload : data });
+    // dispatch({ type : UPDATE_SAVE_STANDARD_IN_BRANCH , payload : data });
+    await requestToServerForSaveStandards();
     setSave(true);
   }
 
@@ -109,7 +167,7 @@ const EachStandard = ({ navigation , item , branchName , branchID }) => {
       style={styles.titleContainer}>
         <Text style={returnTextStyle()}>
           {
-            item.standard
+            item.standard_name
           }
         </Text>
       </TouchableOpacity>

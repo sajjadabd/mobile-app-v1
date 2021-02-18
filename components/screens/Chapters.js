@@ -1,4 +1,4 @@
-import React , { useState } from 'react'
+import React , { useState , useEffect , useMemo } from 'react'
 
 import {
   SafeAreaView,
@@ -26,6 +26,10 @@ import { useSelector , useDispatch } from 'react-redux';
 
 import { SELECT_EXAM , DESELECT_EXAM } from '../../redux/BranchActions'
 
+import { GET_SEASONS } from '../URL/Urls';
+
+import axios from 'axios';
+
 
 
 const Header = styled.View`
@@ -52,12 +56,46 @@ const Chapters = ({ navigation }) => {
   const dispatch = useDispatch();
 
   const whichPage = navigation.getParam('whichPage');
-  const seasons = navigation.getParam('seasons');
+  // const seasons = navigation.getParam('seasons');
   const standardID = navigation.getParam('standardID');
   const branchID = navigation.getParam('branchID');
 
-  const [chapters , setChapters] = useState(seasons);
-  const [selectedSeasons , setSelectedSeasons] = useState(Array(seasons.length).fill(false));
+  const [seasons , setSeasons] = useState(undefined);
+  const [selectedSeasons , setSelectedSeasons] = useState([]);
+  
+  //Array(seasons.length).fill(false)
+  
+
+  const requestToServerForSeasons = async () => {
+    console.log(GET_SEASONS + branchID + '/' + standardID);
+    try {
+      const result = await axios({
+        method: 'GET',
+        url: GET_SEASONS + branchID + '/' + standardID,
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        data : {
+          
+        }
+      });
+      console.log('standards :' , result.data.result);
+      setSeasons(result.data.result);
+    } catch (e) {
+      console.log("Error Happens for fetch seasons ...");
+    }
+  }
+
+  useEffect( () => {
+    const fetchSeasons = async () => {
+      await requestToServerForSeasons();
+    }
+    if(seasons == undefined) {
+      fetchSeasons();
+    }
+  });
+
+  
   
 
   const checkExamsInSelectedOrNot = () => {
@@ -80,12 +118,20 @@ const Chapters = ({ navigation }) => {
     console.log(data);
 
     let newSelectedSeasons = selectedSeasons.map( (item,index) => {
-      if(targetIndex == index) {
-        return !item;
-      } else {
-        return item;
-      }
+      return item;
     })
+
+    if ( 
+      newSelectedSeasons[targetIndex] == undefined ||
+      newSelectedSeasons[targetIndex] == null ||
+      newSelectedSeasons[targetIndex] == false 
+      ) {
+      newSelectedSeasons[targetIndex] = true;
+    } else if ( newSelectedSeasons[targetIndex] == true ) {
+      newSelectedSeasons[targetIndex] = false;
+    }
+
+    
 
     console.log(newSelectedSeasons);
 
@@ -150,17 +196,18 @@ const Chapters = ({ navigation }) => {
 
         <ScrollView style={styles.scroll}>
             <View style={styles.scrollContent}>
-            {seasons.map( ( item , index ) => {
+            {
+            seasons && seasons.map( ( item , index ) => {
                 return (
                     <SubChapter 
-                    key={index} 
-                    index={index}
-                    changeSelectedExams={changeSelectedExams}
-                    navigation={navigation} 
-                    item={item}
-                    standardID={standardID}
-                    branchID={branchID}
-                    selectedSeasons={selectedSeasons}
+                      key={index} 
+                      index={index}
+                      changeSelectedExams={changeSelectedExams}
+                      navigation={navigation} 
+                      item={item}
+                      standardID={standardID}
+                      branchID={branchID}
+                      selectedSeasons={selectedSeasons}
                     />
                 )
             })}

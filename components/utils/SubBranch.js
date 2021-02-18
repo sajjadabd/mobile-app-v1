@@ -44,6 +44,8 @@ const SubBranch = ({navigation, branchName , branchID , standards }) => {
     branchID , 
   }
 
+  console.log(branchData);
+
 
   const returnTextStyle = () => {
     return {

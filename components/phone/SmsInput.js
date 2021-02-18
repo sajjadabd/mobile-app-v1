@@ -85,10 +85,17 @@ const SmsInput = ({phoneNumber , sms , setSMS , scrollSwiper , setPhoneReady}) =
     setSend(true);
     let result = await requestToServerForConfirmSms(phoneNumber , sms);
     
-    console.log(result.success)
+    console.log(result)
+
+    let id = null;
+    if( result && result.user ) {
+      id = result.user.id;
+    }
+
     if( result && result.success == true ) {
       // console.log("There is Success")
-      await setData(phoneNumber , sms);
+      console.log({phoneNumber , sms , id});
+      await setData(phoneNumber , sms , id);
       setPhoneReady(true);
     } else {
       setSend(false);

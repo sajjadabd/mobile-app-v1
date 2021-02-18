@@ -97,7 +97,7 @@ const MainApp = () => {
     const doTheJob = async () => {
       // await removeData();
       let userInfo = await getData();
-      // console.log('userInfo :' , userInfo);
+      console.log('userInfo :' , userInfo);
       let result = await requestToServerForConfirmSms(userInfo);
       dispatch({ type : UPDATE_USER , payload : result.user });
 

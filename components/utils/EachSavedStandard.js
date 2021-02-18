@@ -40,7 +40,14 @@ const TextBlock = styled.Text`
   color : 'white';
 `
 
-const EachSavedStandard = ({ navigation , item , branchName , branchID }) => {
+const EachSavedStandard = ({ 
+  navigation , 
+  item , 
+  index ,
+  branchName , 
+  branchID ,
+  removeStandards
+}) => {
 
   const theme = useSelector( state => state.ThemeReducer.theme );
 
@@ -53,7 +60,7 @@ const EachSavedStandard = ({ navigation , item , branchName , branchID }) => {
   const { 
     branch_id , 
     standard_id , 
-    standard , 
+    standard_name , 
     save  
   } = item;
 
@@ -62,17 +69,17 @@ const EachSavedStandard = ({ navigation , item , branchName , branchID }) => {
   const returnTextStyle = () => {
     return {
       fontFamily : ShabnamMedium,
-      fontSize : windowWidth / 15,
+      fontSize : windowWidth / 22,
       color : theme.TEXT_COLOR,
     }
   }
 
   const unSaveStandard = (data) => {
-    dispatch({ type : UPDATE_UNSAVE_STANDARD , payload : data });
+    // dispatch({ type : UPDATE_UNSAVE_STANDARD , payload : data });
   }
 
   const saveStandard = (data) => {
-    dispatch({ type : UPDATE_SAVE_STANDARD , payload : data });
+    // dispatch({ type : UPDATE_SAVE_STANDARD , payload : data });
   }
 
   return (
@@ -97,7 +104,7 @@ const EachSavedStandard = ({ navigation , item , branchName , branchID }) => {
       style={styles.titleContainer}>
         <Text style={returnTextStyle()}>
           {
-            standard
+            standard_name
           }
         </Text>
       </TouchableOpacity>

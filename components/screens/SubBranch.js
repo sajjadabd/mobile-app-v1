@@ -56,10 +56,9 @@ const SubBranch = ({ navigation }) => {
 
   const standardID = navigation.getParam('standardID');
   const branchID = navigation.getParam('branchID');
-  const seasons = navigation.getParam('seasons');
+  // const seasons = navigation.getParam('seasons');
 
   const chapterData = {
-    seasons ,
     standardID ,
     branchID
   }

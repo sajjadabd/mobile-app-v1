@@ -1,13 +1,17 @@
 import RNSecureStorage, { ACCESSIBLE } from 'rn-secure-storage'
 
 
-export const setData = async (phoneNumber , sms) => {
+export const setData = async (phoneNumber , sms , id) => {
   try {
     await RNSecureStorage.set("phoneNumber", phoneNumber,{
       accessible: ACCESSIBLE.WHEN_UNLOCKED
     });
   
     await RNSecureStorage.set("sms", sms, {
+      accessible: ACCESSIBLE.WHEN_UNLOCKED
+    });
+
+    await RNSecureStorage.set("user_id", id.toString(), {
       accessible: ACCESSIBLE.WHEN_UNLOCKED
     });
   } catch (e) {
@@ -34,17 +38,20 @@ export const setTheme = async (theme) => {
 export const getData = async () => {
   let phoneNumber = null;
   let sms = null;
+  let user_id = null;
 
   try {
     phoneNumber = await RNSecureStorage.get("phoneNumber");
     sms = await RNSecureStorage.get("sms");
+    user_id = await RNSecureStorage.get("user_id");
   } catch (e) {
     
   }
 
   return {
     phoneNumber , 
-    sms
+    sms ,
+    user_id
   }
 }
 
@@ -69,6 +76,7 @@ export const removeData = async () => {
   try {
     await RNSecureStorage.remove("phoneNumber");
     await RNSecureStorage.remove("sms");
+    await RNSecureStorage.remove("user_id");
     await RNSecureStorage.remove("theme");
   } catch (e) {
     

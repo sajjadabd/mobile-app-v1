@@ -13,6 +13,7 @@ import styled from 'styled-components/native';
 import { useSelector } from 'react-redux';
 
 import LinearGradient from 'react-native-linear-gradient';
+import { windowWidth } from './Dimensions';
 
 
 
@@ -28,12 +29,20 @@ const ExamButton = styled.View`
 `
 
 
-const SubChapter = ({navigation , item , index  , selectedSeasons , changeSelectedExams , standardID , branchID}) => {
+const SubChapter = ({ 
+  navigation , 
+  item , 
+  index  , 
+  selectedSeasons , 
+  changeSelectedExams , 
+  standardID , 
+  branchID
+}) => {
 
     const theme = useSelector(state => state.ThemeReducer.theme);
     
 
-    console.log(item);
+    // console.log(item);
 
     const changeStyleBasedOnSelected = (index) => {
       if(selectedSeasons[index]) {
@@ -74,7 +83,7 @@ const SubChapter = ({navigation , item , index  , selectedSeasons , changeSelect
     const seasonTextStyle = () => {
       return {
         color : theme.TEXT_COLOR,
-        fontSize : 35,
+        fontSize : windowWidth / 20,
         fontFamily : VazirRegularFD,
       }
     }
@@ -83,7 +92,7 @@ const SubChapter = ({navigation , item , index  , selectedSeasons , changeSelect
     const subjectTextStyle = () => {
       return {
         color : theme.TEXT_COLOR,
-        fontSize : 25,
+        fontSize : windowWidth / 25,
         fontFamily : ShabnamMedium,
         alignSelf : 'flex-start',
       }
@@ -126,8 +135,11 @@ const SubChapter = ({navigation , item , index  , selectedSeasons , changeSelect
               <TouchableOpacity
               onPress={() => navigation.navigate('Reading')}
               >
-                <Text style={seasonTextStyle()}>{item.chapter}</Text>
-                <Text style={subjectTextStyle()}>{item.subject}</Text>
+                <Text style={seasonTextStyle()}>
+                  فصل
+                  { ' ' + item.season_number }
+                 </Text>
+                <Text style={subjectTextStyle()}>{item.season_title}</Text>
               </TouchableOpacity>
           </View>
          

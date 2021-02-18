@@ -1,4 +1,4 @@
-import React , { useContext } from 'react';
+import React , { useState , useEffect , useContext } from 'react';
 
 import {
   SafeAreaView,
@@ -27,6 +27,8 @@ import SubChapterLogo from '../utils/SubChapterLogo';
 
 import { GET_STANDARDS } from '../URL/Urls';
 
+import axios from 'axios';
+
 
 const Container = styled.View`
   background-color : ${props => props.theme.MAIN_BACKGROUND};
@@ -49,7 +51,8 @@ const Standard = ({ navigation }) => {
   
   const [standards , setStandards] = useState(undefined);
 
-  const requestToServerForBranches = async () => {
+  const requestToServerForStandards = async () => {
+    console.log(GET_STANDARDS + branchID);
     try {
       const result = await axios({
         method: 'GET',
@@ -61,19 +64,19 @@ const Standard = ({ navigation }) => {
           
         }
       });
-      console.log('branches :' , result.data.result);
+      console.log('standards :' , result.data.result);
       setStandards(result.data.result);
     } catch (e) {
-      console.log("Error Happens for fetch branches ...");
+      console.log("Error Happens for fetch standards ...");
     }
   }
 
   useEffect( () => {
-    const fetchBranches = async () => {
-      await requestToServerForBranches();
+    const fetchStandards = async () => {
+      await requestToServerForStandards();
     }
-    if(branches == undefined) {
-      fetchBranches();
+    if(standards == undefined) {
+      fetchStandards();
     }
   });
 
@@ -110,7 +113,7 @@ const Standard = ({ navigation }) => {
             /> */}
 
             {
-              /* standards.map( (item , index) => {
+              standards && standards.map( (item , index) => {
                 return (
                   <EachStandard 
                     key={index} 
@@ -120,7 +123,7 @@ const Standard = ({ navigation }) => {
                     branchID={branchID} 
                   />
                 )
-              }) */
+              })
             }
 
           </View>

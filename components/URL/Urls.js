@@ -20,3 +20,28 @@ localHost + '/home/branches/getAll';
 
 export const GET_STANDARDS = 
 localHost + '/home/standards/';
+
+
+export const GET_SEASONS = 
+localHost + '/home/seasons/'
+
+
+export const GET_SAVED_QUESTIONS = 
+localHost + '/saved/questions/'
+
+export const GET_SAVED_STANDARDS = 
+localHost + '/saved/standards/'
+
+
+export const SAVE_STANDARD = 
+localHost + '/saved/add/standards/';
+// /add/standards/:branch_id/:standard_id/:user_id
+
+export const UNSAVE_STANDARD = 
+localHost + '/saved/remove/standards/';
+
+export const SAVE_QUESTIONS = 
+localHost + '/saved/add/questions/';
+
+export const UNSAVE_QUESTIONS = 
+localHost + '/saved/remove/questions/';

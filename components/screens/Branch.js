@@ -121,7 +121,7 @@ const Branch = ({ navigation }) => {
                     navigation={navigation} 
                     // standards={item.standards} 
                     branchName={item.branch_name}
-                    branchID={item.branch_id}
+                    branchID={item.id}
                   />
                 )
               })
