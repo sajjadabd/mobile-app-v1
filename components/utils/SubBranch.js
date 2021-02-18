@@ -40,7 +40,6 @@ const SubBranch = ({navigation, branchName , branchID , standards }) => {
   const theme = useSelector(state => state.ThemeReducer.theme)
 
   const branchData = {
-    standards , 
     branchName , 
     branchID , 
   }

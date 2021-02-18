@@ -17,3 +17,6 @@ localHost + '/users/update';
 export const GET_ALL_BRANCHES = 
 localHost + '/home/branches/getAll';
 
+
+export const GET_STANDARDS = 
+localHost + '/home/standards/';

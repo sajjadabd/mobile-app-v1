@@ -25,6 +25,8 @@ import Footer from '../footer/Footer';
 import EachStandard from '../utils/EachStandard';
 import SubChapterLogo from '../utils/SubChapterLogo';
 
+import { GET_STANDARDS } from '../URL/Urls';
+
 
 const Container = styled.View`
   background-color : ${props => props.theme.MAIN_BACKGROUND};
@@ -37,13 +39,43 @@ const Standard = ({ navigation }) => {
 
   const title = navigation.getParam('title');
   const logo = navigation.getParam('logo');
-  const standards = navigation.getParam('standards');
+  // const standards = navigation.getParam('standards');
   const branchName = navigation.getParam('branchName');
   const branchID = navigation.getParam('branchID');
 
   // const standards = useSelector(state => state.BranchReducer.branches[branchID-1].standards); 
 
   // const numbers = [1,2,3,4,5,6,7,8,9,10];
+  
+  const [standards , setStandards] = useState(undefined);
+
+  const requestToServerForBranches = async () => {
+    try {
+      const result = await axios({
+        method: 'GET',
+        url: GET_STANDARDS + branchID,
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        data : {
+          
+        }
+      });
+      console.log('branches :' , result.data.result);
+      setStandards(result.data.result);
+    } catch (e) {
+      console.log("Error Happens for fetch branches ...");
+    }
+  }
+
+  useEffect( () => {
+    const fetchBranches = async () => {
+      await requestToServerForBranches();
+    }
+    if(branches == undefined) {
+      fetchBranches();
+    }
+  });
 
   
 
@@ -78,7 +110,7 @@ const Standard = ({ navigation }) => {
             /> */}
 
             {
-              standards.map( (item , index) => {
+              /* standards.map( (item , index) => {
                 return (
                   <EachStandard 
                     key={index} 
@@ -88,7 +120,7 @@ const Standard = ({ navigation }) => {
                     branchID={branchID} 
                   />
                 )
-              })
+              }) */
             }
 
           </View>
