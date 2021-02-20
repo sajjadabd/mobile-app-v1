@@ -74,7 +74,9 @@ const EachStandard = ({ navigation , item , branchName , branchID }) => {
   const standardData = {
     seasons : item.seasons ,
     standardID ,
-    branchID
+    branchID ,
+    branchName ,
+    standardName : item.standard_name
   }
 
   const [save , setSave] = useState(item.save);

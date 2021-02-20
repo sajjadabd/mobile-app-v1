@@ -1,4 +1,4 @@
-import React , { useRef , Component }  from 'react';
+import React , { useRef , useEffect , useState , Component }  from 'react';
 
 // import { View, Text } from 'react-native';
 import { View , Text, StyleSheet , TouchableOpacity  } from 'react-native';
@@ -12,17 +12,33 @@ import { useSelector } from 'react-redux';
 // import Slider from '@react-native-community/slider';
 
 import { LalezarRegular, ShabnamMedium } from './Fonts';
+import { windowWidth } from './Dimensions';
 
 
 
-const ExamQuestionContainer = ({radioButtonsData , color , save}) => {
+const ExamQuestionContainer = ({question , color , save}) => {
 
       const theme = useSelector(state => state.ThemeReducer.theme)
+
+      const radioButtonsData = [
+        {
+          label : question.first
+        },
+        {
+          label : question.second
+        },
+        {
+          label : question.third
+        },
+        {
+          label : question.fourth
+        }
+      ]
 
       const returnQuestionTextStyle = () => {
         return {
           color : 'white',
-          fontSize : 35,
+          fontSize : windowWidth / 18,
           fontFamily : ShabnamMedium,
         }
       }
@@ -31,7 +47,7 @@ const ExamQuestionContainer = ({radioButtonsData , color , save}) => {
       const returnAnswerTextStyle = () => {
         return {
           color : 'white',
-          fontSize : 20,
+          fontSize : windowWidth / 15,
           fontFamily : ShabnamMedium,
         }
       }
@@ -43,7 +59,9 @@ const ExamQuestionContainer = ({radioButtonsData , color , save}) => {
         <View style={{backgroundColor : color}}>
 
         <View style={styles.iconContainer}>
-            <TouchableOpacity
+
+
+            {/* <TouchableOpacity
             onPress={() => null}
             style={styles.saveButton}
             >
@@ -54,7 +72,7 @@ const ExamQuestionContainer = ({radioButtonsData , color , save}) => {
               : 
               <MaterialIcon size={40} color={theme.TEXT_COLOR} name="bookmark-outline" />
               }
-            </TouchableOpacity>
+            </TouchableOpacity> */}
 
             {/* <TouchableOpacity
             onPress={() => null}
@@ -68,7 +86,11 @@ const ExamQuestionContainer = ({radioButtonsData , color , save}) => {
           </View>
 
           <View style={styles.Question}>
-              <Text style={returnQuestionTextStyle()}>سوال</Text>
+              <Text style={returnQuestionTextStyle()}>
+                {
+                  question.question
+                }
+              </Text>
           </View>
           
           {/* <View style={styles.Answer}>
@@ -77,14 +99,18 @@ const ExamQuestionContainer = ({radioButtonsData , color , save}) => {
               </Text>
           </View> */}
     
-          <View >
+          <View style={styles.questionContainer}>
             <RadioButtonRN
               data={radioButtonsData}
               animationTypes={['shake']}
               selectedBtn={() => null}
               style={styles.answers}
               boxStyle={{flexDirection : 'row-reverse'}}
-              textStyle={{alignSelf : 'flex-end' , fontFamily : ShabnamMedium , fontSize : 15}}
+              textStyle={{
+                alignSelf : 'flex-end' , 
+                fontFamily : ShabnamMedium , 
+                fontSize : windowWidth / 25
+              }}
               boxActiveBgColor='dodgerblue'
               boxDeactiveBgColor={null}
               textColor='white'
@@ -124,6 +150,9 @@ const styles = StyleSheet.create({
   },
   saveButton : {
     marginRight : 10,
+  },
+  questionContainer : {
+    paddingBottom : 40,
   }
 });
 

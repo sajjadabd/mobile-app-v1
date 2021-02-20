@@ -1,4 +1,4 @@
-import React , { useRef , useState } from 'react'
+import React , { useRef , useEffect , useState } from 'react'
 
 import {
     SafeAreaView,
@@ -26,15 +26,22 @@ import styled from 'styled-components/native';
 
 import { useSelector } from 'react-redux';
 
+import { 
+  GET_QUESTIONS_FOR_ALL_SEASONS,
+  GET_QUESTIONS_FOR_SELECTED_SEASONS
+} from '../URL/Urls';
+
+import axios from 'axios';
+
 const duration = 100;
 
 
 const Header = styled.View`
-  flex : 3;
+  flex : 4;
   background-color : ${props => props.theme.QUESTION_CONTAINER};
   border-bottom-left-radius : 55px;
   border-bottom-right-radius : 55px;
-  padding : 40px;
+  padding : 30px;
   margin-bottom : 40px;
 `
 
@@ -44,55 +51,87 @@ const Container = styled.View`
 `
 
 
-// const numbers = [1,2,3];
-
-const radioButtonsData = [
-    [
-      {
-        label: 'گزینه ی اول'
-      },
-      {
-        label: 'گزینه ی دوم'
-      },
-      {
-        label: 'گزینه ی سوم'
-      },
-      {
-        label: 'گزینه ی چهارم'
-      }
-    ],
-    [
-      {
-        label: 'سلام'
-      },
-      {
-        label: 'خوبی'
-      },
-      {
-        label: 'چطوری'
-      },
-      {
-        label: 'چه خبر ؟'
-      }
-    ],
-    [
-      {
-        label: '1'
-      },
-      {
-        label: '2'
-      },
-      {
-        label: '3'
-      },
-      {
-        label: '4'
-      }
-    ]
-];
-
 
 const Exam = ({navigation}) => {
+
+    
+    const branchID = navigation.getParam('branchID');
+    const standardID = navigation.getParam('standardID');
+    const selectedSeasons = navigation.getParam('selectedSeasons');
+
+    const [questions, setQuestions] = useState([]);
+    const [questionIndex , setQuestionIndex] = useState(0);
+
+    console.log( branchID , standardID  );
+
+
+    const requestToServerForGetQuestions = async () => {
+      console.log(GET_QUESTIONS_FOR_ALL_SEASONS + branchID + '/' + standardID );
+      try {
+        const result = await axios({
+          method: 'GET',
+          url: GET_QUESTIONS_FOR_ALL_SEASONS + branchID + '/' + standardID ,
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          data : {
+            
+          }
+        });
+        console.log('questions :' , result.data.result.slice(0,10));
+        setQuestions(result.data.result.slice(0,10));
+      } catch (e) {
+        console.log("Error Happens for fetch questions ...");
+      }
+    }
+
+
+    const requestToServerForGetQuestionsForSelectedSeasons = async () => {
+      console.log(GET_QUESTIONS_FOR_SELECTED_SEASONS + branchID + '/' + standardID );
+      try {
+        const result = await axios({
+          method: 'POST',
+          url: GET_QUESTIONS_FOR_SELECTED_SEASONS + branchID + '/' + standardID ,
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          data : {
+            "seasons" : selectedSeasons
+          }
+        });
+        console.log('questions :' , result.data.result.slice(0,10));
+        setQuestions(result.data.result.slice(0,10));
+      } catch (e) {
+        console.log("Error Happens for fetch selected seasons questions ...");
+      }
+    }
+  
+    useEffect( () => {
+
+      const seasons = navigation.getParam('selectedSeasons');
+
+      console.log('seasons :' , seasons);
+      
+      const fetchQuestions = async () => {
+        if( seasons == undefined || seasons == null ) {
+          await requestToServerForGetQuestions();
+        } else {
+          await requestToServerForGetQuestionsForSelectedSeasons();
+        }
+      }
+
+      if(questions == undefined || questions.length == 0) {
+        fetchQuestions();
+      }
+    });
+
+
+    const returnButtonCenter = () => {
+      return {
+        backgroundColor : theme.QUESTION_CONTAINER ,
+        borderRadius : 25,
+      } 
+    }
 
 
     const returnButtonRight = () => {
@@ -144,6 +183,7 @@ const Exam = ({navigation}) => {
 
             <Header>
 
+                
                 <View style={styles.swiperContainer}>
                   <Swiper 
                   horizontal={true}
@@ -154,32 +194,50 @@ const Exam = ({navigation}) => {
                   dotStyle={styles.dotStyle}
                   activeDotStyle={returnDotStyle()}
                   scrollEnabled={false}
+                  index={questionIndex}
                   >
+                    <ScrollView>
                     {
-                    radioButtonsData.map( (item , index) => {
+                    questions && questions.map( (item , index) => {
                       return (
                         <ExamQuestionContainer 
-                        radioButtonsData={radioButtonsData[index]}
-                        key={index} 
-                        style={styles.slide}/>
+                          question={item}
+                          key={index} 
+                          style={styles.slide}
+                        />
                       )
                     })
                     }
+                    </ScrollView>
                   </Swiper>
 
                 </View>
+                
 
             </Header>
 
             <View style={styles.navigation}>
+              <View>
                 <View 
+                style={returnButtonCenter()}>
+                    <TouchableOpacity 
+                    onPress={() => {
+                      return null;
+                    }}
+                    style={styles.touchable}>
+                        <Text style={styles.buttonText}>اتمام آزمون</Text>
+                    </TouchableOpacity>
+                </View>
+              </View>
+                {/* <View 
                 style={returnButtonRight()}>
                     <TouchableOpacity 
                     onPress={() => {
-                      if(currentIndex.current < radioButtonsData.length) {
+                      if(questionIndex < questions.length - 1) {
+                        let newIndex = questionIndex + 1;
                         mySwiper.current.scrollBy(1);
-                        currentIndex.current++;
-                        console.log(currentIndex.current);
+                        console.log(questionIndex);
+                        setQuestionIndex(newIndex);
                       }
                     }}
                     style={styles.touchable}>
@@ -191,16 +249,17 @@ const Exam = ({navigation}) => {
                 style={returnButtonLeft()}>
                     <TouchableOpacity 
                     onPress={() => {
-                      if(currentIndex.current > 1) {
+                      if(questionIndex > 0) {
+                        let newIndex = questionIndex - 1;
                         mySwiper.current.scrollBy(-1);
-                        currentIndex.current--;
-                        console.log(currentIndex.current);
+                        console.log(questionIndex);
+                        setQuestionIndex(newIndex);
                       }
                     }}
                     style={styles.touchable}>
                         <Text style={styles.buttonText}>قبلی</Text>
                     </TouchableOpacity>
-                </View>
+                </View> */}
             </View>
 
         </Container>
@@ -249,7 +308,7 @@ const styles = StyleSheet.create({
     navigation : {
         flexDirection : 'row-reverse',
         flex : 1,
-        justifyContent : 'space-between',
+        justifyContent : 'center',
         alignItems : 'center'
     },
     buttonRight : {

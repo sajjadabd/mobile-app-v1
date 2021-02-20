@@ -56,10 +56,12 @@ const SubBranch = ({ navigation }) => {
 
   const standardID = navigation.getParam('standardID');
   const branchID = navigation.getParam('branchID');
+  const standardName = navigation.getParam('standardName');
   // const seasons = navigation.getParam('seasons');
 
   const chapterData = {
     standardID ,
+    standardName ,
     branchID
   }
 
@@ -68,7 +70,7 @@ const SubBranch = ({ navigation }) => {
   const returnTextStyle = () => {
     return {
       color : theme.TEXT_COLOR,
-      fontSize : 30,
+      fontSize : windowWidth / 13,
       fontFamily : ShabnamMedium,
     }
   }
@@ -76,7 +78,7 @@ const SubBranch = ({ navigation }) => {
   const returnTitleTextStyle = () => {
     return {
       color : theme.TEXT_COLOR,
-      fontSize : 55,
+      fontSize : windowWidth / 13,
       fontFamily : LalezarRegular,
     }
   }
@@ -93,7 +95,11 @@ const SubBranch = ({ navigation }) => {
         >
 
         <Header>
-          <Text style={returnTitleTextStyle()}>زیر شاخه</Text>
+          <Text style={returnTitleTextStyle()}>
+            {
+              standardName
+            }
+          </Text>
         </Header>
 
         

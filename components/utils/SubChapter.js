@@ -44,6 +44,12 @@ const SubChapter = ({
 
     // console.log(item);
 
+    const seasonData = {
+      standardID ,
+      branchID ,
+      seasonID : item.season_number
+    }
+
     const changeStyleBasedOnSelected = (index) => {
       if(selectedSeasons[index]) {
         return {
@@ -117,12 +123,12 @@ const SubChapter = ({
           'rgba(255,255,255,0)', 
           'rgba(255,255,255,0.1)', 
           'rgba(255,255,255,0.4)',
-        ]} 
+        ]}
         style={styles.card}
         >
           <View style={changeStyleBasedOnSelected(index)}> 
             <TouchableOpacity 
-              onPress={() => changeSelectedExams(index , standardID , branchID)}
+              onPress={() => changeSelectedExams(item.season_number-1 , standardID , branchID)}
               // onPress={ () => changeSeasonSelectedStatus(index) }
               style={styles.icon}
             >
@@ -133,7 +139,7 @@ const SubChapter = ({
           
           <View style={styles.info}>
               <TouchableOpacity
-              onPress={() => navigation.navigate('Reading')}
+              onPress={() => navigation.navigate('Reading' , seasonData )}
               >
                 <Text style={seasonTextStyle()}>
                   فصل

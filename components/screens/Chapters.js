@@ -58,6 +58,7 @@ const Chapters = ({ navigation }) => {
   const whichPage = navigation.getParam('whichPage');
   // const seasons = navigation.getParam('seasons');
   const standardID = navigation.getParam('standardID');
+  const standardName = navigation.getParam('standardName');
   const branchID = navigation.getParam('branchID');
 
   const [seasons , setSeasons] = useState(undefined);
@@ -112,7 +113,7 @@ const Chapters = ({ navigation }) => {
     const data = { 
       standard_id : standardID , 
       branch_id : branchID , 
-      season_id : targetIndex+1 
+      season_id : targetIndex 
     };
 
     console.log(data);
@@ -142,7 +143,7 @@ const Chapters = ({ navigation }) => {
   const returnBigTitleText = () => {
     return {
       color : theme.TEXT_COLOR,
-      fontSize : 55,
+      fontSize : windowWidth / 13,
       fontFamily : LalezarRegular,
     }
   }
@@ -177,12 +178,20 @@ const Chapters = ({ navigation }) => {
         >
 
         <Header>
-          <Text style={returnBigTitleText()}>زیر شاخه</Text>
+          <Text style={returnBigTitleText()}>
+            {
+              standardName
+            }
+          </Text>
           
           {
             checkExamsInSelectedOrNot() ?
             <TouchableOpacity
-            onPress={() => navigation.navigate('Exam')}
+            onPress={() => navigation.navigate('Exam' , {
+              branchID ,
+              standardID , 
+              selectedSeasons
+            })}
             >
               <View style={examButtonStyle()}>
                 <Text style={examButtonText()}>آزمون از فصل های انتخاب شده</Text>

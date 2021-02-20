@@ -4,6 +4,7 @@ import { View , Text , StyleSheet } from 'react-native'
 import { LalezarRegular, ShabnamMedium } from './Fonts';
 
 import { useSelector } from 'react-redux';
+import { windowWidth } from './Dimensions';
 
 const EachReadingQuestion = ({question}) => {
 
@@ -13,7 +14,7 @@ const EachReadingQuestion = ({question}) => {
   const returnQuestionTextStyle = () => {
     return {
       color : 'white',
-      fontSize : 35,
+      fontSize : windowWidth / 15,
       fontFamily : ShabnamMedium,
     }
   }
@@ -22,7 +23,7 @@ const EachReadingQuestion = ({question}) => {
   const returnAnswerTextStyle = () => {
     return {
       color : 'white',
-      fontSize : 20,
+      fontSize : windowWidth / 20,
       fontFamily : ShabnamMedium,
     }
   }
@@ -30,12 +31,14 @@ const EachReadingQuestion = ({question}) => {
   return (
     <>
       <View style={styles.Question}>
-          <Text style={returnQuestionTextStyle()}>{question.question}</Text>
+          <Text style={returnQuestionTextStyle()}>
+            {question.question}
+          </Text>
       </View>
       
       <View style={styles.Answer}>
           <Text style={returnAnswerTextStyle()}>
-            {question.answer}
+            {question.first}
           </Text>
       </View>
     </>

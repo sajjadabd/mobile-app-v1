@@ -1,4 +1,4 @@
-import React , { useRef , useState } from 'react'
+import React , { useRef , useEffect , useState } from 'react';
 
 import {
     SafeAreaView,
@@ -27,21 +27,10 @@ import styled from 'styled-components/native';
 
 import { useSelector } from 'react-redux';
 
-const questions = [
-  {
-    question : 'سوال 1',
-    answer : 'جواب 1'
-  },
-  {
-    question : 'سوال 2',
-    answer : 'جواب 2'
-  },
-  {
-    question : 'سوال 3',
-    answer : 'جواب 3'
-  }
-]
+import { GET_QUESTIONS } from '../URL/Urls';
 
+
+import axios from 'axios';
 
 
 const Header = styled.View`
@@ -68,9 +57,50 @@ const Reading = ({navigation}) => {
 
     const mySwiper = useRef(null);
 
-    const currentIndex = useRef(0);
+    // const currentIndex = useRef(0);
+    // currentIndex.current = 1;
 
-    currentIndex.current = 1;
+    const standardID = navigation.getParam('standardID');
+    const branchID = navigation.getParam('branchID');
+    const sesaonID = navigation.getParam('seasonID');
+
+    console.log( branchID , standardID , sesaonID );
+
+    const [questions, setQuestions] = useState([]);
+    const [questionIndex , setQuestionIndex] = useState(0);
+
+
+    const requestToServerForGetQuestions = async () => {
+      console.log(GET_QUESTIONS + branchID + '/' + standardID + '/' + sesaonID);
+      try {
+        const result = await axios({
+          method: 'GET',
+          url: GET_QUESTIONS + branchID + '/' + standardID + '/' + sesaonID,
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          data : {
+            
+          }
+        });
+        console.log('questions :' , result.data.result.slice(0,10));
+        setQuestions(result.data.result.slice(0,10));
+      } catch (e) {
+        console.log("Error Happens for fetch questions ...");
+      }
+    }
+  
+    useEffect( () => {
+      const fetchQuestions = async () => {
+        await requestToServerForGetQuestions();
+      }
+      if(questions == undefined || questions.length == 0) {
+        fetchQuestions();
+      }
+    });
+
+
+
 
     const returnButtonRight = () => {
       return {
@@ -84,8 +114,8 @@ const Reading = ({navigation}) => {
     const returnButtonLeft = () => {
       return {
         backgroundColor : theme.QUESTION_CONTAINER ,
-        borderTopRightRadius : 25,
-        borderBottomRightRadius : 25,
+        borderTopRightRadius : 25 ,
+        borderBottomRightRadius : 25 ,
       }
     }
 
@@ -115,19 +145,20 @@ const Reading = ({navigation}) => {
                   horizontal={true}
                   ref={mySwiper}
                   style={styles.swiper} 
-                  showsButtons={false}
+                  showsButtons={true}
                   paginationStyle={styles.pagination}
                   dotStyle={styles.dotStyle}
                   activeDotStyle={returnDotStyle()}
                   scrollEnabled={true}
+                  index={questionIndex}
                   >
                     {
-                    questions.map( (item , index) => {
+                    questions && questions.map( (item , index) => {
                       return (
                         <EachReadingQuestion 
-                        question={questions[index]}
-                        key={index} 
-                        style={styles.slide}
+                          question={item} 
+                          key={index} 
+                          style={styles.slide} 
                         />
                       )
                     })
@@ -141,11 +172,12 @@ const Reading = ({navigation}) => {
                 <View style={returnButtonRight()}>
                     <TouchableOpacity 
                     onPress={() => {
-                      // if(currentIndex.current < questions.length) {
+                      if(questionIndex < questions.length - 1) {
+                        let newIndex = questionIndex + 1;
                         mySwiper.current.scrollBy(1);
-                        // currentIndex.current++;
-                        // console.log(currentIndex.current);
-                      // }
+                        console.log(questionIndex);
+                        setQuestionIndex(newIndex);
+                      }
                     }}
                     style={styles.touchable}>
                         <Text style={styles.buttonText}>بعدی</Text>
@@ -155,11 +187,12 @@ const Reading = ({navigation}) => {
                 <View style={returnButtonLeft()}>
                     <TouchableOpacity 
                       onPress={() => {
-                        // if(currentIndex.current > 1) {
+                        if(questionIndex > 0) {
+                          let newIndex = questionIndex - 1;
                           mySwiper.current.scrollBy(-1);
-                          // currentIndex.current--;
-                          // console.log(currentIndex.current);
-                        // }
+                          console.log(questionIndex);
+                          setQuestionIndex(newIndex);
+                        }
                       }}
                       style={styles.touchable}>
                         <Text style={styles.buttonText}>قبلی</Text>

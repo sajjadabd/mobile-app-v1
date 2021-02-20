@@ -45,3 +45,12 @@ localHost + '/saved/add/questions/';
 
 export const UNSAVE_QUESTIONS = 
 localHost + '/saved/remove/questions/';
+
+export const GET_QUESTIONS = 
+localHost + '/home/questions/';
+
+export const GET_QUESTIONS_FOR_ALL_SEASONS = 
+localHost + '/home/exam/questions/';
+
+export const GET_QUESTIONS_FOR_SELECTED_SEASONS =
+localHost + '/home/exam/questions/'
