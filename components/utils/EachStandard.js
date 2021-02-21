@@ -71,6 +71,8 @@ const EachStandard = ({ navigation , item , branchName , branchID }) => {
 
   const standardID = id;
 
+  console.log('standardID :' , standardID);
+
   const standardData = {
     seasons : item.seasons ,
     standardID ,
@@ -79,7 +81,7 @@ const EachStandard = ({ navigation , item , branchName , branchID }) => {
     standardName : item.standard_name
   }
 
-  const [save , setSave] = useState(item.save);
+  const [save , setSave] = useState(item.saved);
 
   console.log( id , standard , save);
 
@@ -106,7 +108,8 @@ const EachStandard = ({ navigation , item , branchName , branchID }) => {
           
         }
       });
-      setStandards(result.data.result);
+      console.log(result.data)
+      // setStandards(result.data.result);
     } catch (e) {
       console.log("Error Happens for save standard ...");
     }
@@ -126,7 +129,7 @@ const EachStandard = ({ navigation , item , branchName , branchID }) => {
           
         }
       });
-      setStandards(result.data.result);
+      // setStandards(result.data.result);
     } catch (e) {
       console.log("Error Happens for unsave standard ...");
     }
@@ -192,7 +195,8 @@ const EachStandard = ({ navigation , item , branchName , branchID }) => {
         <TouchableOpacity
           onPress={() => unSaveStandard({
             branch_id : branchID ,
-            standard_id : standardID
+            standard_id : standardID ,
+            user_id : userInfo.user_id ,
           })}
         >
           <MaterialIcon 
@@ -205,7 +209,8 @@ const EachStandard = ({ navigation , item , branchName , branchID }) => {
         <TouchableOpacity
           onPress={() => saveStandard({
             branch_id : branchID ,
-            standard_id : standardID
+            standard_id : standardID ,
+            user_id : userInfo.user_id ,
           })}
         >
           <MaterialIcon 

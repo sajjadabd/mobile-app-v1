@@ -1,4 +1,4 @@
-import React from 'react';
+import React , { useState , useEffect } from 'react';
 
 import { View , Text , TouchableOpacity , StyleSheet } from 'react-native';
 
@@ -18,6 +18,12 @@ import {
   UPDATE_SAVE_STANDARD , 
   UPDATE_UNSAVE_STANDARD 
 } from '../../redux/SavedActions';
+import { getData } from '../AsyncStorage/SecureStorage';
+
+import { SAVE_STANDARD , UNSAVE_STANDARD } from '../URL/Urls';
+
+
+import axios from 'axios';
 
 
 const Container = styled.View`
@@ -40,18 +46,31 @@ const TextBlock = styled.Text`
   color : 'white';
 `
 
+let userInfo ;
+
 const EachSavedStandard = ({ 
   navigation , 
   item , 
   index ,
-  branchName , 
-  branchID ,
   removeStandards
 }) => {
 
   const theme = useSelector( state => state.ThemeReducer.theme );
 
   const dispatch = useDispatch();
+
+  const [ save , setSave ] = useState(item.saved);
+
+
+  useEffect( () => {
+    const getUserData = async () => {
+      userInfo = await getData();
+      console.log(userInfo);
+    }
+
+    getUserData();
+  });
+
 
   const standardData = {
     seasons : item.seasons
@@ -61,8 +80,10 @@ const EachSavedStandard = ({
     branch_id , 
     standard_id , 
     standard_name , 
-    save  
   } = item;
+
+  const branchID = branch_id;
+  const standardID = standard_id ;
 
   console.log(item);
 
@@ -74,12 +95,59 @@ const EachSavedStandard = ({
     }
   }
 
-  const unSaveStandard = (data) => {
-    // dispatch({ type : UPDATE_UNSAVE_STANDARD , payload : data });
+  const requestToServerForSaveStandards = async () => {
+    console.log(SAVE_STANDARD + branchID + '/' + standardID + '/' + userInfo.user_id);
+    try {
+      const result = await axios({
+        method: 'GET',
+        url: SAVE_STANDARD + branchID + '/' + standardID + '/' + userInfo.user_id,
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        data : {
+          
+        }
+      });
+      console.log(result.data)
+      // setStandards(result.data.result);
+    } catch (e) {
+      console.log("Error Happens for save standard ...");
+    }
   }
 
-  const saveStandard = (data) => {
-    // dispatch({ type : UPDATE_SAVE_STANDARD , payload : data });
+
+  const requestToServerForUnSaveStandards = async () => {
+    console.log(UNSAVE_STANDARD + branchID + '/' + standardID + '/' + userInfo.user_id);
+    try {
+      const result = await axios({
+        method: 'GET',
+        url: UNSAVE_STANDARD + branchID + '/' + standardID + '/' + userInfo.user_id,
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        data : {
+          
+        }
+      });
+      // setStandards(result.data.result);
+    } catch (e) {
+      console.log("Error Happens for unsave standard ...");
+    }
+  }
+
+
+  const unSaveStandard = async (data) => {
+    console.log(data);
+    // dispatch({ type : UPDATE_UNSAVE_STANDARD_IN_BRANCH , payload : data });
+    await requestToServerForUnSaveStandards();
+    setSave(false);
+  }
+
+  const saveStandard = async (data) => {
+    console.log(data);
+    // dispatch({ type : UPDATE_SAVE_STANDARD_IN_BRANCH , payload : data });
+    await requestToServerForSaveStandards();
+    setSave(true);
   }
 
   return (
@@ -127,7 +195,7 @@ const EachSavedStandard = ({
         <TouchableOpacity
           onPress={() => unSaveStandard({
             branch_id ,
-            standard_id
+            standard_id ,
           })}
         >
           <MaterialIcon 

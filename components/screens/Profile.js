@@ -1,4 +1,4 @@
-import React , {useState , useRef } from 'react';
+import React , { useState , useEffect , useRef } from 'react';
 
 import {
   SafeAreaView,
@@ -51,7 +51,7 @@ import {
   getTheme
 } from '../AsyncStorage/SecureStorage';
 
-import { UPDATE_USER_URL } from '../URL/Urls';
+import { UPDATE_USER_URL , GET_USER_DATA, GET_QUESTIONS } from '../URL/Urls';
 
 
 const Header = styled.View`
@@ -68,15 +68,19 @@ const Container = styled.View`
 const defaultProvince = 'مازندران';
 
 
+let userInfo ;
+
+
 const Profile = ({ navigation }) => {
 
   const theme = useSelector(state => state.ThemeReducer.theme);
 
   const UserInformation = useSelector(state => state.UserReducer.user);
 
-  console.log(UserInformation);
+  // console.log(UserInformation);
 
   const [ imageURI , setImageURI ] = useState('https://randomuser.me/api/portraits/women/67.jpg');
+  //'https://randomuser.me/api/portraits/women/67.jpg'
 
   const [ province , setProvince ] = useState(UserInformation.province);
 
@@ -98,11 +102,34 @@ const Profile = ({ navigation }) => {
 
   const whichPage = navigation.getParam('whichPage');
 
+
+  useEffect( () => {
+    const getUserData = async () => {
+      userInfo = await getData();
+      await sendRequestToGetUser();
+      console.log(userInfo);
+    }
+
+    getUserData();
+  });
+
   
 
   const dispatch = useDispatch();
 
 
+  const chageProfilePicBasedOnGender = () => {
+    if ( sex == 'male' ) {
+      setImageURI(require('../logo/male-avatar.png'));
+    } else if ( sex == 'female' ) {
+      setImageURI(require('../logo/female-avatar.png'));
+    }
+  }
+
+  /*   if ( imageURI == '' ) {
+      chageProfilePicBasedOnGender();
+    } */
+  
 
 
   const sendRequestToUpdateUser = async (userInfo , data) => {  
@@ -127,6 +154,27 @@ const Profile = ({ navigation }) => {
   }
 
 
+  const sendRequestToGetUser = async (userInfo , data) => {  
+    try {
+      console.log(GET_USER_DATA + userInfo.user_id);
+      let result = await axios({
+        method: 'GET',
+        url: GET_USER_DATA + userInfo.user_id ,
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        data : {
+          
+        }
+      });
+      console.log(result.data);
+      // return result.data;
+    } catch (e) {
+      console.log("Error on Request to Server for get User Data...")
+    }
+  }
+
+
   const changeSex = async (title) => {
 
     let theTitleOfButton = ( title == 'مرد' ? 'male' : 'female' )
@@ -142,17 +190,23 @@ const Profile = ({ navigation }) => {
       
     } else {
       if (sex == 'male') {
+        // chageProfilePicBasedOnGender();
         setSex('female');
+        chageProfilePicBasedOnGender();
         const result = await sendRequestToUpdateUser(userInfo , {
           gender : 'female'
         });
       } else if (sex == 'female') {
+        // chageProfilePicBasedOnGender();
         setSex('male');
+        
         const result = await sendRequestToUpdateUser(userInfo , {
           gender : 'male'
         });
       }
     }
+
+    
   }
 
   const changeName = async (data) => {
@@ -298,10 +352,13 @@ const Profile = ({ navigation }) => {
           style={styles.profilePicture}
           source={require('../logo/worker.png')} /> */}
 
-          <Image 
-          style={styles.profilePicture}
-          source={{ uri : imageURI }}
-          />
+          {
+            imageURI && 
+            <Image 
+              style={styles.profilePicture}
+              source={ { uri : imageURI } }
+            />
+          }
 
           </TouchableOpacity>
         </View>

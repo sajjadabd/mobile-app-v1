@@ -54,3 +54,6 @@ localHost + '/home/exam/questions/';
 
 export const GET_QUESTIONS_FOR_SELECTED_SEASONS =
 localHost + '/home/exam/questions/'
+
+export const GET_USER_DATA = 
+localHost + '/users/getUser/'

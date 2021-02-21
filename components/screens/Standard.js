@@ -28,12 +28,15 @@ import SubChapterLogo from '../utils/SubChapterLogo';
 import { GET_STANDARDS } from '../URL/Urls';
 
 import axios from 'axios';
+import { getData } from '../AsyncStorage/SecureStorage';
 
 
 const Container = styled.View`
   background-color : ${props => props.theme.MAIN_BACKGROUND};
   flex : 1;
 `
+
+let userInfo;
 
 const Standard = ({ navigation }) => {
 
@@ -52,11 +55,11 @@ const Standard = ({ navigation }) => {
   const [standards , setStandards] = useState(undefined);
 
   const requestToServerForStandards = async () => {
-    console.log(GET_STANDARDS + branchID);
+    console.log(GET_STANDARDS + branchID + '/' + userInfo.user_id);
     try {
       const result = await axios({
         method: 'GET',
-        url: GET_STANDARDS + branchID,
+        url: GET_STANDARDS + branchID + '/' + userInfo.user_id,
         headers: {
           'Content-Type': 'application/json'
         },
@@ -72,9 +75,17 @@ const Standard = ({ navigation }) => {
   }
 
   useEffect( () => {
+    const getUserData = async () => {
+      userInfo = await getData();
+      console.log(userInfo);
+    }
+
     const fetchStandards = async () => {
+      await getUserData();
       await requestToServerForStandards();
     }
+
+
     if(standards == undefined) {
       fetchStandards();
     }
