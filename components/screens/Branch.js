@@ -9,7 +9,8 @@ import {
   StatusBar,
   Image,
   TouchableOpacity,
-  ImageBackground
+  ImageBackground ,
+  ActivityIndicator
 } from 'react-native';
 
 import Header from '../header/Header';
@@ -77,6 +78,46 @@ const Branch = ({ navigation }) => {
     }
   });
 
+
+  const showLoaderOrContent = () => {
+    if ( branches != undefined ) {
+      return (
+        <ScrollView >
+        <View style={styles.branches}>
+
+        {/* <FlatList
+          style={styles.list}
+          data={numbers}
+          renderItem={() => <SubBranch />}
+          keyExtractor={item => item}
+        /> */}
+
+        {
+          branches && branches.map( (item , index) => {
+            return (
+              <SubBranch 
+                key={index} 
+                navigation={navigation} 
+                // standards={item.standards} 
+                branchName={item.branch_name}
+                branchID={item.id}
+              />
+            )
+          })
+        }
+
+        </View>
+        </ScrollView>
+      )
+    } else {
+      return (
+        <View style={styles.loader}>
+          <ActivityIndicator size="large" color="#ffffff" />
+        </View>
+      )
+    }
+  }
+
   // console.log('branches : ' , branches);
 
   // const title = navigation.getParam('title');
@@ -100,36 +141,9 @@ const Branch = ({ navigation }) => {
 
           <View style={styles.body}>
 
-          <ScrollView >
+            {showLoaderOrContent()}
 
-            {/* <SubChapterLogo title={title} logo={logo} /> */}
-
-            <View style={styles.branches}>
-
-            {/* <FlatList
-              style={styles.list}
-              data={numbers}
-              renderItem={() => <SubBranch />}
-              keyExtractor={item => item}
-            /> */}
-
-            {
-              branches && branches.map( (item , index) => {
-                return (
-                  <SubBranch 
-                    key={index} 
-                    navigation={navigation} 
-                    // standards={item.standards} 
-                    branchName={item.branch_name}
-                    branchID={item.id}
-                  />
-                )
-              })
-            }
-
-            </View>
-
-          </ScrollView>
+            {/* <SubChapterLogo title={title} logo={logo} /> */}  
           
           </View>
 
@@ -181,6 +195,11 @@ const styles = StyleSheet.create({
     justifyContent : 'center',
     alignItems : 'center',
     // backgroundColor : 'blue',
+  },
+  loader : {
+    flex : 1 ,
+    justifyContent : 'center' ,
+    alignItems : 'center' ,
   }
 });
 

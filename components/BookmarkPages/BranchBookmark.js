@@ -1,6 +1,13 @@
 import React , { useState , useEffect } from 'react';
 
-import { View , Text , StyleSheet } from 'react-native'
+import { 
+  View , 
+  Text , 
+  StyleSheet,
+  ActivityIndicator
+ } from 'react-native'
+
+
 import EachSavedStandard from '../utils/EachSavedStandard';
 
 import { useSelector } from 'react-redux';
@@ -9,28 +16,19 @@ import { getData } from '../AsyncStorage/SecureStorage';
 import { GET_SAVED_STANDARDS } from '../URL/Urls';
 
 import axios from 'axios';
+import { ScrollView } from 'react-native-gesture-handler';
+import { windowWidth } from '../utils/Dimensions';
+import { ShabnamMedium } from '../utils/Fonts';
 
 // const numbers = [1,2,3,4,5,6,7,8,9,10];
-const standard = [
-  {
-    branch_id : 1,
-    standard_id : 1,
-    standard : 'پیرایش مو و ابرو',
-    save : true,
-  },
-  {
-    branch_id : 1,
-    standard_id : 2,
-    standard : 'رنگ مو',
-    save : true,
-  }
-];
 
 
 const BranchBookmark = ({navigation}) => {
 
   // const standards = useSelector(state => state.SavedReducer.saved.standards);
   const [standards , setStandards] = useState();
+
+  const theme = useSelector(state => state.ThemeReducer.theme);
 
   let userInfo ;
 
@@ -87,23 +85,71 @@ const BranchBookmark = ({navigation}) => {
 
   console.log('standards : ' , standards);
 
+
+  const returnTextStyle = () => {
+    return {
+      color : theme.TEXT_COLOR,
+      padding : 30,
+      fontSize : windowWidth / 24,
+      fontFamily : ShabnamMedium
+    }
+  }
+
+  const returnMessageContainerStyle = () => {
+    return {
+      backgroundColor : theme.FOOTER,
+      marginHorizontal : 20,
+      marginVertical : 50,
+      borderRadius : 20,
+      justifyContent : 'center',
+      alignItems : 'center'
+    }
+  }
+
+
+  const showLoaderOrContent = () => {
+    if(standards != undefined) {
+      if( standards.length == 0) {
+        return (
+          <View style={returnMessageContainerStyle()}>
+            <Text style={returnTextStyle()}>
+              هیچ استاندارد ذخیره شده ای وجود ندارد
+            </Text>
+          </View>
+        )
+      } else {
+        return (
+          <ScrollView>
+            <View style={styles.scrollContent}>
+              {
+                standards && standards.map( ( item , index ) => {
+                  return (
+                    <EachSavedStandard 
+                    key={index} 
+                    navigation={navigation} 
+                    item={item} 
+                    removeStandards={removeStandards}
+                    index={index}
+                    />
+                  )
+                })
+              }
+            </View>
+          </ScrollView>
+        )
+      }
+    } else {
+      return (
+        <View style={styles.loader}>
+          <ActivityIndicator size="large" color="#ffffff" />
+        </View>
+      )
+    }
+  }
+
   return (
     <>
-      <View style={styles.scrollContent}>
-        {
-          standards && standards.map( ( item , index ) => {
-            return (
-              <EachSavedStandard 
-              key={index} 
-              navigation={navigation} 
-              item={item} 
-              removeStandards={removeStandards}
-              index={index}
-              />
-            )
-          })
-        }
-      </View>
+      {showLoaderOrContent()}
     </>
   )
 }
@@ -122,6 +168,12 @@ const styles = StyleSheet.create({
     marginTop : 40,
     flex : 1,
   },
+  loader : {
+    flex : 1,
+    marginTop : 100,
+    justifyContent : 'center',
+    alignItems : 'center'
+  }
 });
 
 export default BranchBookmark

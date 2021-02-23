@@ -9,7 +9,8 @@ import {
     StatusBar,
     Image,
     TouchableOpacity,
-    PixelRatio
+    PixelRatio ,
+    ActivityIndicator
   } from 'react-native';
   
 import { windowHeight , windowWidth } from '../utils/Dimensions';
@@ -51,6 +52,12 @@ const Container = styled.View`
 `
 
 
+let answers ;
+
+let numberOfRightAnswers ;
+let numberOfDontAnswers ;
+let numberOfWrongAnswers ;
+
 
 const Exam = ({navigation}) => {
 
@@ -61,9 +68,18 @@ const Exam = ({navigation}) => {
 
     const [questions, setQuestions] = useState([]);
     const [questionIndex , setQuestionIndex] = useState(0);
+    
+    const [ examFinished , setExamFinished ] = useState(false);
+    
 
+    //Array(seasons.length).fill(false)
     console.log( branchID , standardID  );
 
+    const setNewAnswer = (e , questionNumber) => {
+      console.log(e , questionNumber)
+      answers[questionNumber] = e.index;
+      console.log(answers);
+    }
 
     const requestToServerForGetQuestions = async () => {
       console.log(GET_QUESTIONS_FOR_ALL_SEASONS + branchID + '/' + standardID );
@@ -108,6 +124,11 @@ const Exam = ({navigation}) => {
   
     useEffect( () => {
 
+      answers = Array(10).fill(false);
+      numberOfRightAnswers = 0 ;
+      numberOfDontAnswers = 0 ;
+      numberOfWrongAnswers = 0 ;
+
       const seasons = navigation.getParam('selectedSeasons');
 
       console.log('seasons :' , seasons);
@@ -124,6 +145,19 @@ const Exam = ({navigation}) => {
         fetchQuestions();
       }
     });
+
+
+    const calculateAnswersData = () => {
+      for(let i=0;i<answers.length;i++) {
+        if( answers[i] == 1 ){
+          numberOfRightAnswers++;
+        } else if ( answers[i] == false ) {
+          numberOfDontAnswers++;
+        } else {
+          numberOfWrongAnswers++;
+        }
+      }
+    }
 
 
     const returnButtonCenter = () => {
@@ -165,27 +199,21 @@ const Exam = ({navigation}) => {
       }
     }
 
-    const theme = useSelector(state => state.ThemeReducer.theme)
+    const returnTextStyle = () => {
+      return {
+        color : 'white',
+        fontFamily : LalezarRegular,
+        fontSize : windowWidth / 15,
+        paddingHorizontal : 20,
+      }
+    }
 
-    const currentIndex = useRef(0);
-    currentIndex.current = 1;
-    // console.log(radioButtonsData.length);
-
-    const mySwiper = useRef(null);
-    // const prevButton = useRef(null);
-    // const [myIndex , setIndex] = useState(0);
-
-    return (
-        <>
-        <StatusBar backgroundColor={theme.QUESTION_CONTAINER} barStyle="light-content" />
-
-        <Container>
-
-            <Header>
-
-                
+    const showLoaderOrContent = () => {
+      if(questions.length != 0) {
+        return (
+              <Header>
                 <View style={styles.swiperContainer}>
-                  <Swiper 
+                  {/* <Swiper 
                   horizontal={true}
                   ref={mySwiper}
                   style={styles.swiper} 
@@ -209,12 +237,79 @@ const Exam = ({navigation}) => {
                     })
                     }
                     </ScrollView>
-                  </Swiper>
-
+                  </Swiper> */}
+                  <ScrollView>
+                    {
+                    questions && questions.map( (item , index) => {
+                      return (
+                        <ExamQuestionContainer 
+                          question={item}
+                          key={index} 
+                          index={index}
+                          style={styles.slide}
+                          setNewAnswer={setNewAnswer}
+                        />
+                      )
+                    })
+                    }
+                    </ScrollView>
                 </View>
-                
-
             </Header>
+        )
+      } else {
+        return (
+          <Header>
+            <View style={styles.loader}>
+              <ActivityIndicator size="large" color="#ffffff" />
+            </View>
+          </Header>
+        )
+      }
+    }
+
+    const theme = useSelector(state => state.ThemeReducer.theme)
+
+    const currentIndex = useRef(0);
+    currentIndex.current = 1;
+    // console.log(radioButtonsData.length);
+
+    const mySwiper = useRef(null);
+    // const prevButton = useRef(null);
+    // const [myIndex , setIndex] = useState(0);
+
+    return (
+        <>
+        <StatusBar backgroundColor={theme.QUESTION_CONTAINER} barStyle="light-content" />
+
+        <Container>
+
+            {
+              examFinished == false 
+              ?
+              showLoaderOrContent()
+              :
+              <Header>
+                <View>
+                  <Text style={returnTextStyle()}>تعداد سوال صحیح :</Text>
+                  <Text style={returnTextStyle()}>
+                    {numberOfRightAnswers}
+                  </Text>
+
+                  <Text style={returnTextStyle()}>تعداد سوال غلط :</Text>
+                  <Text style={returnTextStyle()}>
+                    {numberOfWrongAnswers}
+                  </Text>
+
+                  <Text style={returnTextStyle()}>تعداد سوال پاسخ داده نشده :</Text>
+                  <Text style={returnTextStyle()}>
+                    {numberOfDontAnswers}
+                  </Text>
+                </View>
+              </Header>
+            }
+            
+
+            
 
             <View style={styles.navigation}>
               <View>
@@ -222,7 +317,9 @@ const Exam = ({navigation}) => {
                 style={returnButtonCenter()}>
                     <TouchableOpacity 
                     onPress={() => {
-                      return null;
+                      calculateAnswersData();
+                      setExamFinished(true);
+                      console.log('Exam Finished :' , examFinished);
                     }}
                     style={styles.touchable}>
                         <Text style={styles.buttonText}>اتمام آزمون</Text>
@@ -328,7 +425,7 @@ const styles = StyleSheet.create({
     buttonText : {
         color : 'white',
         fontFamily : LalezarRegular,
-        fontSize : 30,
+        fontSize : windowWidth / 15,
         paddingHorizontal : 20,
     },
     touchable : {
@@ -365,6 +462,11 @@ const styles = StyleSheet.create({
       marginRight: 3, 
       marginTop: 3, 
       marginBottom: 3,
+    },
+    loader : {
+      flex : 1 ,
+      justifyContent : 'center' ,
+      alignItems : 'center' ,
     }
 });
 

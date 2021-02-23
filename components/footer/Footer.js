@@ -13,10 +13,10 @@ import {
 
 import { useSelector } from 'react-redux';
 
+import styled from 'styled-components/native';
+
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
-
-import styled from 'styled-components/native';
 
 
 const Container = styled.View`

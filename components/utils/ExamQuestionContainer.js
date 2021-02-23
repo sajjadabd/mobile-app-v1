@@ -16,24 +16,54 @@ import { windowWidth } from './Dimensions';
 
 
 
-const ExamQuestionContainer = ({question , color , save}) => {
+const ExamQuestionContainer = ({question , color , index , save , setNewAnswer}) => {
 
       const theme = useSelector(state => state.ThemeReducer.theme)
 
+      const questionNumber = index;
+
       const radioButtonsData = [
         {
-          label : question.first
+          label : question.first ,
+          index : 1,
         },
         {
-          label : question.second
+          label : question.second ,
+          index : 2,
         },
         {
-          label : question.third
+          label : question.third ,
+          index : 3,
         },
         {
-          label : question.fourth
+          label : question.fourth ,
+          index : 4,
         }
       ]
+
+      
+
+      let shuffle = [];
+
+      const shuffleArray = () => {
+        let shufflingCounter = 10;
+
+        for(let i=0;i<shufflingCounter;i++) {
+          let randomNumber = Math.floor(Math.random() * 4);
+          shuffle.push(randomNumber)
+        }
+
+        for(let i=0;i<shufflingCounter/2;i++){
+          let temp = radioButtonsData[shuffle[i]];
+          radioButtonsData[shuffle[i]] = radioButtonsData[shuffle[i+1]];
+          radioButtonsData[shuffle[i+1]] = temp;
+        }
+      }
+
+      shuffleArray();
+      // console.log(shuffle);
+
+      
 
       const returnQuestionTextStyle = () => {
         return {
@@ -103,7 +133,7 @@ const ExamQuestionContainer = ({question , color , save}) => {
             <RadioButtonRN
               data={radioButtonsData}
               animationTypes={['shake']}
-              selectedBtn={() => null}
+              selectedBtn={(e) => setNewAnswer(e , questionNumber)}
               style={styles.answers}
               boxStyle={{flexDirection : 'row-reverse'}}
               textStyle={{

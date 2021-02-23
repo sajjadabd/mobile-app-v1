@@ -9,7 +9,8 @@ import {
     StatusBar,
     Image,
     TouchableOpacity,
-    PixelRatio
+    PixelRatio ,
+    ActivityIndicator
   } from 'react-native';
 
 import { windowHeight , windowWidth } from '../utils/Dimensions';
@@ -17,7 +18,7 @@ import { windowHeight , windowWidth } from '../utils/Dimensions';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 import Footer from '../footer/Footer';
-import { LalezarRegular } from '../utils/Fonts';
+import { LalezarRegular, ShabnamMedium } from '../utils/Fonts';
 import EachReadingQuestion from '../utils/EachReadingQuestion';
 
 import Swiper from 'react-native-swiper';
@@ -27,10 +28,11 @@ import styled from 'styled-components/native';
 
 import { useSelector } from 'react-redux';
 
-import { GET_QUESTIONS } from '../URL/Urls';
+import { GET_QUESTIONS , GET_SAVED_QUESTIONS } from '../URL/Urls';
 
 
 import axios from 'axios';
+import { getData } from '../AsyncStorage/SecureStorage';
 
 
 const Header = styled.View`
@@ -38,8 +40,17 @@ const Header = styled.View`
   background-color : ${props => props.theme.QUESTION_CONTAINER};
   border-bottom-left-radius : 55px;
   border-bottom-right-radius : 55px;
-  justify-content : flex-start;
-  align-items : flex-end;
+  padding : 40px;
+  margin-bottom : 40px;
+`
+
+const LoaderHeader = styled.View`
+  flex : 3;
+  background-color : ${props => props.theme.QUESTION_CONTAINER};
+  border-bottom-left-radius : 55px;
+  border-bottom-right-radius : 55px;
+  justify-content : center;
+  align-items : center;
   padding : 40px;
   margin-bottom : 40px;
 `
@@ -50,10 +61,11 @@ const Container = styled.View`
   background-color : ${props => props.theme.QUESTION_BACKGROUND};
 `
 
+let userInfo;
 
 const Reading = ({navigation}) => {
 
-    const theme = useSelector(state => state.ThemeReducer.theme)
+    const theme = useSelector(state => state.ThemeReducer.theme);
 
     const mySwiper = useRef(null);
 
@@ -66,16 +78,20 @@ const Reading = ({navigation}) => {
 
     console.log( branchID , standardID , sesaonID );
 
-    const [questions, setQuestions] = useState([]);
+    const readingSavedQuestions = !(branchID || standardID || sesaonID);
+
+    console.log('readingSavedQuestions' , readingSavedQuestions);
+
+    const [questions, setQuestions] = useState();
     const [questionIndex , setQuestionIndex] = useState(0);
 
 
-    const requestToServerForGetQuestions = async () => {
-      console.log(GET_QUESTIONS + branchID + '/' + standardID + '/' + sesaonID);
+    const requestToServerForGetSavedQuestions = async () => {
+      console.log(GET_SAVED_QUESTIONS + userInfo.user_id);
       try {
         const result = await axios({
           method: 'GET',
-          url: GET_QUESTIONS + branchID + '/' + standardID + '/' + sesaonID,
+          url: GET_SAVED_QUESTIONS + userInfo.user_id,
           headers: {
             'Content-Type': 'application/json'
           },
@@ -83,20 +99,70 @@ const Reading = ({navigation}) => {
             
           }
         });
-        console.log('questions :' , result.data.result.slice(0,10));
-        setQuestions(result.data.result.slice(0,10));
+        console.log('questions :' , result.data.result.slice(0,5));
+        setQuestions(result.data.result.slice(0,5));
       } catch (e) {
         console.log("Error Happens for fetch questions ...");
       }
     }
-  
-    useEffect( () => {
-      const fetchQuestions = async () => {
+
+
+    const requestToServerForGetQuestions = async () => {
+      console.log(GET_QUESTIONS + branchID + '/' + standardID 
+      + '/' + sesaonID + '/' + userInfo.user_id);
+      try {
+        const result = await axios({
+          method: 'GET',
+          url: GET_QUESTIONS + branchID + '/' + standardID + '/' + sesaonID + '/' + userInfo.user_id,
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          data : {
+            
+          }
+        });
+        console.log('questions :' , result.data.result.slice(0,5));
+        setQuestions(result.data.result.slice(0,5));
+      } catch (e) {
+        console.log("Error Happens for fetch questions ...");
+      }
+    }
+
+
+
+    const updateQuestions = async () => {
+      if ( readingSavedQuestions ) {
+        await requestToServerForGetSavedQuestions();
+      } else {
         await requestToServerForGetQuestions();
       }
-      if(questions == undefined || questions.length == 0) {
-        fetchQuestions();
+    }
+
+  
+    useEffect( () => {
+      const getUserData = async () => {
+        userInfo = await getData();
+        await fetchQuestions();
+        
+        console.log(userInfo);
       }
+
+
+      const fetchQuestions = async () => {
+        if ( readingSavedQuestions ) {
+          await requestToServerForGetSavedQuestions();
+        } else {
+          await requestToServerForGetQuestions();
+        }
+        
+      }
+      
+      if(questions == undefined) {
+        getUserData();
+      }
+
+      // getUserData();
+
     });
 
 
@@ -133,40 +199,149 @@ const Reading = ({navigation}) => {
       }
     }
 
+
+    const calculateQuestionIndexString = () => {
+
+      if(questions == undefined) {
+        return;
+      }
+
+
+      let currentQuestionIndex = questionIndex + 1;
+      let calculatedString = 
+        ' سوال '
+        +
+        currentQuestionIndex
+        +
+        ' از '
+        +
+        questions.length
+
+      if(questions.length != 0) {
+        return (
+          <View style={styles.questionInfo}>
+            <Text style={styles.questionInfoText}>
+                
+                {calculatedString}
+
+            </Text>
+          </View>
+        )
+      } else {
+        return (
+          <View>
+            
+          </View>
+        )
+      }
+    }
+
+    const returnMessageContainer = () => {
+      return {
+        flex : 1,
+        justifyContent : 'center',
+        alignItems : 'center',
+      }
+    }
+
+    const returnTextStyle = () => {
+      return {
+        fontFamily : ShabnamMedium,
+        fontSize : windowWidth / 20,
+        color : theme.TEXT_COLOR
+      }
+    }
+
+
+    const showLoaderOrContent = () => {
+      if( questions != undefined ) {
+        if(questions.length == 0) {
+          if( readingSavedQuestions ) {
+            return (
+              <Header>
+                <View style={returnMessageContainer()}>
+                  <Text style={returnTextStyle()}>سوالی موجود نمی باشد</Text>
+                </View>
+              </Header>
+            )
+          } else {
+            return (
+              <LoaderHeader>
+                <View style={styles.loader}>
+                  <ActivityIndicator size="large" color="#ffffff" />
+                </View>
+              </LoaderHeader>
+            )
+          }
+        } else {
+          return (
+            <Header>
+              <ScrollView>
+            <View style={styles.swiperContainer}>
+            {/* <Swiper 
+              horizontal={true}
+              ref={mySwiper}
+              style={styles.swiper} 
+              showsButtons={false}
+              paginationStyle={styles.pagination}
+              dotStyle={styles.dotStyle}
+              activeDotStyle={returnDotStyle()}
+              scrollEnabled={true}
+              index={questionIndex}
+              showsPagination={false}
+            >
+              {
+              questions && questions.map( (item , index) => {
+                return (
+                  <EachReadingQuestion 
+                    question={item} 
+                    key={index} 
+                    style={styles.slide} 
+                  />
+                )
+              })
+              }
+            </Swiper>  */}
+  
+              {
+                questions 
+                && 
+                <EachReadingQuestion 
+                  question={questions[questionIndex]} 
+                  userInfo={userInfo}
+                  updateQuestions={updateQuestions}
+                  style={styles.slide} 
+                />
+              }
+          </View>
+          </ScrollView>
+          </Header>
+          )
+        }
+      } else {
+        return (
+          <LoaderHeader>
+            <View style={styles.loader}>
+              <ActivityIndicator size="large" color="#ffffff" />
+            </View>
+          </LoaderHeader>
+        )
+      }
+    }
+
     return (
         <>
         <StatusBar backgroundColor={theme.QUESTION_CONTAINER} barStyle="light-content" />
 
         <Container>
 
-            <Header>
-                <View style={styles.swiperContainer}>
-                  <Swiper 
-                  horizontal={true}
-                  ref={mySwiper}
-                  style={styles.swiper} 
-                  showsButtons={true}
-                  paginationStyle={styles.pagination}
-                  dotStyle={styles.dotStyle}
-                  activeDotStyle={returnDotStyle()}
-                  scrollEnabled={true}
-                  index={questionIndex}
-                  >
-                    {
-                    questions && questions.map( (item , index) => {
-                      return (
-                        <EachReadingQuestion 
-                          question={item} 
-                          key={index} 
-                          style={styles.slide} 
-                        />
-                      )
-                    })
-                    }
-                  </Swiper>
+            {showLoaderOrContent()}
 
-                </View>
-            </Header>
+        
+
+            {calculateQuestionIndexString()}
+
+            
 
             <View style={styles.navigation}>
                 <View style={returnButtonRight()}>
@@ -174,9 +349,11 @@ const Reading = ({navigation}) => {
                     onPress={() => {
                       if(questionIndex < questions.length - 1) {
                         let newIndex = questionIndex + 1;
-                        mySwiper.current.scrollBy(1);
+                        // mySwiper.current.scrollBy(1);
                         console.log(questionIndex);
                         setQuestionIndex(newIndex);
+                      } else {
+                        setQuestionIndex(0);
                       }
                     }}
                     style={styles.touchable}>
@@ -189,9 +366,11 @@ const Reading = ({navigation}) => {
                       onPress={() => {
                         if(questionIndex > 0) {
                           let newIndex = questionIndex - 1;
-                          mySwiper.current.scrollBy(-1);
+                          // mySwiper.current.scrollBy(-1);
                           console.log(questionIndex);
                           setQuestionIndex(newIndex);
+                        } else {
+                          setQuestionIndex(questions.length - 1);
                         }
                       }}
                       style={styles.touchable}>
@@ -270,6 +449,7 @@ const styles = StyleSheet.create({
     },
     swiperContainer : {
       flex : 1,
+      width : '100%'
     },
     pagination : {
       position : 'absolute',
@@ -294,6 +474,16 @@ const styles = StyleSheet.create({
       marginRight: 3, 
       marginTop: 3, 
       marginBottom: 3,
+    },
+    loader : {
+    },
+    questionInfo : {
+
+    },
+    questionInfoText : {
+      textAlign : 'center',
+      fontSize : 25,
+      fontFamily : ShabnamMedium
     }
 });
 

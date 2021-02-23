@@ -14,10 +14,13 @@ import {
   View,
   Text,
   StatusBar,
-  Image
+  Image ,
+  ActivityIndicator
 } from 'react-native';
 
 import Circle from 'react-native-progress/Circle'
+
+import Bar from 'react-native-progress/Bar'
 
 import CircleSnail from 'react-native-progress/CircleSnail'
 
@@ -39,11 +42,16 @@ const Splashscreen = () => {
           size={30} 
           indeterminate={true} /> */}
 
-          <CircleSnail
+          {/* <CircleSnail
           style={styles.progressBar} 
           size={50} 
           color={[ '#595959' , '#F26522' ]}
-          />
+          /> */}
+
+        <View style={styles.loader}>
+          {/* <ActivityIndicator size="large" color="#F26522" /> */}
+          <Bar indeterminate={true} />
+        </View>
 
         </View>
         
@@ -85,6 +93,9 @@ const styles = StyleSheet.create({
     alignItems : 'center',
   },
   progressBar : {
+    marginTop : 40,
+  },
+  loader : {
     marginTop : 40,
   }
 });

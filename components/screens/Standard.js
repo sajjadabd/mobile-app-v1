@@ -9,7 +9,8 @@ import {
   StatusBar,
   Image,
   TouchableOpacity,
-  ImageBackground
+  ImageBackground ,
+  ActivityIndicator
 } from 'react-native';
 
 import Header from '../header/Header';
@@ -91,6 +92,48 @@ const Standard = ({ navigation }) => {
     }
   });
 
+
+  const showLoaderOrContent = () => {
+    if(standards != undefined) {
+      return (
+        <ScrollView >
+
+        <View style={styles.braches}>
+
+          {/* <FlatList
+            style={styles.list}
+            data={numbers}
+            renderItem={() => <SubBranch />}
+            keyExtractor={item => item}
+          /> */}
+
+          {
+            standards && standards.map( (item , index) => {
+              return (
+                <EachStandard 
+                  key={index} 
+                  navigation={navigation} 
+                  item={item} 
+                  branchName={branchName} 
+                  branchID={branchID} 
+                />
+              )
+            })
+          }
+
+        </View>
+
+        </ScrollView>
+      )
+    } else {
+      return (
+        <View style={styles.loader}>
+          <ActivityIndicator size="large" color="#ffffff" />
+        </View>
+      )
+    }
+  }
+
   
 
   const whichPage = navigation.getParam('whichPage');
@@ -110,37 +153,10 @@ const Standard = ({ navigation }) => {
 
       <View style={styles.body}>
 
-        <ScrollView >
+        <SubChapterLogo title={branchName} logo={logo} />
 
-          <SubChapterLogo title={branchName} logo={logo} />
+        {showLoaderOrContent()}
 
-          <View style={styles.braches}>
-
-            {/* <FlatList
-              style={styles.list}
-              data={numbers}
-              renderItem={() => <SubBranch />}
-              keyExtractor={item => item}
-            /> */}
-
-            {
-              standards && standards.map( (item , index) => {
-                return (
-                  <EachStandard 
-                    key={index} 
-                    navigation={navigation} 
-                    item={item} 
-                    branchName={branchName} 
-                    branchID={branchID} 
-                  />
-                )
-              })
-            }
-
-          </View>
-
-        </ScrollView>
-        
       </View>
 
       <Footer navigation={navigation} whichPage={whichPage}/>
@@ -182,6 +198,11 @@ const styles = StyleSheet.create({
     // borderColor : 'yellow',
     // borderWidth : 2,
     flex : 1,
+  },
+  loader : {
+    flex : 1 ,
+    justifyContent : 'center' ,
+    alignItems : 'center' ,
   }
 });
 

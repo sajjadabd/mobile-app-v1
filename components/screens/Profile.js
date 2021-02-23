@@ -10,7 +10,8 @@ import {
   StatusBar,
   PixelRatio,
   ImageBackground,
-  Modal
+  Modal ,
+  ActivityIndicator
 } from 'react-native';
 
 import { windowHeight, windowWidth } from '../utils/Dimensions';
@@ -52,6 +53,19 @@ import {
 } from '../AsyncStorage/SecureStorage';
 
 import { UPDATE_USER_URL , GET_USER_DATA, GET_QUESTIONS } from '../URL/Urls';
+import { UPDATE_USER } from '../../redux/UserActions';
+
+
+const Icons = {
+  home : 'home',
+  altHome : 'house-siding',
+  work : 'work',
+  altWork : 'work-outline',
+  bookmark : 'bookmark',
+  altBookmark : 'bookmark-outline',
+  person : 'person',
+  altPerson : 'person-outline'
+}
 
 
 const Header = styled.View`
@@ -73,22 +87,28 @@ let userInfo ;
 
 const Profile = ({ navigation }) => {
 
+  const dispatch = useDispatch();
+
   const theme = useSelector(state => state.ThemeReducer.theme);
 
-  const UserInformation = useSelector(state => state.UserReducer.user);
+  // const UserInformation = useSelector(state => state.UserReducer.user);
 
   // console.log(UserInformation);
 
-  const [ imageURI , setImageURI ] = useState('https://randomuser.me/api/portraits/women/67.jpg');
+  const [ imageURI , setImageURI ] = useState();
   //'https://randomuser.me/api/portraits/women/67.jpg'
 
-  const [ province , setProvince ] = useState(UserInformation.province);
+  /* const [ province , setProvince ] = useState(UserInformation.province);
 
   const [ city , setCity] = useState(UserInformation.city);
 
   const [ sex , setSex ] = useState(UserInformation.gender);
 
-  const [ name , setName ] = useState(UserInformation.username);
+  const [ name , setName ] = useState(UserInformation.username); */
+
+  const [ userInformation , setUserInformation ] = useState({
+
+  });
 
   const picker = useRef();
 
@@ -103,36 +123,8 @@ const Profile = ({ navigation }) => {
   const whichPage = navigation.getParam('whichPage');
 
 
-  useEffect( () => {
-    const getUserData = async () => {
-      userInfo = await getData();
-      await sendRequestToGetUser();
-      console.log(userInfo);
-    }
 
-    getUserData();
-  });
-
-  
-
-  const dispatch = useDispatch();
-
-
-  const chageProfilePicBasedOnGender = () => {
-    if ( sex == 'male' ) {
-      setImageURI(require('../logo/male-avatar.png'));
-    } else if ( sex == 'female' ) {
-      setImageURI(require('../logo/female-avatar.png'));
-    }
-  }
-
-  /*   if ( imageURI == '' ) {
-      chageProfilePicBasedOnGender();
-    } */
-  
-
-
-  const sendRequestToUpdateUser = async (userInfo , data) => {  
+  const sendRequestToUpdateUser = async (data) => {  
     try {
       let result = await axios({
         method: 'POST',
@@ -154,9 +146,9 @@ const Profile = ({ navigation }) => {
   }
 
 
-  const sendRequestToGetUser = async (userInfo , data) => {  
+  const sendRequestToGetUser = async () => {  
+    console.log(GET_USER_DATA + userInfo.user_id);
     try {
-      console.log(GET_USER_DATA + userInfo.user_id);
       let result = await axios({
         method: 'GET',
         url: GET_USER_DATA + userInfo.user_id ,
@@ -167,12 +159,49 @@ const Profile = ({ navigation }) => {
           
         }
       });
-      console.log(result.data);
+      // console.log(result.data.result);
       // return result.data;
+      return result.data.result;
     } catch (e) {
       console.log("Error on Request to Server for get User Data...")
     }
   }
+
+
+
+  useEffect( () => {
+    const getUserData = async () => {
+      userInfo = await getData();
+      const userResult = await sendRequestToGetUser();
+      if( userInformation.username == undefined ) {
+        setUserInformation(userResult);
+      }
+      
+      console.log(userResult);
+    }
+
+    getUserData();
+  });
+
+  
+
+  
+
+
+  const chageProfilePicBasedOnGender = () => {
+    if ( userInformation.gender == 'male' ) {
+      setImageURI(require('../logo/male-avatar.png'));
+    } else if ( userInformation.gender == 'female' ) {
+      setImageURI(require('../logo/female-avatar.png'));
+    }
+  }
+
+  /*   if ( imageURI == '' ) {
+      chageProfilePicBasedOnGender();
+    } */
+  
+
+  
 
 
   const changeSex = async (title) => {
@@ -180,32 +209,38 @@ const Profile = ({ navigation }) => {
     let theTitleOfButton = ( title == 'مرد' ? 'male' : 'female' )
 
     console.log(theTitleOfButton);
-    console.log(sex);
+    console.log(userInformation.gender);
 
     let userInfo = await getData();
     console.log('userInfo : ' , userInfo);
       
     
-    if( theTitleOfButton == sex ) {
+    if( theTitleOfButton == userInformation.gender ) {
       
     } else {
-      if (sex == 'male') {
+      if (userInformation.gender == 'male') {
         // chageProfilePicBasedOnGender();
-        setSex('female');
-        chageProfilePicBasedOnGender();
-        const result = await sendRequestToUpdateUser(userInfo , {
+        // setSex('female');
+        setUserInformation({
+          ...userInformation ,
           gender : 'female'
         });
-      } else if (sex == 'female') {
         // chageProfilePicBasedOnGender();
-        setSex('male');
-        
-        const result = await sendRequestToUpdateUser(userInfo , {
+        const result = await sendRequestToUpdateUser({
+          gender : 'female'
+        });
+      } else if (userInformation.gender == 'female') {
+        // chageProfilePicBasedOnGender();
+        // setSex('male');
+        setUserInformation({
+          ...userInformation ,
+          gender : 'male'
+        });
+        const result = await sendRequestToUpdateUser({
           gender : 'male'
         });
       }
     }
-
     
   }
 
@@ -213,10 +248,14 @@ const Profile = ({ navigation }) => {
     if(data != undefined) {
       let userInfo = await getData();
       console.log('userInfo : ' , userInfo);
-      const result = await sendRequestToUpdateUser(userInfo , {
+      const result = await sendRequestToUpdateUser({
         username : data
       });
-      setName(data);
+      // setName(data);
+      setUserInformation({
+        ...userInformation ,
+        username : data
+      });
     }
     setShowNameChangeModal(false);
   }
@@ -225,10 +264,14 @@ const Profile = ({ navigation }) => {
     if(data !== undefined ) {
       let userInfo = await getData();
       console.log('userInfo : ' , userInfo);
-      const result = await sendRequestToUpdateUser(userInfo , {
+      const result = await sendRequestToUpdateUser({
         city : data
       });
-      setCity(data);
+      // setCity(data);
+      setUserInformation({
+        ...userInformation ,
+        city : data
+      });
     }
     setShowCityModal(false);
   }
@@ -241,10 +284,14 @@ const Profile = ({ navigation }) => {
     if(data !== undefined ) {
       let userInfo = await getData();
       console.log('userInfo : ' , userInfo);
-      const result = await sendRequestToUpdateUser(userInfo , {
+      const result = await sendRequestToUpdateUser({
         province : data
       });
-      setProvince(data);
+      // setProvince(data);
+      setUserInformation({
+        ...userInformation ,
+        province : data
+      });
     }
     setShowProvinceModal(false);
   }
@@ -258,6 +305,118 @@ const Profile = ({ navigation }) => {
       })
     }
     setShowThemeChangeModal(false);
+  }
+
+
+
+
+  const showLoaderOrContent = () => {
+    if(userInformation.username != undefined) {
+      return (
+        <ScrollView >
+
+            <View>
+              <Text style={[styles.infoText , styles.infoTextWhite]}>نام کاربری : </Text>
+            </View>
+          
+            <View style={styles.info}>
+              <TouchableOpacity
+              onPress={() => setShowNameChangeModal(true)}
+              >
+                <Text style={styles.infoText}>
+                  { 
+                  userInformation.username == null || userInformation.username == ''
+                  ?
+                  'نام کاربری خود را انتخاب کنید'   
+                  :
+                  userInformation.username
+                  }
+                </Text>
+              </TouchableOpacity>
+            </View>
+
+            <View>
+              <Text style={[styles.infoText , styles.infoTextWhite]}>استان : </Text>
+            </View>
+
+            <View style={styles.info}>
+              <TouchableOpacity
+              onPress={() => {setShowProvinceModal(true)}}
+              >
+                  <Text style={styles.infoText}>
+                  { 
+                    userInformation.province == null || userInformation.province == '' 
+                    ?
+                    'نام استان خود را وارد کنید'   
+                    :
+                    userInformation.province
+                  }
+                  </Text>
+              </TouchableOpacity>
+            </View>
+
+            <View>
+              <Text style={[styles.infoText , styles.infoTextWhite]}>شهر : </Text>
+            </View>
+
+            <View style={styles.info}>
+              <TouchableOpacity
+              onPress={() => {setShowCityModal(true)}}
+              >
+                  <Text style={styles.infoText}>
+                  { 
+                    userInformation.city == null || userInformation.city == '' 
+                    ?
+                    'نام شهر خود را وارد کنید'   
+                    :
+                    userInformation.city
+                  }
+                  </Text>
+              </TouchableOpacity>
+            </View>
+
+
+            <View>
+              <Text style={[styles.infoText , styles.infoTextWhite]}>جنسیت : </Text>
+            </View>
+
+            <View style={styles.buttonContainer}>
+            {
+              userInformation.gender == 'male' ? (
+                <>
+                  <DeactiveButton 
+                  sex={userInformation.gender} 
+                  title={'زن'} 
+                  changeSex={changeSex}/>
+                  <ActiveButton 
+                  sex={userInformation.gender} 
+                  title={'مرد'} 
+                  changeSex={changeSex} />
+                </>
+              ) : (
+                <>
+                <ActiveButton 
+                sex={userInformation.gender} 
+                title={'زن'} 
+                changeSex={changeSex} />
+                <DeactiveButton 
+                sex={userInformation.gender} 
+                title={'مرد'} 
+                changeSex={changeSex}/>
+              </>
+              )
+            }             
+          </View>
+
+          </ScrollView>
+      )
+    } else {
+      return (
+        <View style={styles.loader}>
+          <ActivityIndicator size="large" color="#ffffff" />
+        </View>
+      )
+    }
   }
   
   
@@ -275,13 +434,13 @@ const Profile = ({ navigation }) => {
     <ProvinceModal 
     visible={showProvinceModal} 
     SubmitProvinceFromModal={SubmitProvinceFromModal}
-    province={province}
+    province={userInformation.province}
     />
 
     <NameChangeModal 
     visible={showNameChangeModal}
     changeName={changeName}
-    username={name}
+    username={userInformation.name}
     />
 
     <ThemeChangeModal 
@@ -353,11 +512,24 @@ const Profile = ({ navigation }) => {
           source={require('../logo/worker.png')} /> */}
 
           {
-            imageURI && 
+            /* imageURI && 
+            <Image 
+              style={styles.profilePicture}
+              source={ { uri : imageURI } }
+            /> */
+            imageURI 
+            ?
             <Image 
               style={styles.profilePicture}
               source={ { uri : imageURI } }
             />
+            :
+            <View style={styles.iconProfilePicture}>
+            <MaterialIcon 
+            size={90} 
+            color={theme.ICON_COLOR} 
+            name={whichPage == 'profile' ? Icons.person : Icons.altPerson} />
+            </View>
           }
 
           </TouchableOpacity>
@@ -368,98 +540,10 @@ const Profile = ({ navigation }) => {
         
         <View style={styles.infoContainer}>
 
-        <ScrollView >
-
-            <View>
-              <Text style={[styles.infoText , styles.infoTextWhite]}>نام کاربری : </Text>
-            </View>
-          
-            <View style={styles.info}>
-              <TouchableOpacity
-              onPress={() => setShowNameChangeModal(true)}
-              >
-                <Text style={styles.infoText}>
-                  { 
-                  name == null || name == ''
-                  ?
-                  'نام کاربری خود را انتخاب کنید'   
-                  :
-                  name
-                  }
-                </Text>
-              </TouchableOpacity>
-            </View>
-
-            <View>
-              <Text style={[styles.infoText , styles.infoTextWhite]}>استان : </Text>
-            </View>
-
-            <View style={styles.info}>
-              <TouchableOpacity
-              onPress={() => {setShowProvinceModal(true)}}
-              >
-                  <Text style={styles.infoText}>
-                  { 
-                    province == null || province == '' 
-                    ?
-                    'نام استان خود را وارد کنید'   
-                    :
-                    province
-                  }
-                  </Text>
-              </TouchableOpacity>
-            </View>
-
-            <View>
-              <Text style={[styles.infoText , styles.infoTextWhite]}>شهر : </Text>
-            </View>
-
-            <View style={styles.info}>
-              <TouchableOpacity
-              onPress={() => {setShowCityModal(true)}}
-              >
-                  <Text style={styles.infoText}>
-                  { 
-                    city == null || city == '' 
-                    ?
-                    'نام شهر خود را وارد کنید'   
-                    :
-                    city
-                  }
-                  </Text>
-              </TouchableOpacity>
-            </View>
-
-
-            <View>
-              <Text style={[styles.infoText , styles.infoTextWhite]}>جنسیت : </Text>
-            </View>
-
-            <View style={styles.buttonContainer}>
-            {
-              sex == 'male' ? (
-                <>
-                  <DeactiveButton sex={sex} title={'زن'} changeSex={changeSex}/>
-                  <ActiveButton sex={sex} title={'مرد'} changeSex={changeSex} />
-                </>
-              ) : (
-                <>
-                <ActiveButton sex={sex} title={'زن'} changeSex={changeSex} />
-                <DeactiveButton sex={sex} title={'مرد'} changeSex={changeSex}/>
-              </>
-              )
-            }             
-          </View>
-
-          </ScrollView>
+          {showLoaderOrContent()}
           
         </View>
-
-        
-
-    
-        
-        
+  
       </View>
 
       
@@ -521,6 +605,13 @@ const styles = StyleSheet.create({
     height : windowWidth / 2.5 ,
     // resizeMode : 'contain',
   },
+  iconProfilePicture : {
+    justifyContent : 'center',
+    alignItems : 'center',
+    width : windowWidth / 2.5 ,
+    height : windowWidth / 2.5 ,
+    backgroundColor : 'gray',
+  } ,
   myText : {
     color : 'black',
     padding : 20,
@@ -572,6 +663,11 @@ const styles = StyleSheet.create({
     height: '100%',
     resizeMode : 'cover',
   },
+  loader : {
+    marginTop : 90,
+    justifyContent : 'center',
+    alignItems : 'center',
+  }
 });
 
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React , { useState } from 'react';
 
 import { View , Text , TouchableOpacity , StyleSheet } from 'react-native';
 
@@ -12,6 +12,10 @@ import { useSelector } from 'react-redux';
 import { ShabnamMedium } from './Fonts';
 
 import LinearGradient from 'react-native-linear-gradient';
+import { SAVE_QUESTIONS, UNSAVE_QUESTIONS } from '../URL/Urls';
+
+
+import axios from 'axios';
 
 
 const Container = styled.View`
@@ -28,18 +32,74 @@ const Container = styled.View`
 `
 
 
-const EachQuestion = ({navigation, save , item}) => {
+const EachQuestion = ({navigation , question , userInfo}) => {
 
   const theme = useSelector(state => state.ThemeReducer.theme)
 
-  console.log(item);
+  console.log(question);
+
+
+  const requestToServerForSaveQuestion = async () => {
+    console.log(SAVE_QUESTIONS + question.id + '/' + userInfo.user_id);
+    try {
+      const result = await axios({
+        method: 'GET',
+        url: SAVE_QUESTIONS + question.id + '/' + userInfo.user_id,
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        data : {
+          
+        }
+      });
+      console.log(result.data)
+      // setStandards(result.data.result);
+    } catch (e) {
+      console.log("Error Happens for save question ...");
+    }
+  }
+
+
+  const requestToServerForUnSaveQuestion = async () => {
+    console.log(UNSAVE_QUESTIONS + question.id + '/' + userInfo.user_id);
+    try {
+      const result = await axios({
+        method: 'GET',
+        url: UNSAVE_QUESTIONS + question.id + '/' + userInfo.user_id,
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        data : {
+          
+        }
+      });
+      // setStandards(result.data.result);
+    } catch (e) {
+      console.log("Error Happens for unsave question ...");
+    }
+  }
+
+
+  const unSaveQuestion = async () => {
+    // dispatch({ type : UPDATE_UNSAVE_STANDARD_IN_BRANCH , payload : data });
+    await requestToServerForUnSaveQuestion();
+    setSave(false);
+    // updateQuestions();
+  }
+  
+  const saveQuestion = async () => {
+    // dispatch({ type : UPDATE_SAVE_STANDARD_IN_BRANCH , payload : data });
+    await requestToServerForSaveQuestion();
+    // updateQuestions();
+    setSave(true);
+  }
+
 
   const returnTextStyle = () => {
     return {
       fontFamily : ShabnamMedium,
       fontSize : windowWidth / 20,
       color : theme.TEXT_COLOR,
-      
     }
   }
 
@@ -65,7 +125,7 @@ const EachQuestion = ({navigation, save , item}) => {
       style={styles.titleContainer}>
         <Text style={returnTextStyle()}>
           {
-            item.question.substring(0, 25) + '...'
+            question.question.substring(0, 25) + '...'
           }
         </Text>
       </TouchableOpacity>
@@ -84,11 +144,19 @@ const EachQuestion = ({navigation, save , item}) => {
       style={styles.saveButton}
       >
           { 
-          save
+          question.saved == null ||
+          question.saved == undefined ||
+          question.saved == false
           ?
-          <MaterialIcon size={40} color={theme.TEXT_COLOR} name="bookmark" />
-          : 
+          <TouchableOpacity onPress={() => saveQuestion()}>
           <MaterialIcon size={40} color={theme.TEXT_COLOR} name="bookmark-outline" />
+          </TouchableOpacity>
+          : 
+          <TouchableOpacity 
+          onPress={() => unSaveQuestion()}
+          >
+          <MaterialIcon size={40} color={theme.TEXT_COLOR} name="bookmark" />
+          </TouchableOpacity>
           }
       </View>
       </View>

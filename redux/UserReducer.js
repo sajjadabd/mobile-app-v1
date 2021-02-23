@@ -5,10 +5,7 @@ import {
 
 const initialState = {
   user : {
-    username : 'سجاد عبداللهی' ,
-    province : 'مازندران' ,
-    city : 'نکا' ,
-    gender : 'male' ,
+
   }
 }
 

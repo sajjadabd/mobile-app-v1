@@ -10,6 +10,7 @@ import {
   Image,
   ImageBackground,
   TouchableOpacity,
+  ActivityIndicator
 } from 'react-native';
 
 import { windowHeight , windowWidth } from '../utils/Dimensions';
@@ -166,6 +167,39 @@ const Chapters = ({ navigation }) => {
     }
   }
 
+
+  const showLoaderOrContent = () => {
+    if( seasons != undefined ) {
+      return (
+        <ScrollView style={styles.scroll}>
+            <View style={styles.scrollContent}>
+            {
+            seasons && seasons.map( ( item , index ) => {
+                return (
+                    <SubChapter 
+                      key={index} 
+                      index={index}
+                      changeSelectedExams={changeSelectedExams}
+                      navigation={navigation} 
+                      item={item}
+                      standardID={standardID}
+                      branchID={branchID}
+                      selectedSeasons={selectedSeasons}
+                    />
+                )
+            })}
+            </View>
+        </ScrollView>
+      )
+    } else {
+      return (
+        <View style={styles.loader}>
+          <ActivityIndicator size="large" color="#ffffff" />
+        </View>
+      )
+    }
+  }
+
   return (
     <>
       <StatusBar backgroundColor={theme.BUTTON_COLOR} barStyle="light-content" />
@@ -203,25 +237,9 @@ const Chapters = ({ navigation }) => {
 
         </Header>
 
-        <ScrollView style={styles.scroll}>
-            <View style={styles.scrollContent}>
-            {
-            seasons && seasons.map( ( item , index ) => {
-                return (
-                    <SubChapter 
-                      key={index} 
-                      index={index}
-                      changeSelectedExams={changeSelectedExams}
-                      navigation={navigation} 
-                      item={item}
-                      standardID={standardID}
-                      branchID={branchID}
-                      selectedSeasons={selectedSeasons}
-                    />
-                )
-            })}
-            </View>
-        </ScrollView>
+        {showLoaderOrContent()}
+
+        
 
         <Footer navigation={navigation} whichPage={whichPage}/>
 
@@ -276,6 +294,11 @@ const styles = StyleSheet.create({
     height: '100%',
     resizeMode : 'cover',
   },
+  loader : {
+    flex : 1 ,
+    justifyContent : 'center' ,
+    alignItems : 'center' ,
+  }
 });
 
 export default Chapters
