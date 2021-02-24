@@ -42,7 +42,7 @@ const SubChapter = ({
     const theme = useSelector(state => state.ThemeReducer.theme);
     
 
-    
+    const paymentAlert = useRef();
 
     // console.log(item);
 
@@ -130,6 +130,7 @@ const SubChapter = ({
     }
 
     return (
+      <>
         <LinearGradient
         colors={[
           'rgba(255,255,255,0.4)', 
@@ -163,6 +164,9 @@ const SubChapter = ({
           </View>
          
         </LinearGradient>
+
+        
+      </>
     )
 }
 

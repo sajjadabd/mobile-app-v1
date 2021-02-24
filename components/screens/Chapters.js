@@ -31,9 +31,10 @@ import { GET_SEASONS } from '../URL/Urls';
 
 import axios from 'axios';
 
-import AlertPro from "react-native-alert-pro";
-
-
+import {
+  SCLAlert,
+  SCLAlertButton
+} from 'react-native-scl-alert'
 
 
 
@@ -71,7 +72,8 @@ const Chapters = ({ navigation }) => {
   
   //Array(seasons.length).fill(false)
 
-  const paymentAlert = useRef();
+  const [ showSCLAlert , setShowSCLAlert] = useState(true);
+  
   
 
   const requestToServerForSeasons = async () => {
@@ -203,32 +205,19 @@ const Chapters = ({ navigation }) => {
             </View>
         </ScrollView>
 
-        {/* <AlertPro
-          ref={paymentAlert}
-          onConfirm={() => null}
-          title="Delete confirmation"
-          message="Are you sure to delete the entry?"
-          textCancel="Cancel"
-          textConfirm="Delete"
-          customStyles={{
-            mask: {
-              backgroundColor: "transparent"
-            },
-            container: {
-              borderWidth: 1,
-              borderColor: "#9900cc",
-              shadowColor: "#000000",
-              shadowOpacity: 0.1,
-              shadowRadius: 10
-            },
-            buttonCancel: {
-              backgroundColor: "#4da6ff"
-            },
-            buttonConfirm: {
-              backgroundColor: "#ffa31a"
-            }
-          }}
-        /> */}
+        <SCLAlert
+          theme="info"
+          show={showSCLAlert}
+          title="Lorem"
+          subtitle="Lorem ipsum dolor"
+          onRequestClose={() => null}
+        >
+          <SCLAlertButton 
+            theme="info" 
+            onPress={(e) => setShowSCLAlert(false)}>
+            Done
+          </SCLAlertButton>
+        </SCLAlert>
         </>
       )
     } else {
