@@ -11,7 +11,8 @@ import {
   TextInput ,
   PixelRatio ,
   SafeAreaView ,
-  Image
+  Image ,
+  ActivityIndicator
 } from 'react-native'
 import { LalezarRegular, ShabnamMedium, UbuntoMedium, VazirRegularFD } from '../utils/Fonts'
 
@@ -181,11 +182,17 @@ const SmsInput = ({phoneNumber , sms , setSMS , scrollSwiper , setPhoneReady}) =
                   </View>
                 </TouchableOpacity>
                 :
-                <CircleSnail
+                <View>
+                {/* <CircleSnail
                   style={styles.progressBar} 
                   size={50} 
                   color={[ '#ffffff' , '#f3f3f3' ]}
-                />    
+                />   */} 
+                  <View style={styles.loader}>
+                    <ActivityIndicator size="large" color="#ffffff" />
+                  </View>
+                </View>
+                
               :
               <Image
                 style={styles.logo}
@@ -295,13 +302,16 @@ const styles = StyleSheet.create({
     paddingHorizontal : 20,
   },
   logo : {
-    width : windowWidth  ,
+    width : windowWidth ,
     height : windowHeight / 3 - 50,
     marginTop : 40,
     resizeMode : 'contain',
   },
   progressBar : {
     marginTop : 20,
+  },
+  loader : {
+    marginTop : 40
   }
 })
 

@@ -60,7 +60,9 @@ const KarAfarini = () => {
       
       <View style={styles.container}>
         <TouchableOpacity
-        onPress={() => setShowAddWorkModal(true)}>
+        onPress={() => {
+          // setShowAddWorkModal(true)
+        }}>
            <Button>
             <Text style={retunTextStyle()}>
               ایجاد شغل

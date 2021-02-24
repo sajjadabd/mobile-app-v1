@@ -71,21 +71,22 @@ const EachSavedStandard = ({
     getUserData();
   });
 
-
-  const standardData = {
-    seasons : item.seasons
-  }
-
   const { 
     branch_id , 
     standard_id , 
     standard_name , 
   } = item;
 
-  const branchID = branch_id;
-  const standardID = standard_id ;
+  const standardData = {
+    seasons : item.seasons , 
+    standard_name : standard_name ,
+    standard_id : standard_id , 
+  }
 
-  console.log(item);
+  const branchID = branch_id;
+  const standardID = standard_id;
+
+  console.log('item' , item);
 
   const returnTextStyle = () => {
     return {

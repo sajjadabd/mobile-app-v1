@@ -59,6 +59,8 @@ const SubBranch = ({ navigation }) => {
   const standardName = navigation.getParam('standardName');
   // const seasons = navigation.getParam('seasons');
 
+  console.log('standardName' , standardName);
+
   const chapterData = {
     standardID ,
     standardName ,

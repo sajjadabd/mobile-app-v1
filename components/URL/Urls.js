@@ -2,58 +2,60 @@ const localHost = 'http://192.168.2.10:3000';
 
 const herokuHost = 'https://fanniherfei.herokuapp.com';
 
+const mainHost = localHost;
+
 export const GET_SMS_URL = 
-localHost + '/auth/signup';
+mainHost + '/auth/signup';
 
 
 export const CONFIRM_SMS_URL = 
-localHost + '/auth/login';
+mainHost + '/auth/login';
 
 
 export const UPDATE_USER_URL =
-localHost + '/users/update';
+mainHost + '/users/update';
 
 
 export const GET_ALL_BRANCHES = 
-localHost + '/home/branches/getAll';
+mainHost + '/home/branches/getAll';
 
 
 export const GET_STANDARDS = 
-localHost + '/home/standards/';
+mainHost + '/home/standards/';
 
 
 export const GET_SEASONS = 
-localHost + '/home/seasons/'
+mainHost + '/home/seasons/'
 
 
 export const GET_SAVED_QUESTIONS = 
-localHost + '/saved/questions/'
+mainHost + '/saved/questions/'
 
 export const GET_SAVED_STANDARDS = 
-localHost + '/saved/standards/'
+mainHost + '/saved/standards/'
 
 
 export const SAVE_STANDARD = 
-localHost + '/saved/add/standards/';
+mainHost + '/saved/add/standards/';
 // /add/standards/:branch_id/:standard_id/:user_id
 
 export const UNSAVE_STANDARD = 
-localHost + '/saved/remove/standards/';
+mainHost + '/saved/remove/standards/';
 
 export const SAVE_QUESTIONS = 
-localHost + '/saved/add/questions/';
+mainHost + '/saved/add/questions/';
 
 export const UNSAVE_QUESTIONS = 
-localHost + '/saved/remove/questions/';
+mainHost + '/saved/remove/questions/';
 
 export const GET_QUESTIONS = 
-localHost + '/home/questions/';
+mainHost + '/home/questions/';
 
 export const GET_QUESTIONS_FOR_ALL_SEASONS = 
-localHost + '/home/exam/questions/';
+mainHost + '/home/exam/questions/';
 
 export const GET_QUESTIONS_FOR_SELECTED_SEASONS =
-localHost + '/home/exam/questions/'
+mainHost + '/home/exam/questions/'
 
 export const GET_USER_DATA = 
-localHost + '/users/getUser/'
+mainHost + '/users/getUser/'

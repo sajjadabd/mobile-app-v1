@@ -1,4 +1,4 @@
-import React , { useState } from 'react'
+import React , { useState , useRef } from 'react'
 
 import { View , Text, TouchableOpacity, StyleSheet } from 'react-native'
 
@@ -36,10 +36,12 @@ const SubChapter = ({
   selectedSeasons , 
   changeSelectedExams , 
   standardID , 
-  branchID
+  branchID 
 }) => {
 
     const theme = useSelector(state => state.ThemeReducer.theme);
+    
+
     
 
     // console.log(item);
@@ -49,6 +51,8 @@ const SubChapter = ({
       branchID ,
       seasonID : item.season_number
     }
+
+    const disabledSeason = item.season_number == 1 ? false : true;
 
     const changeStyleBasedOnSelected = (index) => {
       if(selectedSeasons[index]) {
@@ -115,8 +119,17 @@ const SubChapter = ({
       }
     }
 
+
+    const payMoneyOrGoToReading = () => {
+      if(disabledSeason == true) {
+        alert('هدایت به درگاه پرداخت');
+        // openAlert();
+      } else {
+        navigation.navigate('Reading' , seasonData )
+      }
+    }
+
     return (
-        <>
         <LinearGradient
         colors={[
           'rgba(255,255,255,0.4)', 
@@ -139,7 +152,7 @@ const SubChapter = ({
           
           <View style={styles.info}>
               <TouchableOpacity
-              onPress={() => navigation.navigate('Reading' , seasonData )}
+              onPress={() => payMoneyOrGoToReading() }
               >
                 <Text style={seasonTextStyle()}>
                   فصل
@@ -150,7 +163,6 @@ const SubChapter = ({
           </View>
          
         </LinearGradient>
-        </>
     )
 }
 

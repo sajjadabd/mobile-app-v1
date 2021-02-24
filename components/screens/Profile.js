@@ -15,11 +15,9 @@ import {
 } from 'react-native';
 
 import { windowHeight, windowWidth } from '../utils/Dimensions';
-
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 // import DropDownPicker from 'react-native-dropdown-picker';
-
 // import { DropDown } from './PickerStyle';
 
 import { TouchableOpacity } from 'react-native-gesture-handler';
@@ -43,6 +41,8 @@ import { useSelector , useDispatch } from 'react-redux';
 import styled from 'styled-components/native';
 
 import axios from 'axios';
+
+
 
 import { 
   getData , 
@@ -173,7 +173,7 @@ const Profile = ({ navigation }) => {
     const getUserData = async () => {
       userInfo = await getData();
       const userResult = await sendRequestToGetUser();
-      if( userInformation.username == undefined ) {
+      if( !("username" in userInformation) ) {
         setUserInformation(userResult);
       }
       
@@ -263,7 +263,7 @@ const Profile = ({ navigation }) => {
   const SubmitCityFromModal = async (data) => {
     if(data !== undefined ) {
       let userInfo = await getData();
-      console.log('userInfo : ' , userInfo);
+      // console.log('userInfo : ' , userInfo);
       const result = await sendRequestToUpdateUser({
         city : data
       });
@@ -281,9 +281,10 @@ const Profile = ({ navigation }) => {
 
 
   const SubmitProvinceFromModal = async (data) => {
+    console.log(data);
     if(data !== undefined ) {
       let userInfo = await getData();
-      console.log('userInfo : ' , userInfo);
+      // console.log('userInfo : ' , userInfo);
       const result = await sendRequestToUpdateUser({
         province : data
       });
@@ -311,7 +312,7 @@ const Profile = ({ navigation }) => {
 
 
   const showLoaderOrContent = () => {
-    if(userInformation.username != undefined) {
+    if( "username" in userInformation) {
       return (
         <ScrollView >
 
@@ -429,6 +430,7 @@ const Profile = ({ navigation }) => {
     <CityModal
     visible={showCityModal} 
     SubmitCityFromModal={SubmitCityFromModal}
+    userInformation={userInformation}
     />
 
     <ProvinceModal 

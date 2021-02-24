@@ -23,53 +23,8 @@ import styled from 'styled-components/native';
 import { useSelector } from 'react-redux';
 
 
-const provinces = [
-  {
-    label: 'مازندران'
-  },
-  {
-    label: 'تهران'
-  },
-  {
-    label: 'اصفهان'
-  },
-  {
-    label: 'گلستان'
-  },
-  {
-    label: 'خراسان رضوی'
-  },
-  {
-    label: 'قم'
-  },
-  {
-    label: 'زنجان'
-  },
-  {
-    label: 'مرکزی'
-  },
-  {
-    label: 'قزوین'
-  },
-  {
-    label: 'اردبیل'
-  },
-  {
-    label: 'هرمزگان'
-  },
-  {
-    label: 'ایلام'
-  },
-  {
-    label: 'خوزستان'
-  },
-  {
-    label: 'کردستان'
-  },
-  {
-    label: 'کرمانشاه'
-  },
-];
+import { provinces } from '../data/provinces';
+
 
 
 const Container = styled.View`

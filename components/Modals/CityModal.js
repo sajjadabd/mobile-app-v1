@@ -22,42 +22,8 @@ import styled from 'styled-components/native';
 
 import { useSelector } from 'react-redux';
 
-
-const cities = [
-  {
-    label: 'بهشهر'
-  },
-  {
-    label: 'نکا'
-  },
-  {
-    label: 'ساری'
-  },
-  {
-    label: 'بابل'
-  },
-  {
-    label: 'بابلسر'
-  },
-  {
-    label: 'نور'
-  },
-  {
-    label: 'چالوس'
-  },
-  {
-    label: 'فریدونکنار'
-  },
-  {
-    label: 'محمود آباد'
-  },
-  {
-    label: 'تنکابن'
-  },
-  {
-    label: 'رامسر'
-  }
-];
+import { provinces } from '../data/provinces';
+import { cities } from '../data/cities';
 
 
 const Container = styled.View`
@@ -75,13 +41,41 @@ const CloseButton = styled.View`
 `
 
 
-const CityModal = ({visible , SubmitCityFromModal}) => {
+const returnProvinceId = (userInformation) => {
+  for(let i=0;i<provinces.length;i++){
+    if(provinces[i].label == userInformation.province) {
+      return provinces[i].id
+    }
+  }
+}
+
+const returnMyProvinceCities = (provinceId) => {
+  const MY_CITIES = [];
+
+  for(let i=0;i<cities.length;i++) {
+    if(cities[i].province_id == provinceId) {
+      MY_CITIES.push(cities[i]);
+    }
+  }
+
+  return MY_CITIES;
+}
+
+
+const CityModal = ({ visible , SubmitCityFromModal , userInformation }) => {
 
   const SubmitCity = (e) => {
     setShowCityModal(false);
   }
 
   const theme = useSelector(state => state.ThemeReducer.theme)
+
+  const provinceId = returnProvinceId(userInformation);
+
+  console.log(provinceId);
+
+  const myCities = returnMyProvinceCities(provinceId);
+  
 
   return (
     <Modal 
@@ -92,7 +86,7 @@ const CityModal = ({visible , SubmitCityFromModal}) => {
 
         <ImageBackground
         style={styles.image}
-        source={require('../images/bg.png') }
+        source={ require('../images/bg.png') }
         >
 
         <TouchableOpacity
@@ -108,7 +102,7 @@ const CityModal = ({visible , SubmitCityFromModal}) => {
         <ScrollView>
         <View style={styles.provinces}>
           <RadioButtonRN
-            data={cities}
+            data={myCities}
             animationTypes={['shake']}
             selectedBtn={(e) => {
               setTimeout( () => {

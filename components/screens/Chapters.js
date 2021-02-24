@@ -1,4 +1,4 @@
-import React , { useState , useEffect , useMemo } from 'react'
+import React , { useState , useRef , useEffect , useMemo } from 'react'
 
 import {
   SafeAreaView,
@@ -30,6 +30,10 @@ import { SELECT_EXAM , DESELECT_EXAM } from '../../redux/BranchActions'
 import { GET_SEASONS } from '../URL/Urls';
 
 import axios from 'axios';
+
+import AlertPro from "react-native-alert-pro";
+
+
 
 
 
@@ -66,6 +70,8 @@ const Chapters = ({ navigation }) => {
   const [selectedSeasons , setSelectedSeasons] = useState([]);
   
   //Array(seasons.length).fill(false)
+
+  const paymentAlert = useRef();
   
 
   const requestToServerForSeasons = async () => {
@@ -167,10 +173,15 @@ const Chapters = ({ navigation }) => {
     }
   }
 
+  const openAlert = () => {
+    paymentAlert.open();
+  }
+
 
   const showLoaderOrContent = () => {
     if( seasons != undefined ) {
       return (
+        <>
         <ScrollView style={styles.scroll}>
             <View style={styles.scrollContent}>
             {
@@ -185,11 +196,40 @@ const Chapters = ({ navigation }) => {
                       standardID={standardID}
                       branchID={branchID}
                       selectedSeasons={selectedSeasons}
+                      openAlert={openAlert}
                     />
                 )
             })}
             </View>
         </ScrollView>
+
+        {/* <AlertPro
+          ref={paymentAlert}
+          onConfirm={() => null}
+          title="Delete confirmation"
+          message="Are you sure to delete the entry?"
+          textCancel="Cancel"
+          textConfirm="Delete"
+          customStyles={{
+            mask: {
+              backgroundColor: "transparent"
+            },
+            container: {
+              borderWidth: 1,
+              borderColor: "#9900cc",
+              shadowColor: "#000000",
+              shadowOpacity: 0.1,
+              shadowRadius: 10
+            },
+            buttonCancel: {
+              backgroundColor: "#4da6ff"
+            },
+            buttonConfirm: {
+              backgroundColor: "#ffa31a"
+            }
+          }}
+        /> */}
+        </>
       )
     } else {
       return (
