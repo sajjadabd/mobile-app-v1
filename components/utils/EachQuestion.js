@@ -36,6 +36,8 @@ const EachQuestion = ({navigation , question , userInfo}) => {
 
   const theme = useSelector(state => state.ThemeReducer.theme)
 
+  const [save , setSave] = useState(question.saved);
+
   console.log(question);
 
 
@@ -144,9 +146,9 @@ const EachQuestion = ({navigation , question , userInfo}) => {
       style={styles.saveButton}
       >
           { 
-          question.saved == null ||
-          question.saved == undefined ||
-          question.saved == false
+          save == null ||
+          save == undefined ||
+          save == false
           ?
           <TouchableOpacity onPress={() => saveQuestion()}>
           <MaterialIcon size={40} color={theme.TEXT_COLOR} name="bookmark-outline" />

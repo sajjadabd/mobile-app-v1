@@ -21,9 +21,9 @@ import { ShabnamMedium } from '../utils/Fonts';
 import axios from 'axios';
 
 import {
-  SEARCH_BRANCHES ,
   SEARCH_STANDARDS
 } from '../URL/Urls'
+import SubChapterLogo from '../utils/SubChapterLogo';
 
 const Searchbar = styled.View`
   background-color : ${props => props.theme.SEARCH_COLOR};
@@ -37,38 +37,45 @@ const Searchbar = styled.View`
 `
 
 
-const Header = ({ setBranches }) => {
+const Header = ({ setStandards , requestToServerForStandards , setShowHeaderTitle }) => {
 
   const theme = useSelector(state => state.ThemeReducer.theme)
 
   // const [text , setText] = useState('');
 
-  const text = useRef();
+  const searchInput = useRef();
 
-  const requestToServerForSearchBranches = async () => {
-    console.log(SEARCH_BRANCHES);
+  const requestToServerForSearchStandards = async (text) => {
+    console.log(SEARCH_STANDARDS);
     try {
       const result = await axios({
         method: 'POST',
-        url: SEARCH_BRANCHES  ,
+        url: SEARCH_STANDARDS  ,
         headers: {
           'Content-Type': 'application/json'
         },
         data : {
-          "search" : `${text.current}`
+          "search" : `${text}`
         }
       });
       // console.log('questions :' , result.data.result.slice(0,10));
-      setBranches(result.data.result);
+      setStandards(result.data.result);
     } catch (e) {
       console.log("Error Happens for fetch questions ...");
     }
   }
 
   const onChangeText = async (text) => {
-    console.log(text.current);
+    console.log(text);
+    if( text == '' ) {
+      setShowHeaderTitle(true);
+      await requestToServerForStandards();
+    } else {
+      setShowHeaderTitle(false);
+      await requestToServerForSearchStandards(text);
+    }
+    // await requestToServerForSearchStandards(text);
     // setText(text);
-    await requestToServerForSearchBranches();
   }
 
   return (
@@ -76,14 +83,24 @@ const Header = ({ setBranches }) => {
       <View style={styles.header}>
         <Searchbar>
           <TextInput 
-            ref={text}
+            ref={searchInput} 
             style={styles.input} 
             onChangeText={text => onChangeText(text)} 
-            value={text}
+            placeholder='جستجوی استاندارد ها . . .'
           />
           <MaterialICon style={styles.searchIcon} size={40} color={theme.MAIN_BACKGROUND} name="search" />
         </Searchbar>
       </View>
+      {/* {
+        searchInput == '' 
+        ? 
+        null
+        :
+        <View>
+          <SubChapterLogo title={title} logo={logo} />
+        </View>
+      } */}
+      
     </>
   );
 };
@@ -110,7 +127,7 @@ const styles = StyleSheet.create({
     flex : 1,
   }, 
   searchIcon : {
-    
+    paddingLeft : 10
   }
 });
 

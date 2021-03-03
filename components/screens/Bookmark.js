@@ -1,4 +1,4 @@
-import React , {useState} from 'react';
+import React , { useState } from 'react';
 import {
   StyleSheet,
   ScrollView,
@@ -19,6 +19,8 @@ import { useSelector } from 'react-redux';
 import styled from 'styled-components/native';
 
 import SwitchSelector from "react-native-switch-selector";
+
+// import { SafeAreaProvider , SafeAreaView } from 'react-native-safe-area-context';
 
 const options = [
   { label: "سوالات", value: "questions" },
@@ -131,11 +133,9 @@ const Bookmark = ({ navigation }) => {
             <BranchBookmark navigation={navigation} />
           }
 
-
         </ScrollView>
 
         <Footer navigation={navigation} whichPage={whichPage} />
-        
         
         </ImageBackground>
 
@@ -143,7 +143,6 @@ const Bookmark = ({ navigation }) => {
       
       
     </View>
-    
     </>
   )
 }

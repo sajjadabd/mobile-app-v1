@@ -26,7 +26,7 @@ import Carousel from 'react-native-snap-carousel';
 import { NavigationEvents } from 'react-navigation';
 
 import Footer from '../footer/Footer';
-import Header from '../header/Header';
+import Header from '../header/branchHeader';
 import { LalezarRegular } from '../utils/Fonts';
 
 

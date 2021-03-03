@@ -48,8 +48,8 @@ const QuestionsBookmark = ({navigation}) => {
           
         }
       });
-      console.log('questions :' , result.data.result.slice(0,5));
-      setQuestions(result.data.result.slice(0,5));
+      console.log('questions :' , result.data.result);
+      return result.data.result;
     } catch (e) {
       console.log("Error Happens for fetch questions ...");
     }
@@ -65,12 +65,18 @@ const QuestionsBookmark = ({navigation}) => {
 
 
     const fetchQuestions = async () => {
-      await requestToServerForGetSavedQuestions();
+      const result = await requestToServerForGetSavedQuestions();
+
+      if(questions == undefined ) {
+        setQuestions(result);
+      } else if(result.length != questions.length) {
+        setQuestions(result);
+      }
     }
     
-    if(questions == undefined) {
-      getUserData();
-    }
+
+    getUserData();
+
   });
 
   const returnTextStyle = () => {

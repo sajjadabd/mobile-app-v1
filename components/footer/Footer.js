@@ -17,6 +17,9 @@ import styled from 'styled-components/native';
 
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import { ShabnamMedium } from '../utils/Fonts';
+import { windowWidth } from '../utils/Dimensions';
 
 
 const Container = styled.View`
@@ -31,7 +34,7 @@ const Container = styled.View`
 
 const Icons = {
   home : 'home',
-  altHome : 'house-siding',
+  altHome : 'md-home-outline',
   work : 'work',
   altWork : 'work-outline',
   bookmark : 'bookmark',
@@ -44,6 +47,14 @@ const Footer = ({ navigation , whichPage }) => {
 
   const theme = useSelector(state => state.ThemeReducer.theme)
 
+  const returnTextStyle = () => {
+    return {
+      fontFamily : ShabnamMedium ,
+      fontSize : windowWidth / 30 ,
+      color : theme.TEXT_COLOR ,
+    }
+  }
+
   return (
     <>
       <Container>
@@ -52,8 +63,17 @@ const Footer = ({ navigation , whichPage }) => {
         <TouchableOpacity 
         style={styles.button}
         onPress={ () => navigation.navigate('Homepage' , { whichPage : 'home' }) }>
-          <MaterialIcon size={40} color={theme.ICON_COLOR} 
-          name={whichPage == 'home' || whichPage == undefined ? Icons.home : Icons.altHome} />
+          {
+            whichPage == 'home' || whichPage == undefined
+            ?
+            <MaterialIcon size={40} color={theme.ICON_COLOR} name={Icons.home}></MaterialIcon>
+            :
+            <Ionicons size={34} color={theme.ICON_COLOR} name={Icons.altHome}></Ionicons>
+          }
+          
+          <Text style={returnTextStyle()}>
+            خانه
+          </Text>
         </TouchableOpacity>
         </View>
         
@@ -65,14 +85,14 @@ const Footer = ({ navigation , whichPage }) => {
           </TouchableOpacity>
         </View> */}
 
-        <View style={styles.touchableButton}>
+        {/* <View style={styles.touchableButton}>
           <TouchableOpacity 
           style={styles.button}
           onPress={ () => navigation.navigate('Work' , { whichPage : 'work' }) }>
             <MaterialIcon size={40} color={theme.ICON_COLOR} 
             name={whichPage == 'work' ? Icons.work : Icons.altWork} />
           </TouchableOpacity>
-        </View>
+        </View> */}
 
 
         <View style={styles.touchableButton}>
@@ -81,7 +101,11 @@ const Footer = ({ navigation , whichPage }) => {
           onPress={ () => navigation.navigate('Bookmark' , { whichPage : 'bookmark' }) }>
             <MaterialIcon size={40} color={theme.ICON_COLOR} 
             name={whichPage == 'bookmark' ? Icons.bookmark : Icons.altBookmark} />
+          <Text style={returnTextStyle()}>
+            ذخیره شده ها
+          </Text>
           </TouchableOpacity>
+          
         </View>
         
         <View style={styles.touchableButton}>
@@ -90,6 +114,9 @@ const Footer = ({ navigation , whichPage }) => {
           onPress={ () => navigation.navigate('Profile' , { whichPage : 'profile' }) }>
             <MaterialIcon size={40} color={theme.ICON_COLOR} 
             name={whichPage == 'profile' ? Icons.person : Icons.altPerson} />
+            <Text style={returnTextStyle()}>
+              پروفایل
+            </Text>
           </TouchableOpacity>
         </View>
 

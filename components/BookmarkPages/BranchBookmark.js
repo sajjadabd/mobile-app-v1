@@ -46,7 +46,7 @@ const BranchBookmark = ({navigation}) => {
         }
       });
       console.log('result :' , result.data.result);
-      setStandards(result.data.result);
+      return result.data.result;
     } catch (e) {
       console.log("Error Happens for fetch saved standard ...");
     }
@@ -61,14 +61,18 @@ const BranchBookmark = ({navigation}) => {
     }
 
     const getStandards = async () => {
-      await requestToServerForGetStandards();
+      const result = await requestToServerForGetStandards();
+      if ( standards == undefined ) {
+        setStandards(result);
+      } else if ( result.length != standards.length ) {
+        setStandards(result);
+      }
     }
 
     const getUserInfoAndGetStandards = async () => {
       await getUserData();
-      if ( standards == null ) {
-        await getStandards();
-      }
+      await getStandards();
+      
     }
 
     getUserInfoAndGetStandards();

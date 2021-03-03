@@ -1,4 +1,4 @@
-import React from 'react'
+import React , { useState } from 'react'
 
 import {
   SafeAreaView,
@@ -24,6 +24,11 @@ import styled from 'styled-components/native';
 import { useSelector } from 'react-redux';
 
 import LinearGradient from 'react-native-linear-gradient';
+
+import {
+  SCLAlert,
+  SCLAlertButton
+} from 'react-native-scl-alert'
 
 
 const Header = styled.View`
@@ -58,6 +63,8 @@ const SubBranch = ({ navigation }) => {
   const branchID = navigation.getParam('branchID');
   const standardName = navigation.getParam('standardName');
   // const seasons = navigation.getParam('seasons');
+
+  const [ showSCLAlert , setShowSCLAlert] = useState(false);
 
   console.log('standardName' , standardName);
 
@@ -128,7 +135,9 @@ const SubBranch = ({ navigation }) => {
           </TouchableOpacity>
 
           <TouchableOpacity
-            onPress={() => navigation.navigate('Exam' , chapterData )}
+            onPress={() => {
+              setShowSCLAlert(true);
+            }}
           >
           <View>
             <LinearGradient 
@@ -146,6 +155,52 @@ const SubBranch = ({ navigation }) => {
           </View>
           </TouchableOpacity>
         </View>
+
+
+        <SCLAlert
+          theme="info"
+          show={showSCLAlert}
+          title="سطح بندی"
+          subtitle="سطح بندی سوال را انتخاب کنید"
+          onRequestClose={() => setShowSCLAlert(false)}
+        >
+          <SCLAlertButton 
+            theme="info" 
+            onPress={(e) => {
+              setShowSCLAlert(false);
+              navigation.navigate('Exam' , {
+                ...chapterData ,
+                level : 'آسان'
+              } )
+            }
+            }>
+            آسان
+          </SCLAlertButton>
+          <SCLAlertButton 
+            theme="info" 
+            onPress={(e) => {
+              setShowSCLAlert(false)
+              navigation.navigate('Exam' , {
+                ...chapterData ,
+                level : 'متوسط'
+              } )
+            }
+            }>
+            متوسط
+          </SCLAlertButton>
+          <SCLAlertButton 
+            theme="info" 
+            onPress={(e) => {
+              setShowSCLAlert(false)
+              navigation.navigate('Exam' , {
+                ...chapterData ,
+                level : 'سخت'
+              } )
+            }
+            }>
+            سخت
+          </SCLAlertButton>
+        </SCLAlert>
 
         </ImageBackground>
 

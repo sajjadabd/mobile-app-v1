@@ -99,8 +99,8 @@ const Reading = ({navigation}) => {
             
           }
         });
-        console.log('questions :' , result.data.result.slice(0,5));
-        setQuestions(result.data.result.slice(0,5));
+        // console.log('questions :' , result.data.result.slice(0,5));
+        setQuestions(result.data.result);
       } catch (e) {
         console.log("Error Happens for fetch questions ...");
       }
@@ -121,8 +121,8 @@ const Reading = ({navigation}) => {
             
           }
         });
-        console.log('questions :' , result.data.result.slice(0,5));
-        setQuestions(result.data.result.slice(0,5));
+        // console.log('questions :' , result.data.result.slice(0,5));
+        setQuestions(result.data.result);
       } catch (e) {
         console.log("Error Happens for fetch questions ...");
       }

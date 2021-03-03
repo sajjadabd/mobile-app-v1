@@ -6,7 +6,12 @@
  * @flow strict-local
  */
 
-import React , { useRef ,  useState , useEffect , createContext } from 'react';
+import React , { 
+  useRef ,  
+  useState , 
+  useEffect , 
+  createContext 
+} from 'react';
 
 import Navigator from './components/stack/Homestack';
 
@@ -33,6 +38,19 @@ import { UPDATE_USER } from './redux/UserActions';
 
 import { ThemeProvider } from 'styled-components';
 
+
+import {I18nManager} from "react-native";
+
+import RNRestart from "react-native-restart";
+
+export const languageRestart = async () => {
+  // await I18nManager.forceRTL(false);
+  if (I18nManager.isRTL) {
+      await I18nManager.forceRTL(false);
+      await I18nManager.allowRTL(false);
+      RNRestart.Restart();
+  }
+};
 
 
 const requestToServerForConfirmSms = async (userInfo) => {
@@ -96,6 +114,8 @@ const MainApp = () => {
 
     const doTheJob = async () => {
       // await removeData();
+      // languageRestart();
+
       let userInfo = await getData();
       console.log('userInfo :' , userInfo);
       let result = await requestToServerForConfirmSms(userInfo);
@@ -142,6 +162,8 @@ const MainApp = () => {
         console.log(3);
       }
     }
+
+    languageRestart();
 
     doTheJob();
     

@@ -4,7 +4,6 @@ import { View , Text , TouchableOpacity , StyleSheet } from 'react-native';
 
 import { windowWidth } from './Dimensions';
 
-
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 import styled from 'styled-components/native';
@@ -34,7 +33,6 @@ const Container = styled.View`
 
 // background-color : ${props => props.theme.BUTTON_COLOR};
 
-
 const SubBranch = ({navigation, branchName , branchID , standards }) => {
 
   const theme = useSelector(state => state.ThemeReducer.theme)
@@ -50,7 +48,7 @@ const SubBranch = ({navigation, branchName , branchID , standards }) => {
   const returnTextStyle = () => {
     return {
       fontFamily : ShabnamMedium ,
-      fontSize : windowWidth / 15 ,
+      fontSize : windowWidth / 16 ,
       color : theme.TEXT_COLOR ,
     }
   }

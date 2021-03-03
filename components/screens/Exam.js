@@ -16,12 +16,11 @@ import {
 import { windowHeight , windowWidth } from '../utils/Dimensions';
 
 import Footer from '../footer/Footer';
-import { LalezarRegular } from '../utils/Fonts';
+import { LalezarRegular, ShabnamMedium } from '../utils/Fonts';
 
 import ExamQuestionContainer from '../utils/ExamQuestionContainer';
 
 import Swiper from 'react-native-swiper';
-
 
 import styled from 'styled-components/native';
 
@@ -33,6 +32,11 @@ import {
 } from '../URL/Urls';
 
 import axios from 'axios';
+
+import {
+  PieChart
+} from "react-native-chart-kit";
+
 
 const duration = 100;
 
@@ -61,22 +65,40 @@ let numberOfWrongAnswers ;
 
 const Exam = ({navigation}) => {
 
+    const theme = useSelector(state => state.ThemeReducer.theme)
+
+    const currentIndex = useRef(0);
+    currentIndex.current = 1;
+    // console.log(radioButtonsData.length);
+
+    const mySwiper = useRef(null);
+    // const prevButton = useRef(null);
+    // const [myIndex , setIndex] = useState(0);
     
     const branchID = navigation.getParam('branchID');
     const standardID = navigation.getParam('standardID');
     const selectedSeasons = navigation.getParam('selectedSeasons');
+    const level = navigation.getParam('level');
 
-    const [questions, setQuestions] = useState([]);
+
+    
+
+    console.log('level' , level);
+
+    const [questions, setQuestions] = useState();
     const [questionIndex , setQuestionIndex] = useState(0);
     
     const [ examFinished , setExamFinished ] = useState(false);
+
+
+    const [examData , setExamData] = useState([]);
     
 
     //Array(seasons.length).fill(false)
     console.log( branchID , standardID  );
 
     const setNewAnswer = (e , questionNumber) => {
-      console.log(e , questionNumber)
+      console.log(e , questionNumber);
       answers[questionNumber] = e.index;
       console.log(answers);
     }
@@ -85,17 +107,19 @@ const Exam = ({navigation}) => {
       console.log(GET_QUESTIONS_FOR_ALL_SEASONS + branchID + '/' + standardID );
       try {
         const result = await axios({
-          method: 'GET',
+          method: 'POST',
           url: GET_QUESTIONS_FOR_ALL_SEASONS + branchID + '/' + standardID ,
           headers: {
             'Content-Type': 'application/json'
           },
           data : {
-            
+            "level" : `${level}`
           }
         });
-        console.log('questions :' , result.data.result.slice(0,10));
-        setQuestions(result.data.result.slice(0,10));
+        // console.log('questions :' , result.data.result.slice(0,10));
+        let maxResultLength = result.data.result.length >= 40 ? 40 : result.data.result.length;
+        setQuestions(result.data.result.slice(0,maxResultLength));
+        answers = answers.slice(0 , maxResultLength);
       } catch (e) {
         console.log("Error Happens for fetch questions ...");
       }
@@ -112,11 +136,15 @@ const Exam = ({navigation}) => {
             'Content-Type': 'application/json'
           },
           data : {
-            "seasons" : selectedSeasons
+            "seasons" : selectedSeasons ,
+            "level" : `${level}`
           }
         });
-        console.log('questions :' , result.data.result.slice(0,10));
-        setQuestions(result.data.result.slice(0,10));
+        // console.log('questions :' , result.data.result.slice(0,10));
+        // console.log('get questions for selected seasons...');
+        let maxResultLength = result.data.result.length >= 10 ? 10 : result.data.result.length;
+        setQuestions(result.data.result.slice(0,maxResultLength));
+        answers = answers.slice(0 , maxResultLength);
       } catch (e) {
         console.log("Error Happens for fetch selected seasons questions ...");
       }
@@ -124,7 +152,11 @@ const Exam = ({navigation}) => {
   
     useEffect( () => {
 
-      answers = Array(10).fill(false);
+      const selectedSeasons = navigation.getParam('selectedSeasons');
+
+      const numberOfLoadedQuestions = selectedSeasons == undefined ? 40 : 10;
+
+      answers = Array(numberOfLoadedQuestions).fill(false);
       numberOfRightAnswers = 0 ;
       numberOfDontAnswers = 0 ;
       numberOfWrongAnswers = 0 ;
@@ -141,7 +173,8 @@ const Exam = ({navigation}) => {
         }
       }
 
-      if(questions == undefined || questions.length == 0) {
+
+      if(questions == undefined) {
         fetchQuestions();
       }
     });
@@ -208,7 +241,59 @@ const Exam = ({navigation}) => {
       }
     }
 
+    const returnSmallerTextStyle = () => {
+      return {
+        color : 'white',
+        fontFamily : LalezarRegular,
+        fontSize : windowWidth / 20,
+        paddingHorizontal : 20,
+      }
+    }
+
+    const showExamResult = () => {
+      calculateAnswersData();
+      setExamFinished(true);
+      setExamData([
+        {
+          name: "پاسخ های صحیح",
+          population: numberOfRightAnswers,
+          color: "#11d669",
+          legendFontColor: theme.MAIN_BACKGROUND,
+          legendFontSize: 15,
+          legendFontFamily : ShabnamMedium
+        },
+        {
+          name: "پاسخ های غلط",
+          population: numberOfWrongAnswers,
+          color: "#ff4a4a",
+          legendFontColor: theme.MAIN_BACKGROUND,
+          legendFontSize: 15,
+          legendFontFamily : ShabnamMedium
+        },
+        {
+          name: "پاسخ های داده نشده",
+          population: numberOfDontAnswers,
+          color: "#ffffff",
+          legendFontColor: theme.MAIN_BACKGROUND,
+          legendFontSize: 15,
+          legendFontFamily : ShabnamMedium
+        }
+      ])
+      console.log('Exam Finished :' , examFinished);
+    }
+
     const showLoaderOrContent = () => {
+
+      if( questions == undefined ) {
+        return (
+          <Header>
+            <View style={styles.loader}>
+              <ActivityIndicator size="large" color="#ffffff" />
+            </View>
+          </Header>
+        )
+      }
+
       if(questions.length != 0) {
         return (
               <Header>
@@ -256,26 +341,18 @@ const Exam = ({navigation}) => {
                 </View>
             </Header>
         )
-      } else {
+      } else if ( questions.length == 0) {
         return (
           <Header>
             <View style={styles.loader}>
-              <ActivityIndicator size="large" color="#ffffff" />
+              <Text style={returnSmallerTextStyle()}>سوالی با این طبقه بندی وجود ندارد</Text>
             </View>
           </Header>
         )
       }
     }
 
-    const theme = useSelector(state => state.ThemeReducer.theme)
-
-    const currentIndex = useRef(0);
-    currentIndex.current = 1;
-    // console.log(radioButtonsData.length);
-
-    const mySwiper = useRef(null);
-    // const prevButton = useRef(null);
-    // const [myIndex , setIndex] = useState(0);
+    
 
     return (
         <>
@@ -288,6 +365,7 @@ const Exam = ({navigation}) => {
               ?
               showLoaderOrContent()
               :
+              <>
               <Header>
                 <View>
                   <Text style={returnTextStyle()}>تعداد سوال صحیح :</Text>
@@ -306,26 +384,60 @@ const Exam = ({navigation}) => {
                   </Text>
                 </View>
               </Header>
+              
+              <View style={styles.chart}>
+              <PieChart
+                data={examData}
+                width={windowWidth}
+                height={200}
+                chartConfig={{
+                  backgroundColor: "#e26a00",
+                  backgroundGradientFrom: "#fb8c00",
+                  backgroundGradientTo: "#ffa726",
+                  decimalPlaces: 2, // optional, defaults to 2dp
+                  color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+                  labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+                  style: {
+                    borderRadius: 16
+                  },
+                  propsForDots: {
+                    r: "6",
+                    strokeWidth: "2",
+                    stroke: "#ffa726"
+                  }
+                }}
+                accessor={"population"}
+                backgroundColor={"transparent"}
+                paddingLeft={"0"}
+                center={[10, 10]}
+                absolute
+              />
+              </View>
+              
+              </>
             }
             
 
-            
 
             <View style={styles.navigation}>
-              <View>
+            
+              {
+                examFinished == false 
+                ?
+                <View>
                 <View 
                 style={returnButtonCenter()}>
                     <TouchableOpacity 
-                    onPress={() => {
-                      calculateAnswersData();
-                      setExamFinished(true);
-                      console.log('Exam Finished :' , examFinished);
-                    }}
+                    onPress={() => showExamResult()}
                     style={styles.touchable}>
                         <Text style={styles.buttonText}>اتمام آزمون</Text>
                     </TouchableOpacity>
                 </View>
               </View>
+              :
+              <View>
+              </View>
+              }
                 {/* <View 
                 style={returnButtonRight()}>
                     <TouchableOpacity 
@@ -467,6 +579,10 @@ const styles = StyleSheet.create({
       flex : 1 ,
       justifyContent : 'center' ,
       alignItems : 'center' ,
+    },
+    chart : {
+      justifyContent : 'center',
+      alignItems : 'center',
     }
 });
 

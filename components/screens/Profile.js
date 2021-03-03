@@ -32,7 +32,7 @@ import CityModal from '../Modals/CityModal';
 import { ActiveButton , DeactiveButton } from '../utils/Buttons';
 
 
-import { launchImageLibrary } from 'react-native-image-picker';
+// import { launchImageLibrary } from 'react-native-image-picker';
 
 
 
@@ -491,8 +491,9 @@ const Profile = ({ navigation }) => {
         
         <View style={styles.profilePictureContainer}>
           <TouchableOpacity
-          onPress={() =>
-            launchImageLibrary(
+          onPress={() => null
+            
+            /* launchImageLibrary(
               {
                 mediaType: 'photo',
                 includeBase64: false,
@@ -505,7 +506,7 @@ const Profile = ({ navigation }) => {
                 }
                 console.log(response);
               },
-            )
+            ) */
           }
           >
           {/* <MaterialIcon size={100} color="white" name="person" /> */}

@@ -2,7 +2,7 @@ const localHost = 'http://192.168.2.10:3000';
 
 const herokuHost = 'https://fanniherfei.herokuapp.com';
 
-const mainHost = localHost;
+const mainHost = herokuHost;
 
 export const GET_SMS_URL = 
 mainHost + '/auth/signup';
@@ -55,7 +55,13 @@ export const GET_QUESTIONS_FOR_ALL_SEASONS =
 mainHost + '/home/exam/questions/';
 
 export const GET_QUESTIONS_FOR_SELECTED_SEASONS =
-mainHost + '/home/exam/questions/'
+mainHost + '/home/exam/seasons/questions/'
 
 export const GET_USER_DATA = 
 mainHost + '/users/getUser/'
+
+export const SEARCH_BRANCHES = 
+mainHost + '/home/search/branches/'
+
+export const SEARCH_STANDARDS = 
+mainHost + '/home/search/standards/'

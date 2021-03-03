@@ -64,26 +64,19 @@ const EachStandard = ({ navigation , item , branchName , branchID }) => {
 
   const dispatch = useDispatch();
 
-  let { 
-    id , 
-    standard ,   
-  } = item;
 
-  const standardID = id;
+  const standardID = item.id;
 
   console.log('standardID :' , standardID);
 
   const standardData = {
     seasons : item.seasons ,
-    standardID ,
-    branchID ,
-    branchName ,
+    standardID : item.id ,
+    branchID : item.branch ,
     standardName : item.standard_name
   }
 
   const [save , setSave] = useState(item.saved);
-
-  console.log( id , standard , save);
 
 
   const returnTextStyle = () => {
@@ -194,8 +187,8 @@ const EachStandard = ({ navigation , item , branchName , branchID }) => {
         ?
         <TouchableOpacity
           onPress={() => unSaveStandard({
-            branch_id : branchID ,
-            standard_id : standardID ,
+            branch_id : item.branch ,
+            standard_id : item.id ,
             user_id : userInfo.user_id ,
           })}
         >
@@ -208,8 +201,8 @@ const EachStandard = ({ navigation , item , branchName , branchID }) => {
         : 
         <TouchableOpacity
           onPress={() => saveStandard({
-            branch_id : branchID ,
-            standard_id : standardID ,
+            branch_id : item.branch ,
+            standard_id : item.id ,
             user_id : userInfo.user_id ,
           })}
         >

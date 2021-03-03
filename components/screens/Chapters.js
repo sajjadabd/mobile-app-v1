@@ -71,8 +71,8 @@ const Chapters = ({ navigation }) => {
   const [selectedSeasons , setSelectedSeasons] = useState([]);
   
   //Array(seasons.length).fill(false)
-
-  const [ showSCLAlert , setShowSCLAlert] = useState(true);
+  const [ showSCLAlert , setShowSCLAlert] = useState(false);
+  
   
   
 
@@ -161,6 +161,7 @@ const Chapters = ({ navigation }) => {
   const examButtonStyle = () => {
     return {
       backgroundColor : theme.MAIN_BACKGROUND,
+      marginTop : 10,
       paddingHorizontal : 20,
       paddingVertical : 10,
       borderRadius : 10,
@@ -171,7 +172,7 @@ const Chapters = ({ navigation }) => {
   const examButtonText = () => {
     return {
       color: theme.TEXT_COLOR ,
-      fontFamily : LalezarRegular ,
+      fontFamily : ShabnamMedium ,
     }
   }
 
@@ -208,16 +209,54 @@ const Chapters = ({ navigation }) => {
         <SCLAlert
           theme="info"
           show={showSCLAlert}
-          title="Lorem"
-          subtitle="Lorem ipsum dolor"
-          onRequestClose={() => null}
+          title="سطح بندی"
+          subtitle="سطح بندی سوال را انتخاب کنید"
+          onRequestClose={() => setShowSCLAlert(false)}
         >
           <SCLAlertButton 
             theme="info" 
-            onPress={(e) => setShowSCLAlert(false)}>
-            Done
+            onPress={(e) => {
+              setShowSCLAlert(false);
+              navigation.navigate('Exam' , {
+                branchID ,
+                standardID , 
+                selectedSeasons ,
+                level : 'آسان'
+              })
+            }
+            }>
+            آسان
+          </SCLAlertButton>
+          <SCLAlertButton 
+            theme="info" 
+            onPress={(e) => {
+              setShowSCLAlert(false)
+              navigation.navigate('Exam' , {
+                branchID , 
+                standardID , 
+                selectedSeasons , 
+                level : 'متوسط'
+              })
+            }
+            }>
+            متوسط
+          </SCLAlertButton>
+          <SCLAlertButton 
+            theme="info" 
+            onPress={(e) => {
+              setShowSCLAlert(false)
+              navigation.navigate('Exam' , {
+                branchID ,
+                standardID , 
+                selectedSeasons ,
+                level : 'سخت'
+              })
+            }
+            }>
+            سخت
           </SCLAlertButton>
         </SCLAlert>
+        
         </>
       )
     } else {
@@ -250,11 +289,7 @@ const Chapters = ({ navigation }) => {
           {
             checkExamsInSelectedOrNot() ?
             <TouchableOpacity
-            onPress={() => navigation.navigate('Exam' , {
-              branchID ,
-              standardID , 
-              selectedSeasons
-            })}
+            onPress={() => setShowSCLAlert(true)}
             >
               <View style={examButtonStyle()}>
                 <Text style={examButtonText()}>آزمون از فصل های انتخاب شده</Text>

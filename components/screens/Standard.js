@@ -13,7 +13,7 @@ import {
   ActivityIndicator
 } from 'react-native';
 
-import Header from '../header/Header';
+import Header from '../header/standardHeader';
 
 import { useSelector } from 'react-redux';
 
@@ -43,6 +43,8 @@ const Standard = ({ navigation }) => {
 
   const theme = useSelector(state => state.ThemeReducer.theme)
 
+  const whichPage = navigation.getParam('whichPage');
+
   const title = navigation.getParam('title');
   const logo = navigation.getParam('logo');
   // const standards = navigation.getParam('standards');
@@ -54,6 +56,11 @@ const Standard = ({ navigation }) => {
   // const numbers = [1,2,3,4,5,6,7,8,9,10];
   
   const [standards , setStandards] = useState(undefined);
+
+  const [ showHeaderTitle , setShowHeaderTitle ] = useState(true);
+  
+
+  
 
   const requestToServerForStandards = async () => {
     console.log(GET_STANDARDS + branchID + '/' + userInfo.user_id);
@@ -134,9 +141,8 @@ const Standard = ({ navigation }) => {
     }
   }
 
-  
 
-  const whichPage = navigation.getParam('whichPage');
+
 
   return (
     <>
@@ -149,11 +155,22 @@ const Standard = ({ navigation }) => {
         source={require('../images/bg.png')}
       >
 
-      <Header />
+      <Header 
+      setStandards={setStandards}
+      requestToServerForStandards={requestToServerForStandards}
+      setShowHeaderTitle={setShowHeaderTitle}
+       />
 
       <View style={styles.body}>
 
-        <SubChapterLogo title={branchName} logo={logo} />
+        {
+          showHeaderTitle 
+          ? 
+          <SubChapterLogo title={branchName} logo={logo} />
+          :
+          null
+        }
+        
 
         {showLoaderOrContent()}
 

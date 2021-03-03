@@ -13,9 +13,9 @@ import {
   ActivityIndicator
 } from 'react-native';
 
-import Header from '../header/Header';
+import Header from '../header/branchHeader';
 
-import { useSelector } from 'react-redux'
+import { useSelector } from 'react-redux';
 
 import styled from 'styled-components/native';
 
@@ -131,13 +131,13 @@ const Branch = ({ navigation }) => {
     <StatusBar backgroundColor={theme.MAIN_BACKGROUND} barStyle="light-content" />
     
     <Container>
-      <ImageBackground
-        style={styles.image}
-        source={require('../images/bg.png')}
-      >
+          <ImageBackground
+            style={styles.image}
+            source={require('../images/bg.png')}
+          >
 
         
-          <Header />
+          <Header setBranches={setBranches} />
 
           <View style={styles.body}>
 

@@ -43,9 +43,9 @@ const Header = ({ setBranches }) => {
 
   // const [text , setText] = useState('');
 
-  const text = useRef();
+  // const searchInput = useRef();
 
-  const requestToServerForSearchBranches = async () => {
+  const requestToServerForSearchBranches = async (text) => {
     console.log(SEARCH_BRANCHES);
     try {
       const result = await axios({
@@ -55,7 +55,7 @@ const Header = ({ setBranches }) => {
           'Content-Type': 'application/json'
         },
         data : {
-          "search" : `${text.current}`
+          "search" : `${text}`
         }
       });
       // console.log('questions :' , result.data.result.slice(0,10));
@@ -66,9 +66,9 @@ const Header = ({ setBranches }) => {
   }
 
   const onChangeText = async (text) => {
-    console.log(text.current);
+    console.log(text);
+    await requestToServerForSearchBranches(text);
     // setText(text);
-    await requestToServerForSearchBranches();
   }
 
   return (
@@ -76,10 +76,9 @@ const Header = ({ setBranches }) => {
       <View style={styles.header}>
         <Searchbar>
           <TextInput 
-            ref={text}
             style={styles.input} 
             onChangeText={text => onChangeText(text)} 
-            value={text}
+            placeholder='جستجوی شاخه ها . . .'
           />
           <MaterialICon style={styles.searchIcon} size={40} color={theme.MAIN_BACKGROUND} name="search" />
         </Searchbar>
@@ -110,7 +109,7 @@ const styles = StyleSheet.create({
     flex : 1,
   }, 
   searchIcon : {
-    
+    paddingLeft : 10
   }
 });
 
